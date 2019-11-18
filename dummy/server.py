@@ -54,7 +54,7 @@ class FileServer(file_pb2_grpc.fileChunkerServicer):
         file_pb2_grpc.add_fileChunkerServicer_to_server(Servicer(), self.server)
     
     def run(self, port):
-        print("------------------start Python GRPC server")
+        print("-------start Python GRPC server-----------")
         self.server.add_insecure_port(port)
         self.server.start()
         self.server.wait_for_termination()

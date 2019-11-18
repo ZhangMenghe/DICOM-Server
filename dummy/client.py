@@ -53,9 +53,9 @@ class FileClient:
 def main():
     client = FileClient(SERVER_ADDRESS)
     # uploading
-    client.upload('ct.txt')
+    # client.upload('ct.txt')
     # downloading
-    client.download('ct.txt', 'test_save_client.txt')
+    client.download('pizza-cat.jpg', 'test.jpg')
 
 
 

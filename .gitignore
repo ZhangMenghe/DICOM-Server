@@ -34,4 +34,4 @@ __*
 *.idea
 *build*
 *Build*
-*dicom-images*
+dicom_sample
