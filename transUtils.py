@@ -25,7 +25,6 @@ def download_folder_as_stream(folder_path):
     dcm_list=[]
     path_pre=path.join(getcwd(), folder_path)
     for file_path in listdir(folder_path):
-        # cid += 1
         print("file " + file_path)
         dcm_list.append(processDICOM(path.join(path_pre, file_path)))
         dcm_list.sort(key=lambda x: x.position, reverse=False)

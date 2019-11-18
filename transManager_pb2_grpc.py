@@ -15,12 +15,12 @@ class dataTransferStub(object):
       channel: A grpc.Channel.
     """
     self.getConfig = channel.unary_unary(
-        '/demo.dataTransfer/getConfig',
+        '/helmsley.dataTransfer/getConfig',
         request_serializer=transManager__pb2.Request.SerializeToString,
         response_deserializer=transManager__pb2.bundleConfig.FromString,
         )
     self.Download = channel.unary_stream(
-        '/demo.dataTransfer/Download',
+        '/helmsley.dataTransfer/Download',
         request_serializer=transManager__pb2.Request.SerializeToString,
         response_deserializer=transManager__pb2.dcmImage.FromString,
         )
@@ -59,5 +59,5 @@ def add_dataTransferServicer_to_server(servicer, server):
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'demo.dataTransfer', rpc_method_handlers)
+      'helmsley.dataTransfer', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

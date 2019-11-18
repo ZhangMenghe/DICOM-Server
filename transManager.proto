@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package demo;
+package helmsley;
 
 message dcmImage{
     int32 dcmID = 1;
