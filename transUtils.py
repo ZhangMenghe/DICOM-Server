@@ -9,7 +9,7 @@ def get_all_available_datasets(remote_path):
         return
     #todo: parser sth like .csv to get info
     for folder_name in listdir(remote_path):
-        yield datasetInfo(folder_name = folder_name)    
+        yield datasetInfo(folder_name = folder_name,patient_name="Larry Smarr", date="01/01/19", file_nums=48)    
 
         
 def check_or_download_from_outside_server(remote_path, folder):
