@@ -1,8 +1,17 @@
 from os import path, getcwd,listdir, makedirs
 import shutil
-from transManager_pb2 import dcmImage, bundleConfig
+from transManager_pb2 import dcmImage, bundleConfig, datasetInfo
 from dicomUtils import *
     
+def get_all_available_datasets(remote_path):
+    if not path.isdir(remote_path):
+        print("not a dir : "+ remote_path)
+        return
+    #todo: parser sth like .csv to get info
+    for folder_name in listdir(remote_path):
+        yield datasetInfo(folder_name = folder_name)    
+
+        
 def check_or_download_from_outside_server(remote_path, folder):
     if(path.isdir(folder)):
         return True

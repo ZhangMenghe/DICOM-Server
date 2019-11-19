@@ -14,6 +14,11 @@ class dataTransferStub(object):
     Args:
       channel: A grpc.Channel.
     """
+    self.getAvailableDatasetInfos = channel.unary_stream(
+        '/helmsley.dataTransfer/getAvailableDatasetInfos',
+        request_serializer=transManager__pb2.Request.SerializeToString,
+        response_deserializer=transManager__pb2.datasetInfo.FromString,
+        )
     self.getConfig = channel.unary_unary(
         '/helmsley.dataTransfer/getConfig',
         request_serializer=transManager__pb2.Request.SerializeToString,
@@ -29,6 +34,13 @@ class dataTransferStub(object):
 class dataTransferServicer(object):
   # missing associated documentation comment in .proto file
   pass
+
+  def getAvailableDatasetInfos(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
 
   def getConfig(self, request, context):
     # missing associated documentation comment in .proto file
@@ -47,6 +59,11 @@ class dataTransferServicer(object):
 
 def add_dataTransferServicer_to_server(servicer, server):
   rpc_method_handlers = {
+      'getAvailableDatasetInfos': grpc.unary_stream_rpc_method_handler(
+          servicer.getAvailableDatasetInfos,
+          request_deserializer=transManager__pb2.Request.FromString,
+          response_serializer=transManager__pb2.datasetInfo.SerializeToString,
+      ),
       'getConfig': grpc.unary_unary_rpc_method_handler(
           servicer.getConfig,
           request_deserializer=transManager__pb2.Request.FromString,

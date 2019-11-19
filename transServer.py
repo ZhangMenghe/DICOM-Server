@@ -15,6 +15,10 @@ class transServer(dataTransferServicer):
         class Servicer(dataTransferServicer):
             def __init__(self):
                 self.request_path = None
+            def getAvailableDatasetInfos(self, request, context):
+                print("===Request all avaliable dataset of remote server===")
+                return get_all_available_datasets(REMOTE_ADDR)
+
             def getConfig(self, request, context):
                 print("Request images in folder: " + request.req_msg)
                 if not check_or_download_from_outside_server(REMOTE_ADDR, request.req_msg):
