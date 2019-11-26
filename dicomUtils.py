@@ -7,7 +7,7 @@ from transManager_pb2 import dcmImage, bundleConfig
 def processDICOM(file_name):
     ds = pydicom.dcmread(file_name)
     print("read dicom : " + file_name)
-    return dcmImage(dcmID = 0, position = float(ds[0x0020,0x1041].value), data=ds.pixel_array.astype(np.ubyte).tobytes())
+    return dcmImage(dcmID = 0, position = float(ds[0x0020,0x1041].value), data=ds.pixel_array.tobytes())
 
 def getBundleConfig(folder_name):
     flist = listdir(folder_name)
