@@ -35,3 +35,5 @@ __*
 *build*
 *Build*
 dicom_sample
+data/
+data_mask/
