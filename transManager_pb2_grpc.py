@@ -29,11 +29,6 @@ class dataTransferStub(object):
         request_serializer=transManager__pb2.Request.SerializeToString,
         response_deserializer=transManager__pb2.dcmImage.FromString,
         )
-    self.getMasks = channel.unary_stream(
-        '/helmsley.dataTransfer/getMasks',
-        request_serializer=transManager__pb2.Request.SerializeToString,
-        response_deserializer=transManager__pb2.dcmImage.FromString,
-        )
 
 
 class dataTransferServicer(object):
@@ -61,13 +56,6 @@ class dataTransferServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def getMasks(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
 
 def add_dataTransferServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -83,11 +71,6 @@ def add_dataTransferServicer_to_server(servicer, server):
       ),
       'Download': grpc.unary_stream_rpc_method_handler(
           servicer.Download,
-          request_deserializer=transManager__pb2.Request.FromString,
-          response_serializer=transManager__pb2.dcmImage.SerializeToString,
-      ),
-      'getMasks': grpc.unary_stream_rpc_method_handler(
-          servicer.getMasks,
           request_deserializer=transManager__pb2.Request.FromString,
           response_serializer=transManager__pb2.dcmImage.SerializeToString,
       ),

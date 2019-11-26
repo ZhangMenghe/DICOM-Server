@@ -12,42 +12,35 @@ def get_all_available_datasets(remote_path):
         yield datasetInfo(folder_name = folder_name,patient_name="Larry Smarr", date="01/01/19", file_nums=48)    
 
         
-def check_or_download_from_outside_server(remote_path, local_path, folder_name):
-    local_folder_path = path.join(getcwd(), local_path, folder_name)
-    remote_folder_path = path.join(remote_path, folder_name)
-    if(path.isdir(local_folder_path)):
-        print("====local exist")
+def check_or_download_from_outside_server(remote_path, folder):
+    if(path.isdir(folder)):
         return True
-    if not path.isdir(remote_folder_path):
-        print("not a dir : "+ remote_folder_path)
+    if not path.isdir(path.join(remote_path, folder)):
+        print("not a dir : "+ path.join(remote_path, folder))
         return False
     # copy from remote_path
-    destination = shutil.copytree(remote_folder_path, local_folder_path)
+    destination = shutil.copytree(path.join(remote_path,folder), path.join(getcwd(),folder))
     print("finish copying to " + destination)
     return True
 
-def parser_folder_config(local_path, folder_name):
-    local_folder_path = path.join(getcwd(), local_path, folder_name)
-    if not path.isdir(local_folder_path):
-        print(folder_name + " : Not a path, please double check the name")
+def parser_folder_config(folder_path):
+    if not path.isdir(folder_path):
+        print(folder_path + " : Not a path, please double check the name")
         return bundleConfig(file_nums = 0)
-    print("folder path: " + folder_name)
-    return getBundleConfig(local_folder_path)
+    print("folder path: " + folder_path)
+    return getBundleConfig(folder_path)
 
-def download_folder_as_stream(local_path, folder_name):
+def download_folder_as_stream(folder_path):
     dcm_list=[]
-    path_pre=path.join(getcwd(), local_path, folder_name)
-    print(path_pre)
-    for file_path in listdir(path_pre):
+    path_pre=path.join(getcwd(), folder_path)
+    for file_path in listdir(folder_path):
         print("file " + file_path)
         dcm_list.append(processDICOM(path.join(path_pre, file_path)))
         dcm_list.sort(key=lambda x: x.position, reverse=False)
     for i in range(len(dcm_list)):
         dcm_list[i].dcmID = i
         yield dcm_list[i]
-
-# def inference_masks_as_stream(local_path, folder_name):
-
+        # yield processDICOM(cid, path.join(path_pre, file_path))
 
 def save_dcmImgs_to_file(dcm_iterators, out_folder):
     if not path.exists(out_folder):
@@ -56,21 +49,3 @@ def save_dcmImgs_to_file(dcm_iterators, out_folder):
         with open(path.join(*[getcwd(),out_folder, str(dcm.dcmID)+".dcm"]), 'wb') as f:
             f.write(dcm.data)
         print("write to file id %f, " % dcm.position)
-
-class transDataManager():
-    def __init__(self):
-        self.dcm_list = []
-    def download_folder_as_stream(self, local_path, folder_name):
-        print("=====")
-        self.dcm_list.clear()
-        path_pre=path.join(getcwd(), local_path, folder_name)
-        for file_path in listdir(path_pre):
-            self.dcm_list.append(processDICOM(path.join(path_pre, file_path)))
-            self.dcm_list.sort(key=lambda x: x.position, reverse=False)
-        for i in range(len(self.dcm_list)):
-            self.dcm_list[i].dcmID = i
-            yield self.dcm_list[i]
-    def inference_masks_as_stream(self):
-        for i in range(len(self.dcm_list)):
-            print("======inference  %d" % self.dcm_list[i].position)
-            yield self.dcm_list[i] 
