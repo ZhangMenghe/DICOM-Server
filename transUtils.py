@@ -2,7 +2,11 @@ from os import path, getcwd,listdir, makedirs
 import shutil
 from transManager_pb2 import dcmImage, bundleConfig, datasetInfo
 from dicomUtils import *
-    
+from time import sleep
+from PIL import Image
+import numpy as np 
+import glob
+
 def get_all_available_datasets(remote_path):
     if not path.isdir(remote_path):
         print("not a dir remote : "+ remote_path)
@@ -26,10 +30,8 @@ class transDataManager():
         self.rq_folder_abs_path = path.join(getcwd(), local_data_path, folder_name) 
         self.dcm_list = []
     def check_or_download_from_outside_server(self, remote_path):
-        print("=====")
         remote_folder_path = path.join(remote_path, self.rq_foldername)
         if(path.isdir(self.rq_folder_local_path)):
-            print("===return")
             return True
         if not path.isdir(remote_folder_path):
             print("not a dir in remote: "+ remote_folder_path)
@@ -54,7 +56,30 @@ class transDataManager():
             self.dcm_list[i].dcmID = i
             yield self.dcm_list[i]
 
-    def inference_masks_as_stream(self):
-        for i in range(len(self.dcm_list)):
-            print("======inference  %d" % self.dcm_list[i].position)
-            yield self.dcm_list[i] 
+    def inference_masks_as_stream(self, local_mask_path):
+        local_mask_folder = path.join(local_mask_path, self.rq_foldername)
+        if(path.isdir(local_mask_folder)):
+            # load masks and yield all the images
+            lsize = len(listdir(local_mask_folder))
+            if lsize != len(self.dcm_list):
+                return None
+            for i in range(lsize):
+                print("streaming the %d mask" % i)
+                # img = plt.imread(path.join(local_mask_folder, str(i)+ '.png'))
+                img = np.asarray(Image.open(path.join(local_mask_folder, str(i)+ '.png')))
+                #by default, save at the last bit
+                yield dcmImage(dcmID = i, position = self.dcm_list[i].position, data=img.astype(np.uint16).tobytes())
+        
+        else:
+            # todo: inference
+            # debug: fake~
+            sleep(30)
+            for i in range(len(self.dcm_list)):
+                print("======inference  %d" % self.dcm_list[i].position)
+                #todo:save to file
+                yield self.dcm_list[i] 
+
+
+
+
+

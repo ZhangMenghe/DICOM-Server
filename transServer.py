@@ -28,15 +28,14 @@ class transServer(dataTransferServicer):
                 if not self.trans_manager.check_or_download_from_outside_server(REMOTE_ADDR):
                     print("ERROR: Requested File Not exist")
                     return bundleConfig(file_nums = 0)
-                print("=====")
                 return self.trans_manager.parser_folder_config()
 
             def Download(self, request, context):
                 print("Download from ..")
                 return self.trans_manager.download_folder_as_stream()
-            def getMasks(self, request, context):
+            def DownloadMasks(self, request, context):
                 print("Trying to return or inference Segmentation...")
-                return inference_masks_as_stream()
+                return self.trans_manager.inference_masks_as_stream(self.local_mask_path)
 
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
         add_dataTransferServicer_to_server(Servicer(), self.server)

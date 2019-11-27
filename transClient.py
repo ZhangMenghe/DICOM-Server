@@ -19,13 +19,21 @@ class transClient:
         response = self.stub.Download(Request(client_id=CLIENT_ID))
 
         print("saving (or use) ..." + out_file_name)
-        save_dcmImgs_to_file(response, out_file_name)
+        for it in response:
+            print(it.position)
+        # save_dcmImgs_to_file(response, out_file_name)
+    def getMasks(self):
+        print("====masks")
+        itrs = self.stub.DownloadMasks(Request(client_id = CLIENT_ID))
+        for it in itrs:
+            print(it.position)
 
 def main():
     client = transClient(SERVER_ADDRESS)
-
-    client.getClient("dicom_sample")
-    client.download("bunnmmmy")
+    
+    client.getClient("2016-10-26-series23")
+    client.download("2016-10-26-series23")
+    client.getMasks()
 
 
 

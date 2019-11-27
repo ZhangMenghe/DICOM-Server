@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='helmsley',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12transManager.proto\x12\x08helmsley\"Y\n\x0b\x64\x61tasetInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x14\n\x0cpatient_name\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\x12\x11\n\tfile_nums\x18\x04 \x01(\x05\"9\n\x08\x64\x63mImage\x12\r\n\x05\x64\x63mID\x18\x01 \x01(\x05\x12\x10\n\x08position\x18\x02 \x01(\x02\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"t\n\x0c\x62undleConfig\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x11\n\tfile_nums\x18\x02 \x01(\x05\x12\x11\n\timg_width\x18\x03 \x01(\x05\x12\x12\n\nimg_height\x18\x04 \x01(\x05\x12\x15\n\rorder_flipped\x18\x05 \x01(\x08\"-\n\x07Request\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\".\n\x08Response\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07res_msg\x18\x02 \x01(\t2\xf8\x01\n\x0c\x64\x61taTransfer\x12\x46\n\x18getAvailableDatasetInfos\x12\x11.helmsley.Request\x1a\x15.helmsley.datasetInfo0\x01\x12\x36\n\tgetConfig\x12\x11.helmsley.Request\x1a\x16.helmsley.bundleConfig\x12\x33\n\x08\x44ownload\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x12\x33\n\x08getMasks\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x12transManager.proto\x12\x08helmsley\"Y\n\x0b\x64\x61tasetInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x14\n\x0cpatient_name\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\x12\x11\n\tfile_nums\x18\x04 \x01(\x05\"9\n\x08\x64\x63mImage\x12\r\n\x05\x64\x63mID\x18\x01 \x01(\x05\x12\x10\n\x08position\x18\x02 \x01(\x02\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"t\n\x0c\x62undleConfig\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x11\n\tfile_nums\x18\x02 \x01(\x05\x12\x11\n\timg_width\x18\x03 \x01(\x05\x12\x12\n\nimg_height\x18\x04 \x01(\x05\x12\x15\n\rorder_flipped\x18\x05 \x01(\x08\"-\n\x07Request\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\".\n\x08Response\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07res_msg\x18\x02 \x01(\t2\xfd\x01\n\x0c\x64\x61taTransfer\x12\x46\n\x18getAvailableDatasetInfos\x12\x11.helmsley.Request\x1a\x15.helmsley.datasetInfo0\x01\x12\x36\n\tgetConfig\x12\x11.helmsley.Request\x1a\x16.helmsley.bundleConfig\x12\x33\n\x08\x44ownload\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x12\x38\n\rDownloadMasks\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x62\x06proto3')
 )
 
 
@@ -308,7 +308,7 @@ _DATATRANSFER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   serialized_start=396,
-  serialized_end=644,
+  serialized_end=649,
   methods=[
   _descriptor.MethodDescriptor(
     name='getAvailableDatasetInfos',
@@ -338,8 +338,8 @@ _DATATRANSFER = _descriptor.ServiceDescriptor(
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='getMasks',
-    full_name='helmsley.dataTransfer.getMasks',
+    name='DownloadMasks',
+    full_name='helmsley.dataTransfer.DownloadMasks',
     index=3,
     containing_service=None,
     input_type=_REQUEST,
