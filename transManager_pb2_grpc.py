@@ -14,15 +14,15 @@ class dataTransferStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.getAvailableDatasetInfos = channel.unary_stream(
-        '/helmsley.dataTransfer/getAvailableDatasetInfos',
+    self.getAvailableDatasets = channel.unary_unary(
+        '/helmsley.dataTransfer/getAvailableDatasets',
         request_serializer=transManager__pb2.Request.SerializeToString,
-        response_deserializer=transManager__pb2.datasetInfo.FromString,
+        response_deserializer=transManager__pb2.datasetResponse.FromString,
         )
-    self.getConfig = channel.unary_unary(
-        '/helmsley.dataTransfer/getConfig',
+    self.getVolumeFromDataset = channel.unary_unary(
+        '/helmsley.dataTransfer/getVolumeFromDataset',
         request_serializer=transManager__pb2.Request.SerializeToString,
-        response_deserializer=transManager__pb2.bundleConfig.FromString,
+        response_deserializer=transManager__pb2.volumeResponse.FromString,
         )
     self.Download = channel.unary_stream(
         '/helmsley.dataTransfer/Download',
@@ -40,14 +40,14 @@ class dataTransferServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def getAvailableDatasetInfos(self, request, context):
+  def getAvailableDatasets(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def getConfig(self, request, context):
+  def getVolumeFromDataset(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -71,15 +71,15 @@ class dataTransferServicer(object):
 
 def add_dataTransferServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'getAvailableDatasetInfos': grpc.unary_stream_rpc_method_handler(
-          servicer.getAvailableDatasetInfos,
+      'getAvailableDatasets': grpc.unary_unary_rpc_method_handler(
+          servicer.getAvailableDatasets,
           request_deserializer=transManager__pb2.Request.FromString,
-          response_serializer=transManager__pb2.datasetInfo.SerializeToString,
+          response_serializer=transManager__pb2.datasetResponse.SerializeToString,
       ),
-      'getConfig': grpc.unary_unary_rpc_method_handler(
-          servicer.getConfig,
+      'getVolumeFromDataset': grpc.unary_unary_rpc_method_handler(
+          servicer.getVolumeFromDataset,
           request_deserializer=transManager__pb2.Request.FromString,
-          response_serializer=transManager__pb2.bundleConfig.SerializeToString,
+          response_serializer=transManager__pb2.volumeResponse.SerializeToString,
       ),
       'Download': grpc.unary_stream_rpc_method_handler(
           servicer.Download,

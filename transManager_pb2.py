@@ -20,44 +20,44 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='helmsley',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12transManager.proto\x12\x08helmsley\"Y\n\x0b\x64\x61tasetInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x14\n\x0cpatient_name\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\x12\x11\n\tfile_nums\x18\x04 \x01(\x05\"9\n\x08\x64\x63mImage\x12\r\n\x05\x64\x63mID\x18\x01 \x01(\x05\x12\x10\n\x08position\x18\x02 \x01(\x02\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"t\n\x0c\x62undleConfig\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x11\n\tfile_nums\x18\x02 \x01(\x05\x12\x11\n\timg_width\x18\x03 \x01(\x05\x12\x12\n\nimg_height\x18\x04 \x01(\x05\x12\x15\n\rorder_flipped\x18\x05 \x01(\x08\"-\n\x07Request\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\".\n\x08Response\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07res_msg\x18\x02 \x01(\t2\xfd\x01\n\x0c\x64\x61taTransfer\x12\x46\n\x18getAvailableDatasetInfos\x12\x11.helmsley.Request\x1a\x15.helmsley.datasetInfo0\x01\x12\x36\n\tgetConfig\x12\x11.helmsley.Request\x1a\x16.helmsley.bundleConfig\x12\x33\n\x08\x44ownload\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x12\x38\n\rDownloadMasks\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x12transManager.proto\x12\x08helmsley\"\xaa\x01\n\x0f\x64\x61tasetResponse\x12\x37\n\x08\x64\x61tasets\x18\x01 \x03(\x0b\x32%.helmsley.datasetResponse.datasetInfo\x1a^\n\x0b\x64\x61tasetInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x14\n\x0cpatient_name\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\x12\x16\n\x0e\x64\x65\x66\x61ult_folder\x18\x04 \x01(\t\"\xba\x01\n\x0evolumeResponse\x12\x34\n\x07volumes\x18\x01 \x03(\x0b\x32#.helmsley.volumeResponse.volumeInfo\x1ar\n\nvolumeInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x11\n\tfile_nums\x18\x02 \x01(\x05\x12\x11\n\timg_width\x18\x03 \x01(\x05\x12\x12\n\nimg_height\x18\x04 \x01(\x05\x12\x15\n\rorder_flipped\x18\x05 \x01(\x08\"9\n\x08\x64\x63mImage\x12\r\n\x05\x64\x63mID\x18\x01 \x01(\x05\x12\x10\n\x08position\x18\x02 \x01(\x02\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"-\n\x07Request\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\".\n\x08Response\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07res_msg\x18\x02 \x01(\t2\x88\x02\n\x0c\x64\x61taTransfer\x12\x44\n\x14getAvailableDatasets\x12\x11.helmsley.Request\x1a\x19.helmsley.datasetResponse\x12\x43\n\x14getVolumeFromDataset\x12\x11.helmsley.Request\x1a\x18.helmsley.volumeResponse\x12\x33\n\x08\x44ownload\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x12\x38\n\rDownloadMasks\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x62\x06proto3')
 )
 
 
 
 
-_DATASETINFO = _descriptor.Descriptor(
+_DATASETRESPONSE_DATASETINFO = _descriptor.Descriptor(
   name='datasetInfo',
-  full_name='helmsley.datasetInfo',
+  full_name='helmsley.datasetResponse.datasetInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='folder_name', full_name='helmsley.datasetInfo.folder_name', index=0,
+      name='folder_name', full_name='helmsley.datasetResponse.datasetInfo.folder_name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='patient_name', full_name='helmsley.datasetInfo.patient_name', index=1,
+      name='patient_name', full_name='helmsley.datasetResponse.datasetInfo.patient_name', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='date', full_name='helmsley.datasetInfo.date', index=2,
+      name='date', full_name='helmsley.datasetResponse.datasetInfo.date', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='file_nums', full_name='helmsley.datasetInfo.file_nums', index=3,
-      number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      name='default_folder', full_name='helmsley.datasetResponse.datasetInfo.default_folder', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -73,8 +73,127 @@ _DATASETINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=32,
-  serialized_end=121,
+  serialized_start=109,
+  serialized_end=203,
+)
+
+_DATASETRESPONSE = _descriptor.Descriptor(
+  name='datasetResponse',
+  full_name='helmsley.datasetResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='datasets', full_name='helmsley.datasetResponse.datasets', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_DATASETRESPONSE_DATASETINFO, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=33,
+  serialized_end=203,
+)
+
+
+_VOLUMERESPONSE_VOLUMEINFO = _descriptor.Descriptor(
+  name='volumeInfo',
+  full_name='helmsley.volumeResponse.volumeInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='folder_name', full_name='helmsley.volumeResponse.volumeInfo.folder_name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='file_nums', full_name='helmsley.volumeResponse.volumeInfo.file_nums', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='img_width', full_name='helmsley.volumeResponse.volumeInfo.img_width', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='img_height', full_name='helmsley.volumeResponse.volumeInfo.img_height', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='order_flipped', full_name='helmsley.volumeResponse.volumeInfo.order_flipped', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=278,
+  serialized_end=392,
+)
+
+_VOLUMERESPONSE = _descriptor.Descriptor(
+  name='volumeResponse',
+  full_name='helmsley.volumeResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='volumes', full_name='helmsley.volumeResponse.volumes', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_VOLUMERESPONSE_VOLUMEINFO, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=206,
+  serialized_end=392,
 )
 
 
@@ -118,67 +237,8 @@ _DCMIMAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=123,
-  serialized_end=180,
-)
-
-
-_BUNDLECONFIG = _descriptor.Descriptor(
-  name='bundleConfig',
-  full_name='helmsley.bundleConfig',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='folder_name', full_name='helmsley.bundleConfig.folder_name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='file_nums', full_name='helmsley.bundleConfig.file_nums', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='img_width', full_name='helmsley.bundleConfig.img_width', index=2,
-      number=3, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='img_height', full_name='helmsley.bundleConfig.img_height', index=3,
-      number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='order_flipped', full_name='helmsley.bundleConfig.order_flipped', index=4,
-      number=5, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=182,
-  serialized_end=298,
+  serialized_start=394,
+  serialized_end=451,
 )
 
 
@@ -215,8 +275,8 @@ _REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=300,
-  serialized_end=345,
+  serialized_start=453,
+  serialized_end=498,
 )
 
 
@@ -253,23 +313,50 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=347,
-  serialized_end=393,
+  serialized_start=500,
+  serialized_end=546,
 )
 
-DESCRIPTOR.message_types_by_name['datasetInfo'] = _DATASETINFO
+_DATASETRESPONSE_DATASETINFO.containing_type = _DATASETRESPONSE
+_DATASETRESPONSE.fields_by_name['datasets'].message_type = _DATASETRESPONSE_DATASETINFO
+_VOLUMERESPONSE_VOLUMEINFO.containing_type = _VOLUMERESPONSE
+_VOLUMERESPONSE.fields_by_name['volumes'].message_type = _VOLUMERESPONSE_VOLUMEINFO
+DESCRIPTOR.message_types_by_name['datasetResponse'] = _DATASETRESPONSE
+DESCRIPTOR.message_types_by_name['volumeResponse'] = _VOLUMERESPONSE
 DESCRIPTOR.message_types_by_name['dcmImage'] = _DCMIMAGE
-DESCRIPTOR.message_types_by_name['bundleConfig'] = _BUNDLECONFIG
 DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
 DESCRIPTOR.message_types_by_name['Response'] = _RESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-datasetInfo = _reflection.GeneratedProtocolMessageType('datasetInfo', (_message.Message,), {
-  'DESCRIPTOR' : _DATASETINFO,
+datasetResponse = _reflection.GeneratedProtocolMessageType('datasetResponse', (_message.Message,), {
+
+  'datasetInfo' : _reflection.GeneratedProtocolMessageType('datasetInfo', (_message.Message,), {
+    'DESCRIPTOR' : _DATASETRESPONSE_DATASETINFO,
+    '__module__' : 'transManager_pb2'
+    # @@protoc_insertion_point(class_scope:helmsley.datasetResponse.datasetInfo)
+    })
+  ,
+  'DESCRIPTOR' : _DATASETRESPONSE,
   '__module__' : 'transManager_pb2'
-  # @@protoc_insertion_point(class_scope:helmsley.datasetInfo)
+  # @@protoc_insertion_point(class_scope:helmsley.datasetResponse)
   })
-_sym_db.RegisterMessage(datasetInfo)
+_sym_db.RegisterMessage(datasetResponse)
+_sym_db.RegisterMessage(datasetResponse.datasetInfo)
+
+volumeResponse = _reflection.GeneratedProtocolMessageType('volumeResponse', (_message.Message,), {
+
+  'volumeInfo' : _reflection.GeneratedProtocolMessageType('volumeInfo', (_message.Message,), {
+    'DESCRIPTOR' : _VOLUMERESPONSE_VOLUMEINFO,
+    '__module__' : 'transManager_pb2'
+    # @@protoc_insertion_point(class_scope:helmsley.volumeResponse.volumeInfo)
+    })
+  ,
+  'DESCRIPTOR' : _VOLUMERESPONSE,
+  '__module__' : 'transManager_pb2'
+  # @@protoc_insertion_point(class_scope:helmsley.volumeResponse)
+  })
+_sym_db.RegisterMessage(volumeResponse)
+_sym_db.RegisterMessage(volumeResponse.volumeInfo)
 
 dcmImage = _reflection.GeneratedProtocolMessageType('dcmImage', (_message.Message,), {
   'DESCRIPTOR' : _DCMIMAGE,
@@ -277,13 +364,6 @@ dcmImage = _reflection.GeneratedProtocolMessageType('dcmImage', (_message.Messag
   # @@protoc_insertion_point(class_scope:helmsley.dcmImage)
   })
 _sym_db.RegisterMessage(dcmImage)
-
-bundleConfig = _reflection.GeneratedProtocolMessageType('bundleConfig', (_message.Message,), {
-  'DESCRIPTOR' : _BUNDLECONFIG,
-  '__module__' : 'transManager_pb2'
-  # @@protoc_insertion_point(class_scope:helmsley.bundleConfig)
-  })
-_sym_db.RegisterMessage(bundleConfig)
 
 Request = _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
   'DESCRIPTOR' : _REQUEST,
@@ -307,25 +387,25 @@ _DATATRANSFER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=396,
-  serialized_end=649,
+  serialized_start=549,
+  serialized_end=813,
   methods=[
   _descriptor.MethodDescriptor(
-    name='getAvailableDatasetInfos',
-    full_name='helmsley.dataTransfer.getAvailableDatasetInfos',
+    name='getAvailableDatasets',
+    full_name='helmsley.dataTransfer.getAvailableDatasets',
     index=0,
     containing_service=None,
     input_type=_REQUEST,
-    output_type=_DATASETINFO,
+    output_type=_DATASETRESPONSE,
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='getConfig',
-    full_name='helmsley.dataTransfer.getConfig',
+    name='getVolumeFromDataset',
+    full_name='helmsley.dataTransfer.getVolumeFromDataset',
     index=1,
     containing_service=None,
     input_type=_REQUEST,
-    output_type=_BUNDLECONFIG,
+    output_type=_VOLUMERESPONSE,
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(

@@ -16,26 +16,22 @@ class transServer(dataTransferServicer):
             def __init__(self):
                 self.local_data_path = "data"
                 self.local_mask_path = "data_mask"
-                self.trans_manager = None
-            def getAvailableDatasetInfos(self, request, context):
+                self.trans_manager = transDataManager(REMOTE_ADDR, self.local_data_path)
+            
+            def getAvailableDatasets(self, request, context):
                 print("===Request all avaliable dataset of remote server===")
-                return get_all_available_datasets(REMOTE_ADDR)
-
-            def getConfig(self, request, context):
-                print("Request images in folder: " + request.req_msg)
-                self.trans_manager = transDataManager(self.local_data_path, request.req_msg)
-                self.trans_manager.check_or_download_from_outside_server(REMOTE_ADDR)
-                if not self.trans_manager.check_or_download_from_outside_server(REMOTE_ADDR):
-                    print("ERROR: Requested File Not exist")
-                    return bundleConfig(file_nums = 0)
-                return self.trans_manager.parser_folder_config()
+                return self.trans_manager.get_all_available_datasets()
+            
+            def getVolumeFromDataset(self, request, context):
+                print("===Request to browser all datas in %s ===" %request.req_msg)
+                return self.trans_manager.get_all_available_volumes(request.req_msg)
 
             def Download(self, request, context):
-                print("Download from ..")
-                return self.trans_manager.download_folder_as_stream()
+                print("Download from .." + request.req_msg)
+                return self.trans_manager.download_folder_as_stream(request.req_msg)
             def DownloadMasks(self, request, context):
                 print("Trying to return or inference Segmentation...")
-                return self.trans_manager.inference_masks_as_stream(self.local_mask_path)
+                return self.trans_manager.inference_masks_as_stream(self.local_mask_path, request.req_msg)
 
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
         add_dataTransferServicer_to_server(Servicer(), self.server)
