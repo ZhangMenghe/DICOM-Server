@@ -9,39 +9,68 @@ import glob
 import xlrd
 import datetime
 
+def parse_command():
+    import argparse
+    parser = argparse.ArgumentParser(description='Dicom-GRPC-Server')
+    parser.add_argument('-d', '--pacs_dir', type=str, default='',
+                        help = 'path to local dataset')
+    parser.add_argument('-m', '--pacs_mask_dir', type=str, default='',help='path to all masks')
+    parser.add_argument('-f', '--pacs_index_path', type=str, default='',help='path to the pacs file')
+    parser.add_argument('-p', '--port', type=str, default='23333',help='port number')
+    args = parser.parse_args()
+    return args
+
 class transDataManager():
-    def __init__(self, remote_data_path, local_data_path):
-        # self.rq_foldername = folder_name
+    def __init__(self, remote_data_path, local_data_path = None):
         self.folder_remote_path = remote_data_path
-        self.folder_local_path = local_data_path# path.join(local_data_path, folder_name)
-        self.folder_abs_path = path.join(getcwd(), local_data_path)#, folder_name) 
+        self.folder_local_path = local_data_path
         self.dcm_list = []
     
-    def get_all_available_datasets(self):
+    def check_or_download_from_outside_server(self, target_folder):
+        local_folder_path = path.join(self.folder_local_path, target_folder)
+        if(path.isdir(local_folder_path)):
+            return True
+        remote_folder_path = path.join(self.folder_remote_path, target_folder)        
+        if not path.isdir(remote_folder_path):
+            return False
+        # copy from remote_path
+        destination = shutil.copytree(remote_folder_path, local_folder_path)
+        print("finish copying to " + destination)
+        return True
+
+    def get_all_available_datasets(self, pacs_index_path):
         if not path.isdir(self.folder_remote_path):
             print("not a dir remote : "+ self.folder_remote_path)
             return
-        # Parse an .xlsx file to get data
-        index_file_lst = glob.glob(path.join(self.folder_remote_path, "*.xlsx"))
-        if not len(index_file_lst) == 1:
-            print("Lack or have multiple index files")
+        try:
+            workbook = xlrd.open_workbook(pacs_index_path)
+        except expression as identifier:
+            print("fail to open the workbook")
             return
-        workbook = xlrd.open_workbook(index_file_lst[0])
+        
         sheet = workbook.sheet_by_index(0)
-
         header = sheet.row_values(0)
+
+        #required data    
         try:
             idx_folder = header.index('Directory')
             idx_patient = header.index('Patient Name')
-            idx_date = header.index('Scan Date')
+            idx_modality = header.index('Modality')
+
             idx_default = header.index('Default')
+            idx_date = header.index('Scan Date')
         except ValueError:
             print("Information Lacks")
             return
-            # or pass?
+
         dataset_lst = []
         for rowx in range(sheet.nrows-1):
             clist = sheet.row_values(rowx + 1)
+            # get modality
+            if(clist[idx_modality] not in ['MRI', 'mri', 'CT']):
+                continue
+
+            # add dataset
             date_str=""
             if type(clist[idx_date]) == float:
                 date_obj = datetime.datetime(*xlrd.xldate_as_tuple(clist[idx_date], workbook.datemode))
@@ -51,7 +80,6 @@ class transDataManager():
                                             date=date_str,\
                                             default_folder=clist[idx_default]))    
         return datasetResponse(datasets = dataset_lst)
-
 
     def get_all_available_volumes(self, target_folder):
         remote_path = path.join(self.folder_remote_path, target_folder)
@@ -64,26 +92,18 @@ class transDataManager():
             img_width, img_height = getImageSize(path.join(remote_path, folder))
             ds_lst.append(volumeResponse.volumeInfo(folder_name=folder, file_nums=dcm_num, img_width= img_width, img_height=img_height, order_flipped=False))
         return volumeResponse(volumes = ds_lst)
-
-    def check_or_download_from_outside_server(self, target_folder):
-        local_folder_path = path.join(self.folder_local_path, target_folder)
-        if(path.isdir(local_folder_path)):
-            return True
-        remote_folder_path = path.join(self.folder_remote_path, target_folder)        
-        if not path.isdir(remote_folder_path):
-            return False
-        # copy from remote_path
-        destination = shutil.copytree(remote_folder_path, local_folder_path)
-        print("finish copying to " + destination)
-        return True
         
     def download_folder_as_stream(self, target_folder):
-        if not self.check_or_download_from_outside_server(target_folder):
-            return
-        local_folder_path = path.join(self.folder_local_path, target_folder)
+        if self.folder_local_path == None:
+            datapath = path.join(self.folder_remote_path, target_folder)
+        else:
+            if not self.check_or_download_from_outside_server(target_folder):
+                return
+            datapath = path.join(self.folder_local_path, target_folder)
+
         self.dcm_list.clear()
-        for file_path in listdir(local_folder_path):
-            self.dcm_list.append(processDICOM(path.join(local_folder_path, file_path)))
+        for file_path in listdir(datapath):
+            self.dcm_list.append(processDICOM(path.join(datapath, file_path)))
             self.dcm_list.sort(key=lambda x: x.position, reverse=False)
         for i in range(len(self.dcm_list)):
             self.dcm_list[i].dcmID = i
@@ -91,6 +111,7 @@ class transDataManager():
 
     def inference_masks_as_stream(self, local_mask_path, target_folder):
         local_mask_folder = path.join(local_mask_path, target_folder)
+        print("===="+local_mask_folder)
         if(path.isdir(local_mask_folder)):
             # load masks and yield all the images
             lsize = len(listdir(local_mask_folder))

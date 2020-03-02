@@ -1,0 +1,1 @@
+python3 transServer.py --pacs_dir=../data/PACS --pacs_mask_dir=../data/PACS/MASKS_ --pacs_index_path=../data/PACS/PACS-Index.xlsx --port=23333

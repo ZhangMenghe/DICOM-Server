@@ -18,7 +18,7 @@ class transClient:
         # vconfig = self.stub.getConfig(Request(client_id = CLIENT_ID, req_msg=folder_name))
         # print("returned configs: " + vconfig.folder_name + "nums: %d, width: %d" % (vconfig.file_nums, vconfig.img_width))
     def getAvailableVolume(self, folder_name):
-        ava_vol = self.stub.getVolumeFromDataset(Request(client_id=CLIENT_ID,req_msg=folder_name))
+        ava_vol = self.stub.getVolumeFromDataset(Request(client_id=CLIENT_ID, req_msg=folder_name))
         print(ava_vol)
         return ava_vol
     def download(self, folder_name):
@@ -38,9 +38,10 @@ class transClient:
 def main():
     client = transClient(SERVER_ADDRESS)
     ava_lst = client.getAvailableDatasets()
-    dataset_name = ava_lst.datasets[2].folder_name
+    dataset_name = ava_lst.datasets[3].folder_name
     vol_lst = client.getAvailableVolume(dataset_name)
     vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
+    # vol_name = "Larry-2012-01-17-MRI/series_214_DYN_COR_VIBE_3_RUNS"
     client.download(vol_name)
     client.getMasks(vol_name)
 
