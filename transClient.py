@@ -26,24 +26,40 @@ class transClient:
         response = self.stub.Download(Request(client_id=CLIENT_ID,req_msg=folder_name))
 
         # print("saving (or use) ..." + out_file_name)
+        f = open('sample_data_4bytes', 'wb+')
         for it in response:
             print(it.position)
+            f.write(it.data)
+        f.close()
+
         # save_dcmImgs_to_file(response, out_file_name)
+    def download_volume(self, folder_name):
+        print("downloading from server...")
+        response = self.stub.DownloadVolume(RequestWholeVolume(client_id=CLIENT_ID, req_msg=folder_name, unit_size = 4))
+
+        # print("saving (or use) ..." + out_file_name)
+        f = open('sample_data_4bytes', 'wb+')
+        for it in response:
+            f.write(it.data)
+        f.close()
+
     def getMasks(self, folder_name):
         print("====masks")
         itrs = self.stub.DownloadMasks(Request(client_id = CLIENT_ID,req_msg=folder_name))
+        
         for it in itrs:
             print(it.position)
-
+            # np.save('sample/'+str(it.dcmID), it.data)
 def main():
     client = transClient(SERVER_ADDRESS)
     ava_lst = client.getAvailableDatasets()
     dataset_name = ava_lst.datasets[3].folder_name
     vol_lst = client.getAvailableVolume(dataset_name)
     vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
-    # vol_name = "Larry-2012-01-17-MRI/series_214_DYN_COR_VIBE_3_RUNS"
+    vol_name = "Larry-2012-01-17-MRI/series_214_DYN_COR_VIBE_3_RUNS"
     client.download(vol_name)
     client.getMasks(vol_name)
+    client.download_volume(vol_name)
 
 
 

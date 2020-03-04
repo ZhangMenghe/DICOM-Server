@@ -30,8 +30,12 @@ class transServer(dataTransferServicer):
 
             def Download(self, request, context):
                 print("Download from .." + request.req_msg)
-                return self.trans_manager.download_folder_as_stream(request.req_msg)
-
+                return self.trans_manager.download_folder_as_images(request.req_msg)
+            
+            def DownloadVolume(self, request, context):
+                print("Download from .." + request.req_msg)
+                return self.trans_manager.download_folder_as_volume(request.req_msg, request.unit_size)
+            
             def DownloadMasks(self, request, context):
                 print("Trying to return or inference Segmentation...")
                 return self.trans_manager.inference_masks_as_stream(self.pacs_mask_dir, request.req_msg)

@@ -29,6 +29,11 @@ class dataTransferStub(object):
         request_serializer=transManager__pb2.Request.SerializeToString,
         response_deserializer=transManager__pb2.dcmImage.FromString,
         )
+    self.DownloadVolume = channel.unary_stream(
+        '/helmsley.dataTransfer/DownloadVolume',
+        request_serializer=transManager__pb2.RequestWholeVolume.SerializeToString,
+        response_deserializer=transManager__pb2.volumeWholeResponse.FromString,
+        )
     self.DownloadMasks = channel.unary_stream(
         '/helmsley.dataTransfer/DownloadMasks',
         request_serializer=transManager__pb2.Request.SerializeToString,
@@ -61,6 +66,13 @@ class dataTransferServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def DownloadVolume(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def DownloadMasks(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -85,6 +97,11 @@ def add_dataTransferServicer_to_server(servicer, server):
           servicer.Download,
           request_deserializer=transManager__pb2.Request.FromString,
           response_serializer=transManager__pb2.dcmImage.SerializeToString,
+      ),
+      'DownloadVolume': grpc.unary_stream_rpc_method_handler(
+          servicer.DownloadVolume,
+          request_deserializer=transManager__pb2.RequestWholeVolume.FromString,
+          response_serializer=transManager__pb2.volumeWholeResponse.SerializeToString,
       ),
       'DownloadMasks': grpc.unary_stream_rpc_method_handler(
           servicer.DownloadMasks,

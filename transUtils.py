@@ -92,8 +92,8 @@ class transDataManager():
             img_width, img_height = getImageSize(path.join(remote_path, folder))
             ds_lst.append(volumeResponse.volumeInfo(folder_name=folder, file_nums=dcm_num, img_width= img_width, img_height=img_height, order_flipped=False))
         return volumeResponse(volumes = ds_lst)
-        
-    def download_folder_as_stream(self, target_folder):
+
+    def buildDCMIList(self, target_folder, unit_size=2):
         if self.folder_local_path == None:
             datapath = path.join(self.folder_remote_path, target_folder)
         else:
@@ -103,8 +103,33 @@ class transDataManager():
 
         self.dcm_list.clear()
         for file_path in listdir(datapath):
-            self.dcm_list.append(processDICOM(path.join(datapath, file_path)))
-            self.dcm_list.sort(key=lambda x: x.position, reverse=False)
+            self.dcm_list.append(processDICOM(path.join(datapath, file_path), unit_size))
+        
+        self.dcm_list.sort(key=lambda x: x.position, reverse=False)
+
+    def download_folder_as_volume(self, target_folder, unit_size):
+        self.buildDCMIList(target_folder, unit_size)
+        single_chunk_size = len(self.dcm_list[0].data)
+        chunk_limit = 4194304 - single_chunk_size
+        
+        chunk_data = b""
+        chunk_size = 0
+        for dcm in self.dcm_list:
+            # limit for 4M
+            if(chunk_size >= chunk_limit):
+                print("====sending chunk " + str(chunk_size))
+                yield volumeWholeResponse(data=chunk_data)
+                chunk_data = b""
+                chunk_size = 0
+
+            chunk_data += dcm.data
+            chunk_size += single_chunk_size
+        
+        if chunk_size!= 0:
+            yield volumeWholeResponse(data=chunk_data)
+
+    def download_folder_as_images(self, target_folder):
+        self.buildDCMIList(target_folder)
         for i in range(len(self.dcm_list)):
             self.dcm_list[i].dcmID = i
             yield self.dcm_list[i]
