@@ -38,8 +38,11 @@ class transServer(dataTransferServicer):
             
             def DownloadMasks(self, request, context):
                 print("Trying to return or inference Segmentation...")
-                return self.trans_manager.inference_masks_as_stream(self.pacs_mask_dir, request.req_msg)
+                return self.trans_manager.inference_masks_as_images(self.pacs_mask_dir, request.req_msg)
 
+            def DownloadMasksVolume(self, request, context):
+                return self.trans_manager.inference_masks_as_volume(self.pacs_mask_dir, request.req_msg)
+            
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
         self.servicer = Servicer()
         add_dataTransferServicer_to_server(self.servicer, self.server)

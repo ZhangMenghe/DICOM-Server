@@ -55,4 +55,5 @@ service dataTransfer{
     rpc Download(Request) returns (stream dcmImage);
     rpc DownloadVolume(RequestWholeVolume) returns(stream volumeWholeResponse);
     rpc DownloadMasks(Request) returns(stream dcmImage);
+    rpc DownloadMasksVolume(Request) returns(stream volumeWholeResponse);
 }

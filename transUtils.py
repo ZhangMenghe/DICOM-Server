@@ -25,6 +25,7 @@ class transDataManager():
         self.folder_remote_path = remote_data_path
         self.folder_local_path = local_data_path
         self.dcm_list = []
+        self.unit_size = 2
     
     def check_or_download_from_outside_server(self, target_folder):
         local_folder_path = path.join(self.folder_local_path, target_folder)
@@ -93,7 +94,7 @@ class transDataManager():
             ds_lst.append(volumeResponse.volumeInfo(folder_name=folder, file_nums=dcm_num, img_width= img_width, img_height=img_height, order_flipped=False))
         return volumeResponse(volumes = ds_lst)
 
-    def buildDCMIList(self, target_folder, unit_size=2):
+    def buildDCMIList(self, target_folder):
         if self.folder_local_path == None:
             datapath = path.join(self.folder_remote_path, target_folder)
         else:
@@ -103,12 +104,13 @@ class transDataManager():
 
         self.dcm_list.clear()
         for file_path in listdir(datapath):
-            self.dcm_list.append(processDICOM(path.join(datapath, file_path), unit_size))
+            self.dcm_list.append(processDICOM(path.join(datapath, file_path), self.unit_size))
         
         self.dcm_list.sort(key=lambda x: x.position, reverse=False)
 
     def download_folder_as_volume(self, target_folder, unit_size):
-        self.buildDCMIList(target_folder, unit_size)
+        self.unit_size = unit_size
+        self.buildDCMIList(target_folder)
         single_chunk_size = len(self.dcm_list[0].data)
         chunk_limit = 4194304 - single_chunk_size
         
@@ -134,7 +136,49 @@ class transDataManager():
             self.dcm_list[i].dcmID = i
             yield self.dcm_list[i]
 
-    def inference_masks_as_stream(self, local_mask_path, target_folder):
+    def inference_masks_as_volume(self, local_mask_path, target_folder):
+        local_mask_folder = path.join(local_mask_path, target_folder)
+        if(path.isdir(local_mask_folder)):
+            # load masks and yield all the images
+            lsize = len(listdir(local_mask_folder))
+            if lsize != len(self.dcm_list):
+                return None
+            if(self.unit_size == 2):
+                img = np.asarray(Image.open(path.join(local_mask_folder, '0.png')))
+                chunk_data = img.astype(np.uint16).tobytes()
+                single_chunk_size = len(chunk_data)
+                chunk_size = single_chunk_size
+                chunk_limit = 4194304 - single_chunk_size
+                for i in range(1, lsize):
+                    if(chunk_size >= chunk_limit):
+                        print("====sending chunk " + str(chunk_size))
+                        yield volumeWholeResponse(data=chunk_data)
+                        chunk_data = b""
+                        chunk_size = 0
+
+                    img = np.asarray(Image.open(path.join(local_mask_folder, str(i)+ '.png')))
+                    chunk_data += img.astype(np.uint16).tobytes()
+                    chunk_size += single_chunk_size
+                if chunk_size!= 0:
+                    yield volumeWholeResponse(data=chunk_data)
+
+            # if(self.unit_size == 4):
+            #     single_chunk_size = len(self.dcm_list[0].data)
+            #     chunk_limit = 4194304 - single_chunk_size
+        
+            #     chunk_data = b""
+            #     chunk_size = 0
+
+            #     for i in range(lsize):
+            #         img = np.asarray(Image.open(path.join(local_mask_folder, str(i)+ '.png')))
+            #         data = bytearray(img.astype(np.uint16).tobytes())
+            #         oridata = bytearray(self.dcm_list[i].data)
+            #         idx = 0
+            #         while(idx < len(oridata)):
+            #             oridata[idx]
+                    
+
+    def inference_masks_as_images(self, local_mask_path, target_folder):
         local_mask_folder = path.join(local_mask_path, target_folder)
         print("===="+local_mask_folder)
         if(path.isdir(local_mask_folder)):
