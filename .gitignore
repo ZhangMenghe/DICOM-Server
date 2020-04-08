@@ -34,6 +34,7 @@ __*
 *.idea
 *build*
 *Build*
+dicom_images/*
 dicom_sample
 data/
 data_mask/

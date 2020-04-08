@@ -63,6 +63,7 @@ def main():
     dataset_name = ava_lst.datasets[3].folder_name
     vol_lst = client.getAvailableVolume(dataset_name)
     vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
+    print(vol_name)
     # vol_name = "Larry-2012-01-17-MRI/series_214_DYN_COR_VIBE_3_RUNS"
     # client.download(vol_name)
     # client.getMasks(vol_name)

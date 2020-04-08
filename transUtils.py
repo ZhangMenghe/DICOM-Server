@@ -1,4 +1,4 @@
-from os import path, getcwd,listdir, makedirs
+from os import path, getcwd, listdir, makedirs
 import shutil
 from transManager_pb2 import *
 from dicomUtils import *
@@ -91,7 +91,7 @@ class transDataManager():
         for folder in listdir(remote_path):
             dcm_num = len(glob.glob(path.join(remote_path, folder, '*.dcm')))
             img_width, img_height = getImageSize(path.join(remote_path, folder))
-            ds_lst.append(volumeResponse.volumeInfo(folder_name=folder, file_nums=dcm_num, img_width= img_width, img_height=img_height, order_flipped=False))
+            ds_lst.append(volumeResponse.volumeInfo(folder_name=folder, file_nums=dcm_num, img_width= img_width, img_height=img_height, order_flipped=False, mask_available =False))
         return volumeResponse(volumes = ds_lst)
 
     def buildDCMIList(self, target_folder):
