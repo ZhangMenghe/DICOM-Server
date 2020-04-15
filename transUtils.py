@@ -24,8 +24,8 @@ class transDataManager():
     def __init__(self, remote_data_path, local_data_path = None):
         self.folder_remote_path = remote_data_path
         # self.folder_local_path = local_data_path
-        self.dcm_list = []
-        self.unit_size = 2
+        # self.dcm_list = []
+        # self.unit_size = 2
     
     # def check_or_download_from_outside_server(self, target_folder):
     #     local_folder_path = path.join(self.folder_local_path, target_folder)
@@ -128,25 +128,27 @@ class transDataManager():
         #     datapath = path.join(self.folder_local_path, target_folder)
         
         datapath = path.join(self.folder_remote_path, target_folder)
-        self.dcm_list.clear()
+        # self.dcm_list.clear()
+        dcm_list = []
         for filename in listdir(datapath):
             #check if dcm image
             if(filename.endswith(".dcm")):
-                self.dcm_list.append(processDICOM(path.join(datapath, filename), self.unit_size))
+                dcm_list.append(processDICOM(path.join(datapath, filename)))
         
-        self.dcm_list.sort(key=lambda x: x.position, reverse=False)
+        dcm_list.sort(key=lambda x: x.position, reverse=False)
+        return dcm_list
 
     def download_folder_as_volume(self, target_folder, unit_size):
         print("downloading..." + target_folder)
-        self.unit_size = unit_size
-        self.buildDCMIList(target_folder)
-        single_chunk_size = len(self.dcm_list[0].data)
+        # self.unit_size = unit_size
+        dcm_list = self.buildDCMIList(target_folder)
+        single_chunk_size = len(dcm_list[0].data)
         chunk_limit = 4194304 - single_chunk_size
         
         chunk_data = b""
         chunk_size = 0
         chunk_id = 0
-        for dcm in self.dcm_list:
+        for dcm in dcm_list:
             # limit for 4M
             if(chunk_size >= chunk_limit):
                 chunk_id+=1
@@ -164,10 +166,10 @@ class transDataManager():
     
 
     def download_folder_as_images(self, target_folder):
-        self.buildDCMIList(target_folder)
-        for i in range(len(self.dcm_list)):
-            self.dcm_list[i].dcmID = i
-            yield self.dcm_list[i]
+        dcm_list = self.buildDCMIList(target_folder)
+        for i in range(len(dcm_list)):
+            dcm_list[i].dcmID = i
+            yield dcm_list[i]
         print("Finish sending images of "+target_folder)                
 
     def inference_masks_as_volume(self, vl_folder_):
@@ -175,63 +177,33 @@ class transDataManager():
         if(path.isdir(local_mask_folder)):
             # load masks and yield all the images
             lsize = len(listdir(local_mask_folder))
-            if lsize != len(self.dcm_list):
-                return None
-            if(self.unit_size == 2):
-                img = np.asarray(Image.open(path.join(local_mask_folder, str(lsize-1) +'.png')))
+            # if lsize != len(self.dcm_list):
+            #     return None
+            # if(self.unit_size == 2):
+            img = np.asarray(Image.open(path.join(local_mask_folder, str(lsize-1) +'.png')))
+            if(img.ndim>2):
+                img = img[:,:,0]
+            chunk_data = img.astype(np.uint16).tobytes()
+            single_chunk_size = len(chunk_data)
+            chunk_size = single_chunk_size
+            chunk_limit = 4194304 - single_chunk_size
+            chunk_id = 0
+            for i in range(1, lsize):
+                if(chunk_size >= chunk_limit):
+                    chunk_id+=1
+                    print("Sending the " + str(chunk_id) + " chunk")
+                    yield volumeWholeResponse(data=chunk_data)
+                    chunk_data = b""
+                    chunk_size = 0
+
+                img = np.asarray(Image.open(path.join(local_mask_folder, str(lsize-i)+ '.png')))
                 if(img.ndim>2):
                     img = img[:,:,0]
-                chunk_data = img.astype(np.uint16).tobytes()
-                single_chunk_size = len(chunk_data)
-                chunk_size = single_chunk_size
-                chunk_limit = 4194304 - single_chunk_size
-                chunk_id = 0
-                for i in range(1, lsize):
-                    if(chunk_size >= chunk_limit):
-                        chunk_id+=1
-                        print("Sending the " + str(chunk_id) + " chunk")
-                        yield volumeWholeResponse(data=chunk_data)
-                        chunk_data = b""
-                        chunk_size = 0
-
-                    img = np.asarray(Image.open(path.join(local_mask_folder, str(lsize-i)+ '.png')))
-                    if(img.ndim>2):
-                        img = img[:,:,0]
-                    chunk_data += img.astype(np.uint16).tobytes()
-                    chunk_size += single_chunk_size
-                if chunk_size!= 0:
-                    yield volumeWholeResponse(data=chunk_data)
+                chunk_data += img.astype(np.uint16).tobytes()
+                chunk_size += single_chunk_size
+            if chunk_size!= 0:
+                yield volumeWholeResponse(data=chunk_data)
         print("Finish sending mask volume of "+vl_folder_)                
 
     def inference_masks_as_images(self, vl_folder_):
-        local_mask_folder = path.join(self.folder_remote_path, vl_folder_, "mask")
-        print("===="+local_mask_folder)
-        if(path.isdir(local_mask_folder)):
-            # load masks and yield all the images
-            lsize = len(listdir(local_mask_folder))
-            if lsize != len(self.dcm_list):
-                return None
-            for i in range(lsize):
-                print("streaming the %d mask" % i)
-                # img = plt.imread(path.join(local_mask_folder, str(i)+ '.png'))
-                img = np.asarray(Image.open(path.join(local_mask_folder, str(i)+ '.png')))
-                #by default, save at the last bit
-                yield dcmImage(dcmID = i, position = self.dcm_list[i].position, data=img.astype(np.uint16).tobytes())
-        
-        else:
-            # todo: inference
-            # debug: fake~
-            lsize = len(self.dcm_list)
-            if lsize == 0:
-                return None
-            # sleep(30)
-            for i in range(lsize):
-                print("======inference  %d" % self.dcm_list[i].position)
-                #todo:save to file
-                yield self.dcm_list[i]
-        print("Finish sending mask images of "+vl_folder_)
-
-
-
-
-
+        return self.download_folder_as_images(vl_folder_)
