@@ -5,7 +5,7 @@ from transManager_pb2_grpc import *
 from transUtils import *
 
 SERVER_ADDRESS = "localhost:23333"
-CLIENT_ID = 1
+CLIENT_ID = 100
 
 class transClient:
     def __init__(self, address):
@@ -38,7 +38,7 @@ class transClient:
         response = self.stub.DownloadVolume(RequestWholeVolume(client_id=CLIENT_ID, req_msg=folder_name, unit_size = 2))
 
         # print("saving (or use) ..." + out_file_name)
-        f = open('sample_data_2bytes', 'wb+')
+        f = open('dicom_images/sample_data_2bytes', 'wb+')
         for it in response:
             f.write(it.data)
         f.close()
@@ -52,7 +52,7 @@ class transClient:
             # np.save('sample/'+str(it.dcmID), it.data)
     def getMasks_volume(self, folder_name):
         itrs = self.stub.DownloadMasksVolume(Request(client_id = CLIENT_ID,req_msg=folder_name))
-        f = open('sample_data_mask_2bytes', 'wb+')  
+        f = open('dicom_images/sample_data_mask_2bytes_2016', 'wb+')  
         for it in itrs:
             f.write(it.data)
         f.close()
@@ -60,11 +60,13 @@ class transClient:
 def main():
     client = transClient(SERVER_ADDRESS)
     ava_lst = client.getAvailableDatasets()
-    dataset_name = ava_lst.datasets[3].folder_name
+    # dataset_name = ava_lst.datasets[3].folder_name
+    dataset_name = "Larry_Smarr_2017"
     vol_lst = client.getAvailableVolume(dataset_name)
-    vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
-    print(vol_name)
-    # vol_name = "Larry-2012-01-17-MRI/series_214_DYN_COR_VIBE_3_RUNS"
+
+    # vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
+    # print(vol_name)
+    vol_name = "Larry_Smarr_2017/Larry_2017"
     # client.download(vol_name)
     # client.getMasks(vol_name)
     client.download_volume(vol_name)

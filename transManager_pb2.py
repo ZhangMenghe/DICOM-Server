@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='helmsley',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12transManager.proto\x12\x08helmsley\"\xaa\x01\n\x0f\x64\x61tasetResponse\x12\x37\n\x08\x64\x61tasets\x18\x01 \x03(\x0b\x32%.helmsley.datasetResponse.datasetInfo\x1a^\n\x0b\x64\x61tasetInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x14\n\x0cpatient_name\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\x12\x16\n\x0e\x64\x65\x66\x61ult_folder\x18\x04 \x01(\t\"\xd3\x01\n\x0evolumeResponse\x12\x34\n\x07volumes\x18\x01 \x03(\x0b\x32#.helmsley.volumeResponse.volumeInfo\x1a\x8a\x01\n\nvolumeInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x11\n\tfile_nums\x18\x02 \x01(\x05\x12\x11\n\timg_width\x18\x03 \x01(\x05\x12\x12\n\nimg_height\x18\x04 \x01(\x05\x12\x15\n\rorder_flipped\x18\x05 \x01(\x08\x12\x16\n\x0emask_available\x18\x06 \x01(\x08\"#\n\x13volumeWholeResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"9\n\x08\x64\x63mImage\x12\r\n\x05\x64\x63mID\x18\x01 \x01(\x05\x12\x10\n\x08position\x18\x02 \x01(\x02\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"-\n\x07Request\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\"K\n\x12RequestWholeVolume\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\x12\x11\n\tunit_size\x18\x03 \x01(\x05\".\n\x08Response\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07res_msg\x18\x02 \x01(\t2\xa4\x03\n\x0c\x64\x61taTransfer\x12\x44\n\x14getAvailableDatasets\x12\x11.helmsley.Request\x1a\x19.helmsley.datasetResponse\x12\x43\n\x14getVolumeFromDataset\x12\x11.helmsley.Request\x1a\x18.helmsley.volumeResponse\x12\x33\n\x08\x44ownload\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x12O\n\x0e\x44ownloadVolume\x12\x1c.helmsley.RequestWholeVolume\x1a\x1d.helmsley.volumeWholeResponse0\x01\x12\x38\n\rDownloadMasks\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x12I\n\x13\x44ownloadMasksVolume\x12\x11.helmsley.Request\x1a\x1d.helmsley.volumeWholeResponse0\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x12transManager.proto\x12\x08helmsley\"\xbf\x01\n\x0f\x64\x61tasetResponse\x12\x37\n\x08\x64\x61tasets\x18\x01 \x03(\x0b\x32%.helmsley.datasetResponse.datasetInfo\x1as\n\x0b\x64\x61tasetInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x14\n\x0cpatient_name\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\x12\x15\n\rphysican_name\x18\x04 \x01(\t\x12\x14\n\x0cmask_folders\x18\x05 \x03(\t\"\xbb\x01\n\x0evolumeResponse\x12\x34\n\x07volumes\x18\x01 \x03(\x0b\x32#.helmsley.volumeResponse.volumeInfo\x1as\n\nvolumeInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x11\n\tfile_nums\x18\x02 \x01(\x05\x12\x11\n\timg_width\x18\x03 \x01(\x05\x12\x12\n\nimg_height\x18\x04 \x01(\x05\x12\x16\n\x0emask_available\x18\x05 \x01(\x08\"#\n\x13volumeWholeResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"9\n\x08\x64\x63mImage\x12\r\n\x05\x64\x63mID\x18\x01 \x01(\x05\x12\x10\n\x08position\x18\x02 \x01(\x02\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"-\n\x07Request\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\"K\n\x12RequestWholeVolume\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\x12\x11\n\tunit_size\x18\x03 \x01(\x05\".\n\x08Response\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07res_msg\x18\x02 \x01(\t2\xa4\x03\n\x0c\x64\x61taTransfer\x12\x44\n\x14getAvailableDatasets\x12\x11.helmsley.Request\x1a\x19.helmsley.datasetResponse\x12\x43\n\x14getVolumeFromDataset\x12\x11.helmsley.Request\x1a\x18.helmsley.volumeResponse\x12\x33\n\x08\x44ownload\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x12O\n\x0e\x44ownloadVolume\x12\x1c.helmsley.RequestWholeVolume\x1a\x1d.helmsley.volumeWholeResponse0\x01\x12\x38\n\rDownloadMasks\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x12I\n\x13\x44ownloadMasksVolume\x12\x11.helmsley.Request\x1a\x1d.helmsley.volumeWholeResponse0\x01\x62\x06proto3')
 )
 
 
@@ -54,9 +54,16 @@ _DATASETRESPONSE_DATASETINFO = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='default_folder', full_name='helmsley.datasetResponse.datasetInfo.default_folder', index=3,
+      name='physican_name', full_name='helmsley.datasetResponse.datasetInfo.physican_name', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='mask_folders', full_name='helmsley.datasetResponse.datasetInfo.mask_folders', index=4,
+      number=5, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -73,7 +80,7 @@ _DATASETRESPONSE_DATASETINFO = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=109,
-  serialized_end=203,
+  serialized_end=224,
 )
 
 _DATASETRESPONSE = _descriptor.Descriptor(
@@ -103,7 +110,7 @@ _DATASETRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=33,
-  serialized_end=203,
+  serialized_end=224,
 )
 
 
@@ -143,15 +150,8 @@ _VOLUMERESPONSE_VOLUMEINFO = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='order_flipped', full_name='helmsley.volumeResponse.volumeInfo.order_flipped', index=4,
+      name='mask_available', full_name='helmsley.volumeResponse.volumeInfo.mask_available', index=4,
       number=5, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='mask_available', full_name='helmsley.volumeResponse.volumeInfo.mask_available', index=5,
-      number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -168,8 +168,8 @@ _VOLUMERESPONSE_VOLUMEINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=279,
-  serialized_end=417,
+  serialized_start=299,
+  serialized_end=414,
 )
 
 _VOLUMERESPONSE = _descriptor.Descriptor(
@@ -198,8 +198,8 @@ _VOLUMERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=206,
-  serialized_end=417,
+  serialized_start=227,
+  serialized_end=414,
 )
 
 
@@ -229,8 +229,8 @@ _VOLUMEWHOLERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=419,
-  serialized_end=454,
+  serialized_start=416,
+  serialized_end=451,
 )
 
 
@@ -274,8 +274,8 @@ _DCMIMAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=456,
-  serialized_end=513,
+  serialized_start=453,
+  serialized_end=510,
 )
 
 
@@ -312,8 +312,8 @@ _REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=515,
-  serialized_end=560,
+  serialized_start=512,
+  serialized_end=557,
 )
 
 
@@ -357,8 +357,8 @@ _REQUESTWHOLEVOLUME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=562,
-  serialized_end=637,
+  serialized_start=559,
+  serialized_end=634,
 )
 
 
@@ -395,8 +395,8 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=639,
-  serialized_end=685,
+  serialized_start=636,
+  serialized_end=682,
 )
 
 _DATASETRESPONSE_DATASETINFO.containing_type = _DATASETRESPONSE
@@ -485,8 +485,8 @@ _DATATRANSFER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=688,
-  serialized_end=1108,
+  serialized_start=685,
+  serialized_end=1105,
   methods=[
   _descriptor.MethodDescriptor(
     name='getAvailableDatasets',
