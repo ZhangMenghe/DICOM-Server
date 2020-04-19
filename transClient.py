@@ -61,12 +61,12 @@ def main():
     client = transClient(SERVER_ADDRESS)
     ava_lst = client.getAvailableDatasets()
     # dataset_name = ava_lst.datasets[3].folder_name
-    dataset_name = "Larry_Smarr_2017"
+    dataset_name = "IRB4"
     vol_lst = client.getAvailableVolume(dataset_name)
 
-    # vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
-    # print(vol_name)
-    vol_name = "Larry_Smarr_2017/Larry_2017"
+    vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
+    print(vol_name)
+    # vol_name = "Larry_Smarr_2017/Larry_2017"
     # client.download(vol_name)
     # client.getMasks(vol_name)
     client.download_volume(vol_name)

@@ -94,10 +94,10 @@ class transDataManager():
         # check dataset exist
         ds_path = path.join(self.folder_remote_path, ds_folder)
         if not path.isdir(ds_path):
-            print("Failed to getVolumeInfoListFromDS: dir not exist "+ remote_path)
+            print("Failed to getVolumeInfoListFromDS: dir not exist "+ ds_path)
             return
         volume_lst = []
-        volume_sort_base_lst = []
+        sort_base_id = []
         # generate or read volume index file
         idx_file_path = path.join(ds_path, volume_idxf_name)
         # if index file not exist, generate it(usually we do this offline)
@@ -107,16 +107,17 @@ class transDataManager():
             vl_lines = index_file.readlines()
             for line in vl_lines:
                 contents = line.split(',')
-                has_mask = contents[4] in ('True', 'true', '1')
+                has_mask = contents[5] in ('True', 'true', '1')
                 volume_lst.append(volumeResponse.volumeInfo(folder_name=contents[0],\
                 file_nums=int(contents[1]),\
-                img_width=int(contents[2]),\
-                img_height=int(contents[3]),\
-                mask_available=has_mask))
-                volume_sort_base_lst.append(int(has_mask)*100 + float(contents[5]) + float(contents[6]) + float(contents[7]))
+                img_height=int(contents[2]),\
+                img_width=int(contents[3]),\
+                vol_thickness = float(contents[4]),\
+                mask_available = has_mask,\
+                quality_score = float(contents[-1])))
+                sort_base_id.append(int(contents[0].split('_')[0]))
         #order the volume list
-        sorted_list = [x for _, x in sorted(zip(volume_sort_base_lst,volume_lst), key=lambda pair: pair[0], reverse=True)]
-        # print(volume_sort_base_lst)
+        sorted_list = [x for _, x in sorted(zip(sort_base_id,volume_lst), key=lambda pair: pair[0], reverse=False)]
         return volumeResponse(volumes = sorted_list)
 
     def buildDCMIList(self, target_folder):

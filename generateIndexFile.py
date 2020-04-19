@@ -1,7 +1,7 @@
 from glob import glob
 from random import random
 from os import path, listdir
-from dicomUtils import getImageSize
+from dicomUtils import getVolumeDimensions
 from queue import Queue
 import numpy as np
 def debug_score_generator():
@@ -56,19 +56,21 @@ def generateDSIndexFile(dspath, index_file_path):
             vol_names = get_vol_folder_name_lst(dspath, foldername)
             for vol_name in vol_names:
                 vol_path = path.join(dspath, vol_name)
-                dcm_num = len(glob(path.join(vol_path, '*.dcm')))
-                img_width, img_height = getImageSize(vol_path)
+                img_width, img_height, dcm_num, vol_thickness = getVolumeDimensions(vol_path)
+                if(img_width < 0):
+                    continue
                 vl_mask_path = path.join(vol_path, 'mask')
                 mask_available = path.exists(vl_mask_path) and path.isdir(vl_mask_path) and len(glob(vl_mask_path+'/*.png')) == dcm_num
                 # mask_available = path.isdir(mskpath) and path.isdir(path.join(mskpath, folder)) and len(glob(path.join(mskpath, folder, '*.png'))) == dcm_num
                 scores = debug_score_generator()
-                content = get_content_str_array("", [vol_name, dcm_num, img_height, img_width, mask_available, scores])[:-1]
+                qscore = int(mask_available)*100 + float(scores[0]) + float(scores[1]) + float(scores[2])
+                content = get_content_str_array("", [vol_name, dcm_num, img_height, img_width, vol_thickness, mask_available, scores, qscore])[:-1]
                 content+= "\n"
                 # print(content)
                 index_file.write(content)
 def test_gen():
-    root_dir = "/home/eevee/Github/data/PACS/IRB1"
-    file_path = "/home/eevee/Github/data/PACS/IRB1/index.txt"
+    root_dir = "/home/eevee/Github/data/PACS/Larry-2012-01-17-MRI"
+    file_path = "/home/eevee/Github/data/PACS/Larry-2012-01-17-MRI/index.txt"
     generateDSIndexFile(root_dir, file_path)
     # generateDSIndexFile(root_dir, "MASKS_", "JH")
 def parse_command():
