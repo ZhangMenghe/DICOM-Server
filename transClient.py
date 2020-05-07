@@ -1,5 +1,7 @@
 import time
 import grpc
+import os
+
 from transManager_pb2 import *
 from transManager_pb2_grpc import *
 from transUtils import *
@@ -11,6 +13,10 @@ class transClient:
     def __init__(self, address):
         channel = grpc.insecure_channel(address)
         self.stub = dataTransferStub(channel)
+    def getAvailableConfigs(self):
+        ava_lst = self.stub.getAvailableConfigs(Request(client_id = CLIENT_ID))
+        print(ava_lst)
+        return ava_lst
     def getAvailableDatasets(self):
         ava_lst = self.stub.getAvailableDatasets(Request(client_id = CLIENT_ID))
         print(ava_lst)
@@ -38,7 +44,12 @@ class transClient:
         response = self.stub.DownloadVolume(RequestWholeVolume(client_id=CLIENT_ID, req_msg=folder_name, unit_size = 2))
 
         # print("saving (or use) ..." + out_file_name)
-        f = open('dicom_images/sample_data_2bytes', 'wb+')
+        names = folder_name.split('/')
+        
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        f = open(folder_name + '/'+'data', 'wb+')
         for it in response:
             f.write(it.data)
         f.close()
@@ -52,25 +63,32 @@ class transClient:
             # np.save('sample/'+str(it.dcmID), it.data)
     def getMasks_volume(self, folder_name):
         itrs = self.stub.DownloadMasksVolume(Request(client_id = CLIENT_ID,req_msg=folder_name))
-        f = open('dicom_images/sample_data_mask_2bytes_2016', 'wb+')  
+        names = folder_name.split('/')
+        f = open(folder_name + '/'+'mask', 'wb+')
         for it in itrs:
             f.write(it.data)
         f.close()
 
 def main():
     client = transClient(SERVER_ADDRESS)
-    ava_lst = client.getAvailableDatasets()
+    # ava_config = client.getAvailableConfigs()
+    # ava_lst = client.getAvailableDatasets()
+    
     # dataset_name = ava_lst.datasets[3].folder_name
-    dataset_name = "IRB4"
-    vol_lst = client.getAvailableVolume(dataset_name)
+    # dataset_name = "IRB1"
+    # vol_lst = client.getAvailableVolume(dataset_name)
 
-    vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
-    print(vol_name)
+    # vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
+    # print(vol_name)
     # vol_name = "Larry_Smarr_2017/Larry_2017"
     # client.download(vol_name)
     # client.getMasks(vol_name)
-    client.download_volume(vol_name)
-    client.getMasks_volume(vol_name)
+    # vol_names = ["IRB1/26_LAVACORPOST2", "IRB2/28_WATERPOSTCorLAVAFLEX2MM", "IRB3/2100_FATPOSTCORLAVAFLEX20secs", "IRB4/21_WATERPOSTCORLAVAFLEX20secs"]
+    # vol_names = ['IRB5/21_WATERPOSTCORLAVAFLEX20secs', 'IRB6/22_WATERPOSTCORLAVAFLEX20secs']
+    # vol_names = ["IRB1/26_LAVACORPOST2"]
+    # for vol_name in vol_names:
+    #     client.download_volume(vol_name)
+    #     client.getMasks_volume(vol_name)
 
 
 

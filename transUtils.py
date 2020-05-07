@@ -16,13 +16,17 @@ def parse_command():
     parser.add_argument('-d', '--pacs_dir', type=str, default='',
                         help = 'path to local dataset')
     parser.add_argument('-f', '--pacs_index_path', type=str, default='',help='path to the pacs file')
+    parser.add_argument('-c', '--config_dir', type=str, default='',help='dirctory of config files')
     parser.add_argument('-p', '--port', type=str, default='23333',help='port number')
     args = parser.parse_args()
     return args
 
 class transDataManager():
-    def __init__(self, remote_data_path, local_data_path = None):
+    def __init__(self, remote_data_path, config_dir, local_data_path = None):
         self.folder_remote_path = remote_data_path
+        self.config_dir = config_dir
+        self.configs_ = None
+        self.config_check_dirty = True
         # self.folder_local_path = local_data_path
         # self.dcm_list = []
         # self.unit_size = 2
@@ -38,7 +42,26 @@ class transDataManager():
     #     destination = shutil.copytree(remote_folder_path, local_folder_path)
     #     print("finish copying to " + destination)
     #     return True
+    def get_config_files(self):
+        if(self.config_check_dirty):
+            self.configs_ = []
+            for filename in listdir(self.config_dir):
+                if(filename.endswith(".yml") or filename.endswith(".yaml")):
+                    with open(path.join(self.config_dir, filename), 'r') as cf:
+                        config_info = cf.read()
+                        config_name = filename.split('.')[0]
+                        self.configs_.append(configResponse.configInfo(file_name=config_name, content=config_info))
+            self.config_check_dirty = False
+        return configResponse(configs = self.configs_)
+    def export_config_file(self, content):
+        name = content.splitlines()[0].split(" ")[-1]
+        while (name + ".yml") in listdir(self.config_dir):
+            name = name + "_c"
 
+        with open(path.join(self.config_dir, name + ".yml"), 'w') as cf:
+            cf.write(content)
+        self.configs_.append(configResponse.configInfo(file_name=name, content=content))
+        return Response(success = True)
     def get_all_available_datasets(self, pacs_index_path):
         if not path.isdir(self.folder_remote_path):
             print("not a dir remote : "+ self.folder_remote_path)
@@ -115,7 +138,11 @@ class transDataManager():
                 vol_thickness = float(contents[4]),\
                 mask_available = has_mask,\
                 quality_score = float(contents[-1])))
-                sort_base_id.append(int(contents[0].split('_')[0]))
+                id_str = contents[0].split('_')[0]
+                if(id_str.isnumeric()):
+                    sort_base_id.append(int(id_str))
+                else:
+                    sort_base_id.append(0)
         #order the volume list
         sorted_list = [x for _, x in sorted(zip(sort_base_id,volume_lst), key=lambda pair: pair[0], reverse=False)]
         return volumeResponse(volumes = sorted_list)

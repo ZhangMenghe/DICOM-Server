@@ -69,8 +69,8 @@ def generateDSIndexFile(dspath, index_file_path):
                 # print(content)
                 index_file.write(content)
 def test_gen():
-    root_dir = "/home/eevee/Github/data/PACS/Larry-2012-01-17-MRI"
-    file_path = "/home/eevee/Github/data/PACS/Larry-2012-01-17-MRI/index.txt"
+    root_dir = "/home/eevee/Github/data/PACS/IRB3"
+    file_path = "/home/eevee/Github/data/PACS/IRB3/index.txt"
     generateDSIndexFile(root_dir, file_path)
     # generateDSIndexFile(root_dir, "MASKS_", "JH")
 def parse_command():

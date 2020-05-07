@@ -14,6 +14,16 @@ class dataTransferStub(object):
     Args:
       channel: A grpc.Channel.
     """
+    self.getAvailableConfigs = channel.unary_unary(
+        '/helmsley.dataTransfer/getAvailableConfigs',
+        request_serializer=transManager__pb2.Request.SerializeToString,
+        response_deserializer=transManager__pb2.configResponse.FromString,
+        )
+    self.exportConfigs = channel.unary_unary(
+        '/helmsley.dataTransfer/exportConfigs',
+        request_serializer=transManager__pb2.Request.SerializeToString,
+        response_deserializer=transManager__pb2.Response.FromString,
+        )
     self.getAvailableDatasets = channel.unary_unary(
         '/helmsley.dataTransfer/getAvailableDatasets',
         request_serializer=transManager__pb2.Request.SerializeToString,
@@ -49,6 +59,20 @@ class dataTransferStub(object):
 class dataTransferServicer(object):
   # missing associated documentation comment in .proto file
   pass
+
+  def getAvailableConfigs(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def exportConfigs(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
 
   def getAvailableDatasets(self, request, context):
     # missing associated documentation comment in .proto file
@@ -95,6 +119,16 @@ class dataTransferServicer(object):
 
 def add_dataTransferServicer_to_server(servicer, server):
   rpc_method_handlers = {
+      'getAvailableConfigs': grpc.unary_unary_rpc_method_handler(
+          servicer.getAvailableConfigs,
+          request_deserializer=transManager__pb2.Request.FromString,
+          response_serializer=transManager__pb2.configResponse.SerializeToString,
+      ),
+      'exportConfigs': grpc.unary_unary_rpc_method_handler(
+          servicer.exportConfigs,
+          request_deserializer=transManager__pb2.Request.FromString,
+          response_serializer=transManager__pb2.Response.SerializeToString,
+      ),
       'getAvailableDatasets': grpc.unary_unary_rpc_method_handler(
           servicer.getAvailableDatasets,
           request_deserializer=transManager__pb2.Request.FromString,

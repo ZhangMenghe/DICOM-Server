@@ -15,10 +15,18 @@ class transServer(dataTransferServicer):
                 # self.local_mask_path = "data_mask"
                 # self.trans_manager = transDataManager(pacs_dir, self.local_data_path)
             
-            def setup(self, pacs_dir, pacs_index_path):
-                self.trans_manager = transDataManager(pacs_dir)
+            def setup(self, pacs_dir, pacs_index_path, config_dir):
+                self.trans_manager = transDataManager(pacs_dir,config_dir)
                 self.pacs_index_path = pacs_index_path
             
+            def getAvailableConfigs(self, request, context):
+                print("===Client: " + str(request.client_id)+" Request config files===")
+                return self.trans_manager.get_config_files()
+            def exportConfigs(self, request, context):
+                # request.req_msg
+                print("===Client: " + str(request.client_id)+" export config files===")
+                return self.trans_manager.export_config_file(request.req_msg)
+
             def getAvailableDatasets(self, request, context):
                 print("===Client: " + str(request.client_id)+" Request all avaliable dataset of remote server===")
                 return self.trans_manager.get_all_available_datasets(self.pacs_index_path)
@@ -46,9 +54,9 @@ class transServer(dataTransferServicer):
         self.servicer = Servicer()
         add_dataTransferServicer_to_server(self.servicer, self.server)
         
-    def setup(self, pacs_dir, pacs_index_path, port_num):
+    def setup(self, pacs_dir, pacs_index_path, config_dir, port_num):
         self.port = '[::]:'+port_num
-        self.servicer.setup(pacs_dir, pacs_index_path)
+        self.servicer.setup(pacs_dir, pacs_index_path, config_dir)
 
     def run(self):
         print("-----------start Python GRPC server-----------")
@@ -59,8 +67,7 @@ class transServer(dataTransferServicer):
 def main():
     args = parse_command()
     server = transServer()
-    #todo:remove mask dir
-    server.setup(args.pacs_dir, args.pacs_index_path, args.port)
+    server.setup(args.pacs_dir, args.pacs_index_path, args.config_dir, args.port)
     server.run()
 
 
