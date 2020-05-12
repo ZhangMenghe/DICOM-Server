@@ -9,7 +9,7 @@ camera:
     center: [0,0,2]
 render mode: Raycasting
 transfer function:
-    contrast: [1.0,.0,1.0,0.5]
+    contrast: [.0,1.0,0.5]
     opacity: [[1.0, .0, 2.0, .0, 1.0],[1.0, .0, 2.0, .0, 1.0]]
     color scheme: HSV
 cutting plane:
