@@ -29,7 +29,7 @@ class dataTransferStub(object):
         request_serializer=transManager__pb2.Request.SerializeToString,
         response_deserializer=transManager__pb2.datasetResponse.FromString,
         )
-    self.getVolumeFromDataset = channel.unary_unary(
+    self.getVolumeFromDataset = channel.unary_stream(
         '/helmsley.dataTransfer/getVolumeFromDataset',
         request_serializer=transManager__pb2.Request.SerializeToString,
         response_deserializer=transManager__pb2.volumeResponse.FromString,
@@ -134,7 +134,7 @@ def add_dataTransferServicer_to_server(servicer, server):
           request_deserializer=transManager__pb2.Request.FromString,
           response_serializer=transManager__pb2.datasetResponse.SerializeToString,
       ),
-      'getVolumeFromDataset': grpc.unary_unary_rpc_method_handler(
+      'getVolumeFromDataset': grpc.unary_stream_rpc_method_handler(
           servicer.getVolumeFromDataset,
           request_deserializer=transManager__pb2.Request.FromString,
           response_serializer=transManager__pb2.volumeResponse.SerializeToString,

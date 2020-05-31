@@ -7,8 +7,10 @@ from PIL import Image
 import numpy as np 
 import xlrd
 import datetime
+import cv2
 
 from generateIndexFile import generateDSIndexFile
+from ast import literal_eval
 
 def parse_command():
     import argparse
@@ -20,13 +22,43 @@ def parse_command():
     parser.add_argument('-p', '--port', type=str, default='23333',help='port number')
     args = parser.parse_args()
     return args
+'''
+Input: path of index file
+output: list of volumeStructs built from index file
 
+'''
+def build_volume_struct_from_files(rf_path):
+    vsc = []
+    tn_pre = 'report/' + rf_path.split('/')[-2]
+    with open(rf_path, 'r') as rf:
+        record_lines = rf.readlines()[3:]
+        record_num = int(len(record_lines) / 2)
+        for i in range(record_num):
+            infos = record_lines[2*i].split('/')
+            scores_np = np.array(record_lines[2*i+1].split('/')).astype(np.float)
+            simg = cv2.imread(path.join(tn_pre, infos[0], 'full.png'), 0)
+            spacing = literal_eval(infos[4])
+            vsc.append(volumeResponse.volumeInfo(folder_name=infos[0], \
+                dims = literal_eval(infos[1]),\
+                orientation = literal_eval(infos[2]),\
+                resolution = [spacing[0],spacing[1], float(infos[5])],\
+                volume_loc_range = float(infos[6]),\
+                sample_img = simg.tobytes(),\
+                scores = volumeResponse.scoreInfo(rgroup_id=int(infos[3]),\
+                        raw_score=scores_np[:-3],\
+                        raw_rank_score = [],\
+                        num_score=scores_np[-3],\
+                        tags_score=scores_np[-2],\
+                        mask_score=scores_np[-1])))
+    return vsc
 class transDataManager():
     def __init__(self, remote_data_path, config_dir, local_data_path = None):
         self.folder_remote_path = remote_data_path
         self.config_dir = config_dir
         self.configs_ = None
         self.config_check_dirty = True
+        self.default_sel_percent = 0.8
+        self.VR_LEN = 10
         # self.folder_local_path = local_data_path
         # self.dcm_list = []
         # self.unit_size = 2
@@ -113,7 +145,63 @@ class transDataManager():
                                             mask_folders=volume_with_mask_lst))    
         return datasetResponse(datasets = dataset_lst)
 
+    #todo:test this!!!
     def getVolumeInfoListFromDS(self, ds_folder, volume_idxf_name):
+        # check dataset exist
+        ds_path = path.join(self.folder_remote_path, ds_folder)
+        if not path.isdir(ds_path):
+            print("Failed to getVolumeInfoListFromDS: dir not exist "+ ds_path)
+            return
+        volume_lst = []
+        # generate or read volume index file
+        idx_file_path = path.join(ds_path, volume_idxf_name)
+        # if index file not exist, generate it(usually we do this offline)
+        if not path.exists(idx_file_path):
+            generateDSIndexFile(ds_path, idx_file_path)
+        vsc = build_volume_struct_from_files(idx_file_path)
+        vol_cut_group = []
+        for vs in vsc:
+            vol_cut_group.append(vs.scores.rgroup_id)
+        unique_group = np.unique(vol_cut_group)
+        grouped_vsc = {}
+        for gid in unique_group:
+            grouped_vsc[gid] = [vs for vs in vsc if vs.scores.rgroup_id == gid]
+        param_num = len(vsc[0].scores.raw_score)
+        grouped_vsc_sorted = {}
+        for gvsc_id in grouped_vsc:
+            grouped_vsc_sorted[gvsc_id] = [vs for vs in sorted(grouped_vsc.get(gvsc_id), key=lambda vs: np.mean(vs.scores.raw_score), reverse=True)]
+        default_sel_percent = 0.8
+        grouped_vsc_sorted_norm = {}
+        for gvsc_id in grouped_vsc:
+            gsvsc = grouped_vsc_sorted[gvsc_id]
+            
+            max_vs_local = []
+            for i in range(param_num):
+                max_vs_local.append(np.max([vs.scores.raw_score[i] for vs in gsvsc]))
+            
+            for i in range(len(gsvsc)):
+                gsvsc[i].scores.raw_rank_score.extend([u/(v+0.0001) for u,v in zip(gsvsc[i].scores.raw_score,max_vs_local)])
+                
+            sel_num = int(len(gsvsc) * default_sel_percent)
+            sel_gsvc = gsvsc[:sel_num]
+            rule_out_gsvc = gsvsc[sel_num:]
+            #sort_mean_sel_gsvc = [vs for vs in sorted(sel_gsvc, key=lambda vs: np.mean([u/(v+0.001) for u,v in zip(vs.scores_raw,max_vs_local)]), reverse=True)]
+            
+            sort_mean_sel_gsvc = [vs for vs in sorted(sel_gsvc, key=lambda vs: np.mean(vs.scores.raw_rank_score), reverse=True)]
+            grouped_vsc_sorted_norm[gvsc_id] = sort_mean_sel_gsvc + rule_out_gsvc
+        for gid in unique_group:
+            for vs in grouped_vsc_sorted_norm[gid]:
+                vs.scores.rank_score = np.mean(vs.scores.raw_rank_score)
+                volume_lst.append(vs)
+        group_num = int(len(volume_lst) / self.VR_LEN)
+        stream_id = 0
+        for i in range(group_num):
+            yield volumeResponse(volumes=volume_lst[stream_id:stream_id + self.VR_LEN])
+            stream_id+=self.VR_LEN
+        if(stream_id != len(volume_lst)):
+            yield volumeResponse(volumes = volume_lst[stream_id:])
+
+    def getVolumeInfoListFromDS_old(self, ds_folder, volume_idxf_name):
         # check dataset exist
         ds_path = path.join(self.folder_remote_path, ds_folder)
         if not path.isdir(ds_path):
@@ -146,8 +234,7 @@ class transDataManager():
         #order the volume list
         sorted_list = [x for _, x in sorted(zip(sort_base_id,volume_lst), key=lambda pair: pair[0], reverse=False)]
         return volumeResponse(volumes = sorted_list)
-
-    def buildDCMIList(self, target_folder):
+    def buildDCMIList_old(self, target_folder):
         # if self.folder_local_path == None:
         #     datapath = path.join(self.folder_remote_path, target_folder)
         # else:
@@ -165,11 +252,13 @@ class transDataManager():
         
         dcm_list.sort(key=lambda x: x.position, reverse=False)
         return dcm_list
-
+    def buildDCMIList(self, target_folder):
+        return processDICOM(glob(path.join(path.join(self.folder_remote_path, target_folder), '*.dcm')))
     def download_folder_as_volume(self, target_folder, unit_size):
         print("downloading..." + target_folder)
         # self.unit_size = unit_size
-        dcm_list = self.buildDCMIList(target_folder)
+        dcm_list = processDICOM(glob(path.join(path.join(self.folder_remote_path, target_folder), '*.dcm')))
+        print("len:"+str(len(dcm_list)))
         single_chunk_size = len(dcm_list[0].data)
         chunk_limit = 4194304 - single_chunk_size
         
