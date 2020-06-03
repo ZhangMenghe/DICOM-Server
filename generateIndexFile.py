@@ -8,6 +8,9 @@ import cv2
 import matplotlib.pyplot as plt
 from util.slice_score import measure_func
 
+from collections import namedtuple
+volumeStruct = namedtuple("volumeStruct", "info_lst cut_group scores_raw scores_vol raw_rank_score")  
+
 def get_vol_info_lst(vol_name, meta_dic):
     res_lst = [vol_name]
     for item in meta_dic.values():
@@ -60,7 +63,56 @@ def get_vol_folder_name_lst(parent_path, foldername):
         else:
             [queue.put(path.join(item,name)) for name in subnames]
     return res_lst
+'''
+Input: info lst
+       score lst(should add the ranking id and rank score to the very front)
+Output: reordered infolst(should not be changed content, only the order)
+        modified and reordered scorelst
+'''
+def rank_and_reorder(infos, scores):
+    #build volumeStruct from inputs
+    vsc = []
+    for info,score in zip(infos, scores):
+        vsc.append(volumeStruct(info_lst=info, cut_group=int(info[3]), scores_raw = np.array(score[:-3]).astype(np.float), scores_vol =np.array(score[-3:]).astype(np.float), raw_rank_score=[]))
+    vol_cut_group = []
+    for vs in vsc:
+        vol_cut_group.append(vs.cut_group)
+    unique_group = np.unique(vol_cut_group)
+    grouped_vsc = {}
+    for gid in unique_group:
+        grouped_vsc[gid] = [vs for vs in vsc if vs.cut_group == gid]
+    param_num = len(vsc[0].scores_raw) 
+    grouped_vsc_sorted = {}
+    for gvsc_id in grouped_vsc:
+        grouped_vsc_sorted[gvsc_id] = [vs for vs in sorted(grouped_vsc.get(gvsc_id), key=lambda vs: np.mean(vs.scores_raw), reverse=True)]
+    default_sel_percent = 0.8
+    grouped_vsc_sorted_norm = {}
+    for gvsc_id in grouped_vsc:
+        gsvsc = grouped_vsc_sorted[gvsc_id]
+        max_vs_local = []
+        for i in range(param_num):
+            max_vs_local.append(np.max([vs.scores_raw[i] for vs in gsvsc]))
+        
+        for i in range(len(gsvsc)):
+            gsvsc[i].raw_rank_score.extend([u/(v+0.0001) for u,v in zip(gsvsc[i].scores_raw,max_vs_local)])
+            
+        sel_num = int(len(gsvsc) * default_sel_percent)
+        sel_gsvc = gsvsc[:sel_num]
+        rule_out_gsvc = gsvsc[sel_num:]
+        sort_mean_sel_gsvc = [vs for vs in sorted(sel_gsvc, key=lambda vs: np.mean(vs.raw_rank_score), reverse=True)]
+        grouped_vsc_sorted_norm[gvsc_id] = sort_mean_sel_gsvc + rule_out_gsvc
 
+    rinfo_lst = []
+    rscore_lst = []
+    for gid in unique_group:
+        rank=1
+        for vs in grouped_vsc_sorted_norm[gid]:
+            # vs.rank_score = np.mean(vs.raw_rank_score)
+            # vs.rank_id = rank
+            rinfo_lst.append(vs.info_lst)
+            rscore_lst.append([gid, rank, np.mean(vs.raw_rank_score)] + vs.scores_raw.tolist() + vs.scores_vol.tolist())
+            rank+=1
+    return rinfo_lst, rscore_lst
 def generateDSIndexFile(dspath, sample_num, save_thumb = True):
     if(dspath[-1] == '/'):
         dspath = dspath[:-1]
@@ -78,6 +130,10 @@ def generateDSIndexFile(dspath, sample_num, save_thumb = True):
         #write header
         rf.write("#DS Info: name," + ','.join(default_meta_dic.keys()) + '\n')
         rf.write("#score items: " + ','.join(measure_func.keys())+ '\n\n')
+
+        info_lst = []
+        score_lst = []
+
         for foldername in listdir(dspath):
             folderpath = path.join(dspath, foldername)
             if not path.isdir(folderpath):# or len(listdir(folderpath))<10:
@@ -95,10 +151,14 @@ def generateDSIndexFile(dspath, sample_num, save_thumb = True):
                 num = vd.meta_data['volume_dims'][-1]
                 sids = [int(p * num) for p in sids_norm]
                 ss, num_score, tags_score, mask_score = getScore(vd, sample_ids = sids)
-                #write contents
-                rf.write('/'.join(str(ti) for ti in get_vol_info_lst(vol_name, vd.meta_data)) + '\n')
-                scores = ss.tolist() + [num_score, tags_score, mask_score]
-                rf.write('/'.join(str(ti) for ti in scores)+ '\n')
+                info_lst.append(get_vol_info_lst(vol_name, vd.meta_data))
+                score_lst.append(ss.tolist() + [num_score, tags_score, mask_score])
+        #re-order
+        rinfo_lst, rscore_lst = rank_and_reorder(info_lst, score_lst)
+        #write contents
+        for rinfo,rscore in zip(rinfo_lst, rscore_lst):
+            rf.write('/'.join(str(ti) for ti in rinfo) + '\n')
+            rf.write('/'.join(str(ti) for ti in rscore)+ '\n')
                 
 def parse_command():
     import argparse
