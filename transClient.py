@@ -80,10 +80,10 @@ def main():
     # ava_lst = client.getAvailableDatasets()
     
     # dataset_name = ava_lst.datasets[3].folder_name
-    dataset_name = "IRB02"
+    dataset_name = "Larry_Smarr_2016"
     ava_vols = client.getAvailableVolume(dataset_name)
     for v in ava_vols:
-        print(v.folder_name)
+        print(v)
     # vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
     # print(vol_name)
     # vol_name = "Larry_Smarr_2017/Larry_2017"

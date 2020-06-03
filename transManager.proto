@@ -37,8 +37,8 @@ message volumeResponse{
         repeated float orientation = 3;
         repeated float resolution = 4;/*pix_spacing y, x, slice thickness*/
         float volume_loc_range = 5;
-        bytes sample_img = 6;  
-        scoreInfo scores = 7;      
+        bytes sample_img = 6;
+        scoreInfo scores = 7;
     }
     repeated volumeInfo volumes = 1;
 }
