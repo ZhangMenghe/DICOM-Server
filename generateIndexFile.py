@@ -20,13 +20,15 @@ def get_vol_info_lst(vol_name, meta_dic):
         res_lst.append(item)
     return res_lst
 
-def save_thumbnails(vol_path, raw_data):
+def save_thumbnails(vol_path, raw_data, save_thumb):
     if not os.path.exists(vol_path):
         os.makedirs(vol_path)
-    for i in range(raw_data.shape[-1]):
-        tn = cv2.resize(raw_data[:,:,i],None,fx=0.2,fy=0.2)
-        plt.imsave(path.join(vol_path, str(i)+'.png'), tn, cmap = 'gray')
-    plt.imsave(path.join(vol_path,'full.png'), raw_data[:,:,int(raw_data.shape[-1]/2)], cmap = 'gray')
+    if(save_thumb == 'all'):    
+        for i in range(raw_data.shape[-1]):
+            tn = cv2.resize(raw_data[:,:,i],None,fx=0.2,fy=0.2)
+            plt.imsave(path.join(vol_path, str(i)+'.png'), tn, cmap = 'gray')
+    elif(save_thumb == 'full'):
+        plt.imsave(path.join(vol_path,'full.png'), raw_data[:,:,int(raw_data.shape[-1]/2)], cmap = 'gray')
 
 def get_content_str_array(cstr, carray):
     for item in carray:
@@ -114,7 +116,7 @@ def rank_and_reorder(infos, scores):
             rscore_lst.append([gid, rank, rscore] + vs.scores_raw.tolist() + vs.scores_vol.tolist())
             rank+=1
     return rinfo_lst, rscore_lst
-def generateDSIndexFile(dspath, sample_num, save_thumb = True):
+def generateDSIndexFile(dspath, sample_num, save_thumb = 'full'):
     if(dspath[-1] == '/'):
         dspath = dspath[:-1]
     ds_name = dspath.split('/')[-1]
@@ -143,8 +145,8 @@ def generateDSIndexFile(dspath, sample_num, save_thumb = True):
             for vol_name in vol_names:
                 vol_path = path.join(dspath, vol_name)
                 vd = getVolume(vol_path)
-                if(save_thumb):
-                    save_thumbnails(path.join('report', ds_name, vol_name), vd.raw_data)
+                if(len(save_thumb)!=0):
+                    save_thumbnails(path.join('report', ds_name, vol_name), vd.raw_data, save_thumb)
                 if(vd == None):
                     print("==vd invalid==")
                     continue
