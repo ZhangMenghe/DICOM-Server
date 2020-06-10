@@ -24,9 +24,14 @@ class transClient:
         # vconfig = self.stub.getConfig(Request(client_id = CLIENT_ID, req_msg=folder_name))
         # print("returned configs: " + vconfig.folder_name + "nums: %d, width: %d" % (vconfig.file_nums, vconfig.img_width))
     def getAvailableVolume(self, folder_name):
-        ava_vol = self.stub.getVolumeFromDataset(Request(client_id=CLIENT_ID, req_msg=folder_name))
-        print(ava_vol)
-        return ava_vol
+        resp = self.stub.getVolumeFromDataset(Request(client_id=CLIENT_ID, req_msg=folder_name))
+        ava_vols = []
+        for it in resp:
+            ava_vols.extend(it.volumes)
+            # for v in it.volumes:
+            #     print(v.folder_name)
+            # print("=====")
+        return ava_vols
     def download(self, folder_name):
         print("downloading from server...")
         response = self.stub.Download(Request(client_id=CLIENT_ID,req_msg=folder_name))
@@ -75,9 +80,10 @@ def main():
     # ava_lst = client.getAvailableDatasets()
     
     # dataset_name = ava_lst.datasets[3].folder_name
-    # dataset_name = "IRB1"
-    # vol_lst = client.getAvailableVolume(dataset_name)
-
+    dataset_name = 'Larry-2012-01-17-MRI'#"Larry_Smarr_2016"
+    ava_vols = client.getAvailableVolume(dataset_name)
+    for v in ava_vols:
+        print(v)
     # vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
     # print(vol_name)
     # vol_name = "Larry_Smarr_2017/Larry_2017"
