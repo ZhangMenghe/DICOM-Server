@@ -99,7 +99,7 @@ def rank_and_reorder(infos, scores):
         sel_num = int(len(gsvsc) * default_sel_percent)
         sel_gsvc = gsvsc[:sel_num]
         rule_out_gsvc = gsvsc[sel_num:]
-        sort_mean_sel_gsvc = [vs for vs in sorted(sel_gsvc, key=lambda vs: np.mean(vs.raw_rank_score), reverse=True)]
+        sort_mean_sel_gsvc = [vs for vs in sorted(sel_gsvc, key=lambda vs: np.mean(vs.raw_rank_score)*0.8 + np.mean(vs.scores_vol)*0.2, reverse=True)]
         grouped_vsc_sorted_norm[gvsc_id] = sort_mean_sel_gsvc + rule_out_gsvc
 
     rinfo_lst = []
@@ -110,7 +110,8 @@ def rank_and_reorder(infos, scores):
             # vs.rank_score = np.mean(vs.raw_rank_score)
             # vs.rank_id = rank
             rinfo_lst.append(vs.info_lst)
-            rscore_lst.append([gid, rank, np.mean(vs.raw_rank_score)] + vs.scores_raw.tolist() + vs.scores_vol.tolist())
+            rscore = np.mean(vs.raw_rank_score)*0.8 + np.mean(vs.scores_vol)*0.2
+            rscore_lst.append([gid, rank, rscore] + vs.scores_raw.tolist() + vs.scores_vol.tolist())
             rank+=1
     return rinfo_lst, rscore_lst
 def generateDSIndexFile(dspath, sample_num, save_thumb = True):

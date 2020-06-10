@@ -80,7 +80,12 @@ def getVolume(vol_path):
     instance_id = []
     
     for ipath in flist:
-        ds = pydicom.dcmread(ipath)
+        try:
+            ds = pydicom.dcmread(ipath)
+        except:
+            print("Fail to load " + ipath)
+            continue
+        
         cvd = ds.pixel_array
         if ds.pixel_array.shape != (fs.Rows, fs.Columns):
             continue

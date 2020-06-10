@@ -80,7 +80,7 @@ def main():
     # ava_lst = client.getAvailableDatasets()
     
     # dataset_name = ava_lst.datasets[3].folder_name
-    dataset_name = "Larry_Smarr_2016"
+    dataset_name = 'Larry-2012-01-17-MRI'#"Larry_Smarr_2016"
     ava_vols = client.getAvailableVolume(dataset_name)
     for v in ava_vols:
         print(v)

@@ -159,6 +159,9 @@ class transDataManager():
         if not path.exists(idx_file_path):
             generateDSIndexFile(ds_path, idx_file_path)
         volume_lst = build_volume_struct_from_files(idx_file_path)
+        for v in volume_lst:
+            if(v.dims[0] > 1000 and v.dims[1]> 1000):
+                volume_lst.remove(v)
         group_num = int(len(volume_lst) / self.VR_LEN)
         stream_id = 0
         for i in range(group_num):
