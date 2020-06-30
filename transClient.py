@@ -2,8 +2,8 @@ import time
 import grpc
 import os
 
-from transManager_pb2 import *
-from transManager_pb2_grpc import *
+from proto.transManager_pb2 import *
+from proto.transManager_pb2_grpc import *
 from transUtils import *
 
 SERVER_ADDRESS = "localhost:23333"

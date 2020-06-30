@@ -1,7 +1,7 @@
 from os import listdir,path
 import pydicom
 import numpy as np
-from transManager_pb2 import dcmImage
+from proto.transManager_pb2 import dcmImage
 from glob import glob
 from math import isnan
 

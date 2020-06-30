@@ -2,8 +2,8 @@ from threading import Thread
 from concurrent import futures
 
 import grpc
-from transManager_pb2 import *
-from transManager_pb2_grpc import *
+from proto.transManager_pb2 import *
+from proto.transManager_pb2_grpc import *
 from transUtils import *
 
 class transServer(dataTransferServicer):

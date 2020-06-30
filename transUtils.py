@@ -1,6 +1,6 @@
 from os import path, getcwd, listdir, makedirs
 import shutil
-from transManager_pb2 import *
+from proto.transManager_pb2 import *
 from dicomUtils import *
 from time import sleep
 from PIL import Image
