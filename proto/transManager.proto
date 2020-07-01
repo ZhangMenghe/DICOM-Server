@@ -1,6 +1,8 @@
 syntax = "proto3";
 
 package helmsley;
+import "common.proto";
+
 
 message configResponse{
     message configInfo{
@@ -59,24 +61,15 @@ message dcmImage{
     bytes data = 3;
 }
 
-message Request{
-    int32 client_id = 1;
-    string req_msg = 2;
-}
-
 message RequestWholeVolume{
     int32 client_id = 1;
     string req_msg = 2;
     int32 unit_size = 3;
 }
 
-message Response{
-    bool success = 1;
-    string res_msg = 2;
-}
 service dataTransfer{
     rpc getAvailableConfigs(Request) returns(configResponse);
-    rpc exportConfigs(Request) returns(Response);
+    rpc exportConfigs(Request) returns(commonResponse);
     rpc getAvailableDatasets(Request) returns(datasetResponse);
     rpc getVolumeFromDataset(Request) returns(stream volumeResponse);
     rpc Download(Request) returns (stream dcmImage);

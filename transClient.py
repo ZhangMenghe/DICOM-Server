@@ -2,8 +2,14 @@ import time
 import grpc
 import os
 
+import sys
+# insert at 1, 0 is the script path (or '' in REPL)
+sys.path.insert(1, 'proto/')
+
 from proto.transManager_pb2 import *
 from proto.transManager_pb2_grpc import *
+from proto.inspectorSync_pb2 import *
+from proto.inspectorSync_pb2_grpc import *
 from transUtils import *
 
 SERVER_ADDRESS = "localhost:23333"
@@ -13,6 +19,15 @@ class transClient:
     def __init__(self, address):
         channel = grpc.insecure_channel(address)
         self.stub = dataTransferStub(channel)
+        self.syncer = inspectorSyncStub(channel)
+
+    def setRST(self, type, value):
+        res = self.syncer.gsVolumePose(VPMsg(client_id = CLIENT_ID,req_type=ReqType.SET, volume_pose_type= type, values = value))
+        print(res.res_msg)
+    def getOperations(self):
+        itrs = self.syncer.getOperations(Request(client_id = CLIENT_ID))
+        for it in itrs:
+            print(it.gesture_op.type)
     def getAvailableConfigs(self):
         ava_lst = self.stub.getAvailableConfigs(Request(client_id = CLIENT_ID))
         print(ava_lst)
@@ -76,14 +91,17 @@ class transClient:
 
 def main():
     client = transClient(SERVER_ADDRESS)
+    while(True):
+        client.getOperations()
+    # client.setRST(VPMsg.VPType.POS, [1,2,3])
     # ava_config = client.getAvailableConfigs()
     # ava_lst = client.getAvailableDatasets()
     
     # dataset_name = ava_lst.datasets[3].folder_name
-    dataset_name = 'Larry-2012-01-17-MRI'#"Larry_Smarr_2016"
-    ava_vols = client.getAvailableVolume(dataset_name)
-    for v in ava_vols:
-        print(v)
+    # dataset_name = 'Larry-2012-01-17-MRI'#"Larry_Smarr_2016"
+    # ava_vols = client.getAvailableVolume(dataset_name)
+    # for v in ava_vols:
+    #     print(v.folder_name)
     # vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
     # print(vol_name)
     # vol_name = "Larry_Smarr_2017/Larry_2017"

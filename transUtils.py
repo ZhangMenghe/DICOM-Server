@@ -1,6 +1,7 @@
 from os import path, getcwd, listdir, makedirs
 import shutil
 from proto.transManager_pb2 import *
+from proto.common_pb2 import * 
 from dicomUtils import *
 from time import sleep
 from PIL import Image
@@ -56,7 +57,7 @@ class transDataManager():
     def __init__(self, remote_data_path, config_dir, local_data_path = None):
         self.folder_remote_path = remote_data_path
         self.config_dir = config_dir
-        self.configs_ = None
+        self.configs_ = []
         self.config_check_dirty = True
         self.default_sel_percent = 0.8
         self.VR_LEN = 10
@@ -94,7 +95,7 @@ class transDataManager():
         with open(path.join(self.config_dir, name + ".yml"), 'w') as cf:
             cf.write(content)
         self.configs_.append(configResponse.configInfo(file_name=name, content=content))
-        return Response(success = True)
+        return commonResponse(success = True)
     def get_all_available_datasets(self, pacs_index_path):
         if not path.isdir(self.folder_remote_path):
             print("not a dir remote : "+ self.folder_remote_path)
