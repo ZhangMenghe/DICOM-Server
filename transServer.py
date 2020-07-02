@@ -5,7 +5,7 @@ import grpc
 import sys
 sys.path.insert(1, 'proto/')
 from Servicer import *
-
+ 
 class transServer():
     def __init__(self):
         
