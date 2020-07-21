@@ -7,11 +7,22 @@ from proto.common_pb2_grpc import *
 
 from transUtils import *
 import queue
+from time import time
+import threading
 
 class operationServicer(inspectorSyncServicer):
     def __init__(self):
         self.provider = None
-        self.op_pool = queue.Queue()
+        self.ops = []
+        self.gesture_pool = []
+        self.tune_pool = []
+        self.check_pool = []
+        self.mask_value = None
+        self.reset_value = None
+        self.mtx = threading.Lock()
+        self.current_data = None
+        self.volume_info = None
+
     def startBroadcast(self, info, context):
         if self.provider is not None:
             return commonResponse(success = False, res_msg = "exisiting broadcaster")
@@ -25,14 +36,68 @@ class operationServicer(inspectorSyncServicer):
         print(msg.values)
 
         return commonResponse(success = True, res_msg="lalalala")
+
+    def reqestReset(self, msg, context):
+        try:
+            self.ops.remove(FrameUpdateMsg.MsgType.RESET)
+        except:
+            pass
+        self.ops.append(FrameUpdateMsg.MsgType.RESET)
+        self.reset_value = msg
+        
     def setGestureOp(self, touch, context):
-        self.op_pool.put(touch)
-        # print(touch.type)
-        # print(touch.x)
-        # print(touch.y)
+        self.ops.append(FrameUpdateMsg.MsgType.GESTURE)
+        self.gesture_pool.append(touch) 
+
+    def setTuneParams(self, tune, context):
+        self.ops.append(FrameUpdateMsg.MsgType.TUNE)
+        self.tune_pool.append(tune)
+
+    def setCheckParams(self, check, context):
+        self.ops.append(FrameUpdateMsg.MsgType.CHECK)
+        self.check_pool.append(check)
+
+    def setMaskParams(self, msk, context):
+        try:
+            self.ops.remove(FrameUpdateMsg.MsgType.MASK)
+        except:
+            pass
+        self.ops.append(FrameUpdateMsg.MsgType.MASK)
+        self.mask_value = msk
+    def setDisplayVolume(self, msg, context):
+        if(msg.vol_path == self.current_data):
+            return
+        try:
+            self.ops.remove(FrameUpdateMsg.MsgType.DATA)
+        except:
+            pass
+        self.ops.append(FrameUpdateMsg.MsgType.DATA)
+        self.current_data = msg.vol_path
+        self.volume_info = msg
+
+    def getUpdates(self, req, context):
+        # mutex.acquire()
+        self.gesture_pool.sort(key = lambda x: int(x.gid))
+        rt = FrameUpdateMsg(types = self.ops, gestures = self.gesture_pool, tunes = self.tune_pool, checks=self.check_pool, mask_value=self.mask_value, reset_value=self.reset_value, data_value=self.volume_info)
+        self.ops = []
+        self.gesture_pool = []
+        self.tune_pool = []
+        self.check_pool = []
+        self.mask_value = None
+        self.reset_value = None
+        # mutex.release()
+        return rt
+
     def getOperations(self, req, context):
-        while not self.op_pool.empty():
-            yield OperationResponse(gesture_op = self.op_pool.get())
+        if(len(self.gesture_pool) == 0):
+            return None
+        self.gesture_pool.sort(key = lambda x: int(x.gid))
+        ges_batch = OperationBatch(bid = time(), gesture_op = self.gesture_pool)
+        self.gesture_pool.clear()
+        return ges_batch
+
+        # while not self.op_pool.empty():
+        #     yield OperationResponse(gesture_op = self.op_pool.get())
 
 class dataServicer(dataTransferServicer):
     def __init__(self):

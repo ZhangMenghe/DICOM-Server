@@ -91,8 +91,8 @@ class transClient:
 
 def main():
     client = transClient(SERVER_ADDRESS)
-    while(True):
-        client.getOperations()
+    # while(True):
+    #     client.getOperations()
     # client.setRST(VPMsg.VPType.POS, [1,2,3])
     # ava_config = client.getAvailableConfigs()
     # ava_lst = client.getAvailableDatasets()
@@ -109,10 +109,10 @@ def main():
     # client.getMasks(vol_name)
     # vol_names = ["IRB1/26_LAVACORPOST2", "IRB2/28_WATERPOSTCorLAVAFLEX2MM", "IRB3/2100_FATPOSTCORLAVAFLEX20secs", "IRB4/21_WATERPOSTCORLAVAFLEX20secs"]
     # vol_names = ['IRB5/21_WATERPOSTCORLAVAFLEX20secs', 'IRB6/22_WATERPOSTCORLAVAFLEX20secs']
-    # vol_names = ["IRB1/26_LAVACORPOST2"]
-    # for vol_name in vol_names:
-    #     client.download_volume(vol_name)
-    #     client.getMasks_volume(vol_name)
+    vol_names = ["IRB01/2100_FATPOSTCORLAVAFLEX20secs"]
+    for vol_name in vol_names:
+        client.download_volume(vol_name)
+        client.getMasks_volume(vol_name)
 
 
 

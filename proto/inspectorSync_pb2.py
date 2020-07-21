@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='helmsley',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x13inspectorSync.proto\x12\x08helmsley\x1a\x0c\x63ommon.proto\"\xa8\x01\n\x05VPMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12#\n\x08req_type\x18\x02 \x01(\x0e\x32\x11.helmsley.ReqType\x12\x30\n\x10volume_pose_type\x18\x03 \x01(\x0e\x32\x16.helmsley.VPMsg.VPType\x12\x0e\n\x06values\x18\x04 \x03(\x02\"%\n\x06VPType\x12\x07\n\x03POS\x10\x00\x12\t\n\x05SCALE\x10\x01\x12\x07\n\x03ROT\x10\x02\"\x89\x01\n\tGestureOp\x12(\n\x04type\x18\x01 \x01(\x0e\x32\x1a.helmsley.GestureOp.OPType\x12\t\n\x01x\x18\x02 \x01(\x02\x12\t\n\x01y\x18\x03 \x01(\x02\"<\n\x06OPType\x12\x0e\n\nTOUCH_DOWN\x10\x00\x12\x0e\n\nTOUCH_MOVE\x10\x01\x12\t\n\x05SCALE\x10\x02\x12\x07\n\x03PAN\x10\x03\"<\n\x11OperationResponse\x12\'\n\ngesture_op\x18\x01 \x01(\x0b\x32\x13.helmsley.GestureOp*\x1b\n\x07ReqType\x12\x07\n\x03SET\x10\x00\x12\x07\n\x03GET\x10\x01\x32\xde\x01\n\rinspectorSync\x12+\n\x0estartBroadcast\x12\x08.Request\x1a\x0f.commonResponse\x12\x30\n\x0cgsVolumePose\x12\x0f.helmsley.VPMsg\x1a\x0f.commonResponse\x12\x34\n\x0csetGestureOp\x12\x13.helmsley.GestureOp\x1a\x0f.commonResponse\x12\x38\n\rgetOperations\x12\x08.Request\x1a\x1b.helmsley.OperationResponse0\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x13inspectorSync.proto\x12\x08helmsley\x1a\x0c\x63ommon.proto\"\xa8\x01\n\x05VPMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12#\n\x08req_type\x18\x02 \x01(\x0e\x32\x11.helmsley.ReqType\x12\x30\n\x10volume_pose_type\x18\x03 \x01(\x0e\x32\x16.helmsley.VPMsg.VPType\x12\x0e\n\x06values\x18\x04 \x03(\x02\"%\n\x06VPType\x12\x07\n\x03POS\x10\x00\x12\t\n\x05SCALE\x10\x01\x12\x07\n\x03ROT\x10\x02\"\x96\x01\n\tGestureOp\x12\x0b\n\x03gid\x18\x01 \x01(\x03\x12(\n\x04type\x18\x02 \x01(\x0e\x32\x1a.helmsley.GestureOp.OPType\x12\t\n\x01x\x18\x03 \x01(\x02\x12\t\n\x01y\x18\x04 \x01(\x02\"<\n\x06OPType\x12\x0e\n\nTOUCH_DOWN\x10\x00\x12\x0e\n\nTOUCH_MOVE\x10\x01\x12\t\n\x05SCALE\x10\x02\x12\x07\n\x03PAN\x10\x03\"F\n\x0eOperationBatch\x12\x0b\n\x03\x62id\x18\x01 \x01(\x02\x12\'\n\ngesture_op\x18\x02 \x03(\x0b\x32\x13.helmsley.GestureOp\"^\n\x08ResetMsg\x12\x12\n\ncheck_keys\x18\x01 \x03(\t\x12\x14\n\x0c\x63heck_values\x18\x02 \x03(\x08\x12\x13\n\x0bvolume_pose\x18\x03 \x03(\x02\x12\x13\n\x0b\x63\x61mera_pose\x18\x04 \x03(\x02\"\x8c\x02\n\x07TuneMsg\x12(\n\x04type\x18\x01 \x01(\x0e\x32\x1a.helmsley.TuneMsg.TuneType\x12\x0e\n\x06target\x18\x02 \x01(\x05\x12\x12\n\nsub_target\x18\x03 \x01(\x05\x12\r\n\x05value\x18\x04 \x01(\x02\x12\x0e\n\x06values\x18\x05 \x03(\x02\"\x93\x01\n\x08TuneType\x12\x0b\n\x07\x41\x44\x44_ONE\x10\x00\x12\x0e\n\nREMOVE_ONE\x10\x01\x12\x0e\n\nREMOTE_ALL\x10\x02\x12\x0b\n\x07SET_ONE\x10\x03\x12\x0b\n\x07SET_ALL\x10\x04\x12\x0f\n\x0bSET_VISIBLE\x10\x05\x12\x0e\n\nSET_TARGET\x10\x06\x12\r\n\tCUT_PLANE\x10\x07\x12\x10\n\x0c\x43OLOR_SCHEME\x10\x08\"&\n\x08\x43heckMsg\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08\"%\n\x07MaskMsg\x12\x0b\n\x03num\x18\x01 \x01(\x05\x12\r\n\x05mbits\x18\x02 \x01(\x05\"P\n\rvolumeConcise\x12\x10\n\x08vol_path\x18\x01 \x01(\t\x12\x0c\n\x04\x64ims\x18\x02 \x03(\x05\x12\x0c\n\x04size\x18\x03 \x03(\x02\x12\x11\n\twith_mask\x18\x04 \x01(\x08\"\xf7\x02\n\x0e\x46rameUpdateMsg\x12/\n\x05types\x18\x01 \x03(\x0e\x32 .helmsley.FrameUpdateMsg.MsgType\x12%\n\x08gestures\x18\x02 \x03(\x0b\x32\x13.helmsley.GestureOp\x12 \n\x05tunes\x18\x03 \x03(\x0b\x32\x11.helmsley.TuneMsg\x12\"\n\x06\x63hecks\x18\x04 \x03(\x0b\x32\x12.helmsley.CheckMsg\x12%\n\nmask_value\x18\x05 \x01(\x0b\x32\x11.helmsley.MaskMsg\x12\'\n\x0breset_value\x18\x06 \x01(\x0b\x32\x12.helmsley.ResetMsg\x12+\n\ndata_value\x18\x07 \x01(\x0b\x32\x17.helmsley.volumeConcise\"J\n\x07MsgType\x12\x0b\n\x07GESTURE\x10\x00\x12\x08\n\x04TUNE\x10\x01\x12\t\n\x05\x43HECK\x10\x02\x12\x08\n\x04MASK\x10\x03\x12\t\n\x05RESET\x10\x04\x12\x08\n\x04\x44\x41TA\x10\x05*\x1b\n\x07ReqType\x12\x07\n\x03SET\x10\x00\x12\x07\n\x03GET\x10\x01\x32\x9e\x04\n\rinspectorSync\x12+\n\x0estartBroadcast\x12\x08.Request\x1a\x0f.commonResponse\x12\x30\n\x0cgsVolumePose\x12\x0f.helmsley.VPMsg\x1a\x0f.commonResponse\x12\x33\n\rgetOperations\x12\x08.Request\x1a\x18.helmsley.OperationBatch\x12\x30\n\ngetUpdates\x12\x08.Request\x1a\x18.helmsley.FrameUpdateMsg\x12\x32\n\x0breqestReset\x12\x12.helmsley.ResetMsg\x1a\x0f.commonResponse\x12\x34\n\x0csetGestureOp\x12\x13.helmsley.GestureOp\x1a\x0f.commonResponse\x12\x33\n\rsetTuneParams\x12\x11.helmsley.TuneMsg\x1a\x0f.commonResponse\x12\x35\n\x0esetCheckParams\x12\x12.helmsley.CheckMsg\x1a\x0f.commonResponse\x12\x33\n\rsetMaskParams\x12\x11.helmsley.MaskMsg\x1a\x0f.commonResponse\x12<\n\x10setDisplayVolume\x12\x17.helmsley.volumeConcise\x1a\x0f.commonResponseb\x06proto3')
   ,
   dependencies=[common__pb2.DESCRIPTOR,])
 
@@ -42,8 +42,8 @@ _REQTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=420,
-  serialized_end=447,
+  serialized_start=1349,
+  serialized_end=1376,
 )
 _sym_db.RegisterEnumDescriptor(_REQTYPE)
 
@@ -103,10 +103,98 @@ _GESTUREOP_OPTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=296,
-  serialized_end=356,
+  serialized_start=309,
+  serialized_end=369,
 )
 _sym_db.RegisterEnumDescriptor(_GESTUREOP_OPTYPE)
+
+_TUNEMSG_TUNETYPE = _descriptor.EnumDescriptor(
+  name='TuneType',
+  full_name='helmsley.TuneMsg.TuneType',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='ADD_ONE', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='REMOVE_ONE', index=1, number=1,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='REMOTE_ALL', index=2, number=2,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='SET_ONE', index=3, number=3,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='SET_ALL', index=4, number=4,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='SET_VISIBLE', index=5, number=5,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='SET_TARGET', index=6, number=6,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='CUT_PLANE', index=7, number=7,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='COLOR_SCHEME', index=8, number=8,
+      serialized_options=None,
+      type=None),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=661,
+  serialized_end=808,
+)
+_sym_db.RegisterEnumDescriptor(_TUNEMSG_TUNETYPE)
+
+_FRAMEUPDATEMSG_MSGTYPE = _descriptor.EnumDescriptor(
+  name='MsgType',
+  full_name='helmsley.FrameUpdateMsg.MsgType',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='GESTURE', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='TUNE', index=1, number=1,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='CHECK', index=2, number=2,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='MASK', index=3, number=3,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='RESET', index=4, number=4,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='DATA', index=5, number=5,
+      serialized_options=None,
+      type=None),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=1273,
+  serialized_end=1347,
+)
+_sym_db.RegisterEnumDescriptor(_FRAMEUPDATEMSG_MSGTYPE)
 
 
 _VPMSG = _descriptor.Descriptor(
@@ -170,22 +258,29 @@ _GESTUREOP = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='type', full_name='helmsley.GestureOp.type', index=0,
-      number=1, type=14, cpp_type=8, label=1,
+      name='gid', full_name='helmsley.GestureOp.gid', index=0,
+      number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='x', full_name='helmsley.GestureOp.x', index=1,
-      number=2, type=2, cpp_type=6, label=1,
+      name='type', full_name='helmsley.GestureOp.type', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='x', full_name='helmsley.GestureOp.x', index=2,
+      number=3, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='y', full_name='helmsley.GestureOp.y', index=2,
-      number=3, type=2, cpp_type=6, label=1,
+      name='y', full_name='helmsley.GestureOp.y', index=3,
+      number=4, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -204,21 +299,28 @@ _GESTUREOP = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=219,
-  serialized_end=356,
+  serialized_end=369,
 )
 
 
-_OPERATIONRESPONSE = _descriptor.Descriptor(
-  name='OperationResponse',
-  full_name='helmsley.OperationResponse',
+_OPERATIONBATCH = _descriptor.Descriptor(
+  name='OperationBatch',
+  full_name='helmsley.OperationBatch',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='gesture_op', full_name='helmsley.OperationResponse.gesture_op', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='bid', full_name='helmsley.OperationBatch.bid', index=0,
+      number=1, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='gesture_op', full_name='helmsley.OperationBatch.gesture_op', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -234,8 +336,322 @@ _OPERATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=358,
-  serialized_end=418,
+  serialized_start=371,
+  serialized_end=441,
+)
+
+
+_RESETMSG = _descriptor.Descriptor(
+  name='ResetMsg',
+  full_name='helmsley.ResetMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='check_keys', full_name='helmsley.ResetMsg.check_keys', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='check_values', full_name='helmsley.ResetMsg.check_values', index=1,
+      number=2, type=8, cpp_type=7, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='volume_pose', full_name='helmsley.ResetMsg.volume_pose', index=2,
+      number=3, type=2, cpp_type=6, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='camera_pose', full_name='helmsley.ResetMsg.camera_pose', index=3,
+      number=4, type=2, cpp_type=6, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=443,
+  serialized_end=537,
+)
+
+
+_TUNEMSG = _descriptor.Descriptor(
+  name='TuneMsg',
+  full_name='helmsley.TuneMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='type', full_name='helmsley.TuneMsg.type', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='target', full_name='helmsley.TuneMsg.target', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='sub_target', full_name='helmsley.TuneMsg.sub_target', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='helmsley.TuneMsg.value', index=3,
+      number=4, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='values', full_name='helmsley.TuneMsg.values', index=4,
+      number=5, type=2, cpp_type=6, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _TUNEMSG_TUNETYPE,
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=540,
+  serialized_end=808,
+)
+
+
+_CHECKMSG = _descriptor.Descriptor(
+  name='CheckMsg',
+  full_name='helmsley.CheckMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='helmsley.CheckMsg.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='helmsley.CheckMsg.value', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=810,
+  serialized_end=848,
+)
+
+
+_MASKMSG = _descriptor.Descriptor(
+  name='MaskMsg',
+  full_name='helmsley.MaskMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='num', full_name='helmsley.MaskMsg.num', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='mbits', full_name='helmsley.MaskMsg.mbits', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=850,
+  serialized_end=887,
+)
+
+
+_VOLUMECONCISE = _descriptor.Descriptor(
+  name='volumeConcise',
+  full_name='helmsley.volumeConcise',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='vol_path', full_name='helmsley.volumeConcise.vol_path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='dims', full_name='helmsley.volumeConcise.dims', index=1,
+      number=2, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='size', full_name='helmsley.volumeConcise.size', index=2,
+      number=3, type=2, cpp_type=6, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='with_mask', full_name='helmsley.volumeConcise.with_mask', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=889,
+  serialized_end=969,
+)
+
+
+_FRAMEUPDATEMSG = _descriptor.Descriptor(
+  name='FrameUpdateMsg',
+  full_name='helmsley.FrameUpdateMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='types', full_name='helmsley.FrameUpdateMsg.types', index=0,
+      number=1, type=14, cpp_type=8, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='gestures', full_name='helmsley.FrameUpdateMsg.gestures', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='tunes', full_name='helmsley.FrameUpdateMsg.tunes', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='checks', full_name='helmsley.FrameUpdateMsg.checks', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='mask_value', full_name='helmsley.FrameUpdateMsg.mask_value', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='reset_value', full_name='helmsley.FrameUpdateMsg.reset_value', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='data_value', full_name='helmsley.FrameUpdateMsg.data_value', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _FRAMEUPDATEMSG_MSGTYPE,
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=972,
+  serialized_end=1347,
 )
 
 _VPMSG.fields_by_name['req_type'].enum_type = _REQTYPE
@@ -243,10 +659,26 @@ _VPMSG.fields_by_name['volume_pose_type'].enum_type = _VPMSG_VPTYPE
 _VPMSG_VPTYPE.containing_type = _VPMSG
 _GESTUREOP.fields_by_name['type'].enum_type = _GESTUREOP_OPTYPE
 _GESTUREOP_OPTYPE.containing_type = _GESTUREOP
-_OPERATIONRESPONSE.fields_by_name['gesture_op'].message_type = _GESTUREOP
+_OPERATIONBATCH.fields_by_name['gesture_op'].message_type = _GESTUREOP
+_TUNEMSG.fields_by_name['type'].enum_type = _TUNEMSG_TUNETYPE
+_TUNEMSG_TUNETYPE.containing_type = _TUNEMSG
+_FRAMEUPDATEMSG.fields_by_name['types'].enum_type = _FRAMEUPDATEMSG_MSGTYPE
+_FRAMEUPDATEMSG.fields_by_name['gestures'].message_type = _GESTUREOP
+_FRAMEUPDATEMSG.fields_by_name['tunes'].message_type = _TUNEMSG
+_FRAMEUPDATEMSG.fields_by_name['checks'].message_type = _CHECKMSG
+_FRAMEUPDATEMSG.fields_by_name['mask_value'].message_type = _MASKMSG
+_FRAMEUPDATEMSG.fields_by_name['reset_value'].message_type = _RESETMSG
+_FRAMEUPDATEMSG.fields_by_name['data_value'].message_type = _VOLUMECONCISE
+_FRAMEUPDATEMSG_MSGTYPE.containing_type = _FRAMEUPDATEMSG
 DESCRIPTOR.message_types_by_name['VPMsg'] = _VPMSG
 DESCRIPTOR.message_types_by_name['GestureOp'] = _GESTUREOP
-DESCRIPTOR.message_types_by_name['OperationResponse'] = _OPERATIONRESPONSE
+DESCRIPTOR.message_types_by_name['OperationBatch'] = _OPERATIONBATCH
+DESCRIPTOR.message_types_by_name['ResetMsg'] = _RESETMSG
+DESCRIPTOR.message_types_by_name['TuneMsg'] = _TUNEMSG
+DESCRIPTOR.message_types_by_name['CheckMsg'] = _CHECKMSG
+DESCRIPTOR.message_types_by_name['MaskMsg'] = _MASKMSG
+DESCRIPTOR.message_types_by_name['volumeConcise'] = _VOLUMECONCISE
+DESCRIPTOR.message_types_by_name['FrameUpdateMsg'] = _FRAMEUPDATEMSG
 DESCRIPTOR.enum_types_by_name['ReqType'] = _REQTYPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -264,12 +696,54 @@ GestureOp = _reflection.GeneratedProtocolMessageType('GestureOp', (_message.Mess
   ))
 _sym_db.RegisterMessage(GestureOp)
 
-OperationResponse = _reflection.GeneratedProtocolMessageType('OperationResponse', (_message.Message,), dict(
-  DESCRIPTOR = _OPERATIONRESPONSE,
+OperationBatch = _reflection.GeneratedProtocolMessageType('OperationBatch', (_message.Message,), dict(
+  DESCRIPTOR = _OPERATIONBATCH,
   __module__ = 'inspectorSync_pb2'
-  # @@protoc_insertion_point(class_scope:helmsley.OperationResponse)
+  # @@protoc_insertion_point(class_scope:helmsley.OperationBatch)
   ))
-_sym_db.RegisterMessage(OperationResponse)
+_sym_db.RegisterMessage(OperationBatch)
+
+ResetMsg = _reflection.GeneratedProtocolMessageType('ResetMsg', (_message.Message,), dict(
+  DESCRIPTOR = _RESETMSG,
+  __module__ = 'inspectorSync_pb2'
+  # @@protoc_insertion_point(class_scope:helmsley.ResetMsg)
+  ))
+_sym_db.RegisterMessage(ResetMsg)
+
+TuneMsg = _reflection.GeneratedProtocolMessageType('TuneMsg', (_message.Message,), dict(
+  DESCRIPTOR = _TUNEMSG,
+  __module__ = 'inspectorSync_pb2'
+  # @@protoc_insertion_point(class_scope:helmsley.TuneMsg)
+  ))
+_sym_db.RegisterMessage(TuneMsg)
+
+CheckMsg = _reflection.GeneratedProtocolMessageType('CheckMsg', (_message.Message,), dict(
+  DESCRIPTOR = _CHECKMSG,
+  __module__ = 'inspectorSync_pb2'
+  # @@protoc_insertion_point(class_scope:helmsley.CheckMsg)
+  ))
+_sym_db.RegisterMessage(CheckMsg)
+
+MaskMsg = _reflection.GeneratedProtocolMessageType('MaskMsg', (_message.Message,), dict(
+  DESCRIPTOR = _MASKMSG,
+  __module__ = 'inspectorSync_pb2'
+  # @@protoc_insertion_point(class_scope:helmsley.MaskMsg)
+  ))
+_sym_db.RegisterMessage(MaskMsg)
+
+volumeConcise = _reflection.GeneratedProtocolMessageType('volumeConcise', (_message.Message,), dict(
+  DESCRIPTOR = _VOLUMECONCISE,
+  __module__ = 'inspectorSync_pb2'
+  # @@protoc_insertion_point(class_scope:helmsley.volumeConcise)
+  ))
+_sym_db.RegisterMessage(volumeConcise)
+
+FrameUpdateMsg = _reflection.GeneratedProtocolMessageType('FrameUpdateMsg', (_message.Message,), dict(
+  DESCRIPTOR = _FRAMEUPDATEMSG,
+  __module__ = 'inspectorSync_pb2'
+  # @@protoc_insertion_point(class_scope:helmsley.FrameUpdateMsg)
+  ))
+_sym_db.RegisterMessage(FrameUpdateMsg)
 
 
 
@@ -279,8 +753,8 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=450,
-  serialized_end=672,
+  serialized_start=1379,
+  serialized_end=1921,
   methods=[
   _descriptor.MethodDescriptor(
     name='startBroadcast',
@@ -301,21 +775,75 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
+    name='getOperations',
+    full_name='helmsley.inspectorSync.getOperations',
+    index=2,
+    containing_service=None,
+    input_type=common__pb2._REQUEST,
+    output_type=_OPERATIONBATCH,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='getUpdates',
+    full_name='helmsley.inspectorSync.getUpdates',
+    index=3,
+    containing_service=None,
+    input_type=common__pb2._REQUEST,
+    output_type=_FRAMEUPDATEMSG,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='reqestReset',
+    full_name='helmsley.inspectorSync.reqestReset',
+    index=4,
+    containing_service=None,
+    input_type=_RESETMSG,
+    output_type=common__pb2._COMMONRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
     name='setGestureOp',
     full_name='helmsley.inspectorSync.setGestureOp',
-    index=2,
+    index=5,
     containing_service=None,
     input_type=_GESTUREOP,
     output_type=common__pb2._COMMONRESPONSE,
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='getOperations',
-    full_name='helmsley.inspectorSync.getOperations',
-    index=3,
+    name='setTuneParams',
+    full_name='helmsley.inspectorSync.setTuneParams',
+    index=6,
     containing_service=None,
-    input_type=common__pb2._REQUEST,
-    output_type=_OPERATIONRESPONSE,
+    input_type=_TUNEMSG,
+    output_type=common__pb2._COMMONRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='setCheckParams',
+    full_name='helmsley.inspectorSync.setCheckParams',
+    index=7,
+    containing_service=None,
+    input_type=_CHECKMSG,
+    output_type=common__pb2._COMMONRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='setMaskParams',
+    full_name='helmsley.inspectorSync.setMaskParams',
+    index=8,
+    containing_service=None,
+    input_type=_MASKMSG,
+    output_type=common__pb2._COMMONRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='setDisplayVolume',
+    full_name='helmsley.inspectorSync.setDisplayVolume',
+    index=9,
+    containing_service=None,
+    input_type=_VOLUMECONCISE,
+    output_type=common__pb2._COMMONRESPONSE,
     serialized_options=None,
   ),
 ])
