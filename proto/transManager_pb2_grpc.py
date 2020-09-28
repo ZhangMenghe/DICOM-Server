@@ -55,6 +55,11 @@ class dataTransferStub(object):
         request_serializer=common__pb2.Request.SerializeToString,
         response_deserializer=transManager__pb2.volumeWholeResponse.FromString,
         )
+    self.DownloadCenterLineData = channel.unary_stream(
+        '/helmsley.dataTransfer/DownloadCenterLineData',
+        request_serializer=common__pb2.Request.SerializeToString,
+        response_deserializer=transManager__pb2.centerlineData.FromString,
+        )
 
 
 class dataTransferServicer(object):
@@ -117,6 +122,13 @@ class dataTransferServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def DownloadCenterLineData(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_dataTransferServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -159,6 +171,11 @@ def add_dataTransferServicer_to_server(servicer, server):
           servicer.DownloadMasksVolume,
           request_deserializer=common__pb2.Request.FromString,
           response_serializer=transManager__pb2.volumeWholeResponse.SerializeToString,
+      ),
+      'DownloadCenterLineData': grpc.unary_stream_rpc_method_handler(
+          servicer.DownloadCenterLineData,
+          request_deserializer=common__pb2.Request.FromString,
+          response_serializer=transManager__pb2.centerlineData.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

@@ -140,3 +140,6 @@ class dataServicer(dataTransferServicer):
     def DownloadMasksVolume(self, request, context):
         print("===Client: " + str(request.client_id)+" Stream Masks from " + request.req_msg)
         return self.trans_manager.inference_masks_as_volume(request.req_msg)
+    def DownloadCenterLineData(self, request, context):
+        print("===Client: " + str(request.client_id) + " Start to send centerline data")
+        return self.trans_manager.get_centerline(request.req_msg)

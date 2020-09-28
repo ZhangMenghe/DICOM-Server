@@ -294,3 +294,20 @@ class transDataManager():
 
     def inference_masks_as_images(self, vl_folder_):
         return self.download_folder_as_images(vl_folder_)
+    def get_centerline(self, vl_folder):
+        cline_file = path.join(self.folder_remote_path, vl_folder, "centerline", "normalized.txt")
+        if not path.exists(cline_file):
+            return
+        with open(cline_file, 'r') as rf:
+            contents = rf.readlines()
+            record_num = len(contents) % 4000
+            for i in range(record_num):
+                parts = contents[4000*i+i : 4000*i+i + 4001]
+                cd = [.0]*12001
+                cd[0] = float(parts[0])
+                idx = 1
+                for line in parts[1:]:
+                    cd[idx:idx+3] = [float(x) for x in line.split(',')]
+                    idx+=3
+                yield centerlineData(data = cd)
+        

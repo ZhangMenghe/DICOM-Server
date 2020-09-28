@@ -11,7 +11,7 @@ from proto.transManager_pb2_grpc import *
 from proto.inspectorSync_pb2 import *
 from proto.inspectorSync_pb2_grpc import *
 from transUtils import *
-
+from shutil import copyfile
 SERVER_ADDRESS = "localhost:23333"
 CLIENT_ID = 100
 
@@ -88,6 +88,11 @@ class transClient:
         for it in itrs:
             f.write(it.data)
         f.close()
+    def getCenterLineData(self, folder_name):
+        itrs = self.stub.DownloadCenterLineData(Request(client_id = CLIENT_ID,req_msg=folder_name))
+        for it in itrs:
+            print(it.data[0])
+    
 
 def main():
     client = transClient(SERVER_ADDRESS)
@@ -107,10 +112,19 @@ def main():
     # vol_name = "Larry_Smarr_2017/Larry_2017"
     # client.download(vol_name)
     # client.getMasks(vol_name)
-    # vol_names = ["IRB1/26_LAVACORPOST2", "IRB2/28_WATERPOSTCorLAVAFLEX2MM", "IRB3/2100_FATPOSTCORLAVAFLEX20secs", "IRB4/21_WATERPOSTCORLAVAFLEX20secs"]
+    # vol_names = ["IRB01/2100_FATPOSTCORLAVAFLEX20secs","IRB02/21_WATERPOSTCORLAVAFLEX20secs","IRB03/22_WATERPOSTCORLAVAFLEX20secs","IRB04/21_WATERPOSTCORLAVAFLEX20secs", "IRB05/17_WATERPOSTCORLAVAFLEX20secs", "IRB06/19_WATERPOSTCORLAVAFLEX20secs"]
     # vol_names = ['IRB5/21_WATERPOSTCORLAVAFLEX20secs', 'IRB6/22_WATERPOSTCORLAVAFLEX20secs']
     vol_names = ["IRB01/2100_FATPOSTCORLAVAFLEX20secs"]
+    # vol_names = ["IRB03/22_WATERPOSTCORLAVAFLEX20secs"]#["IRB02/21_WATERPOSTCORLAVAFLEX20secs"]
+
     for vol_name in vol_names:
+        client.getCenterLineData(vol_name)
+        # vol_path = '../data/PACS/' + vol_name
+        # # os.makedirs(path.join(vol_path, "centerline"))
+        # src_path = '../volume-rendering/app/src/main/assets/dicom-data/'+vol_name.split('/')[0]+'_normalized.txt'
+        # print(src_path)
+        # copyfile(src_path, path.join(vol_path, "centerline", "normalized.txt"))
+
         client.download_volume(vol_name)
         client.getMasks_volume(vol_name)
 

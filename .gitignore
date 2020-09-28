@@ -37,3 +37,5 @@ __*
 data/
 data_mask/
 report/*
+jupyters/*
+.ipynb_checkpoints/*
