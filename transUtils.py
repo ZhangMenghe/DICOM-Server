@@ -2,6 +2,8 @@ from os import path, getcwd, listdir, makedirs
 import shutil
 from proto.transManager_pb2 import *
 from proto.common_pb2 import * 
+import sys
+sys.path.append("proto")
 from dicomUtils import *
 from time import sleep
 from PIL import Image
