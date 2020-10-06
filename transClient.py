@@ -100,13 +100,13 @@ def main():
     #     client.getOperations()
     # client.setRST(VPMsg.VPType.POS, [1,2,3])
     # ava_config = client.getAvailableConfigs()
-    # ava_lst = client.getAvailableDatasets()
+    ava_lst = client.getAvailableDatasets()
     
-    # dataset_name = ava_lst.datasets[3].folder_name
+    dataset_name = ava_lst.datasets[0].folder_name
     # dataset_name = 'Larry-2012-01-17-MRI'#"Larry_Smarr_2016"
-    # ava_vols = client.getAvailableVolume(dataset_name)
-    # for v in ava_vols:
-    #     print(v.folder_name)
+    ava_vols = client.getAvailableVolume(dataset_name)
+    for v in ava_vols:
+        print(v.folder_name)
     # vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
     # print(vol_name)
     # vol_name = "Larry_Smarr_2017/Larry_2017"
@@ -114,19 +114,19 @@ def main():
     # client.getMasks(vol_name)
     # vol_names = ["IRB01/2100_FATPOSTCORLAVAFLEX20secs","IRB02/21_WATERPOSTCORLAVAFLEX20secs","IRB03/22_WATERPOSTCORLAVAFLEX20secs","IRB04/21_WATERPOSTCORLAVAFLEX20secs", "IRB05/17_WATERPOSTCORLAVAFLEX20secs", "IRB06/19_WATERPOSTCORLAVAFLEX20secs"]
     # vol_names = ['IRB5/21_WATERPOSTCORLAVAFLEX20secs', 'IRB6/22_WATERPOSTCORLAVAFLEX20secs']
-    vol_names = ["IRB01/2100_FATPOSTCORLAVAFLEX20secs"]
+    # vol_names = ["IRB01/2100_FATPOSTCORLAVAFLEX20secs"]
     # vol_names = ["IRB03/22_WATERPOSTCORLAVAFLEX20secs"]#["IRB02/21_WATERPOSTCORLAVAFLEX20secs"]
 
-    for vol_name in vol_names:
-        client.getCenterLineData(vol_name)
+    # for vol_name in vol_names:
+    #     client.getCenterLineData(vol_name)
         # vol_path = '../data/PACS/' + vol_name
         # # os.makedirs(path.join(vol_path, "centerline"))
         # src_path = '../volume-rendering/app/src/main/assets/dicom-data/'+vol_name.split('/')[0]+'_normalized.txt'
         # print(src_path)
         # copyfile(src_path, path.join(vol_path, "centerline", "normalized.txt"))
 
-        client.download_volume(vol_name)
-        client.getMasks_volume(vol_name)
+        # client.download_volume(vol_name)
+        # client.getMasks_volume(vol_name)
 
 
 
