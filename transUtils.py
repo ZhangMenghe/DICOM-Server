@@ -40,6 +40,9 @@ def build_volume_struct_from_files(rf_path):
             infos = record_lines[2*i].rstrip('\n').split('/')
             scores_np = np.array(record_lines[2*i+1].split('/')).astype(np.float)
             simg = cv2.imread(path.join(tn_pre, infos[0], 'full.png'), 0)
+            if simg is None:
+                mdims = literal_eval(infos[1])[:2]
+                simg = np.zeros(mdims,dtype=np.uint8)
             spacing = literal_eval(infos[4])
             vsc.append(volumeResponse.volumeInfo(folder_name=infos[0], \
                 dims = literal_eval(infos[1]),\

@@ -20,6 +20,11 @@ class inspectorSyncStub(object):
         request_serializer=common__pb2.Request.SerializeToString,
         response_deserializer=common__pb2.commonResponse.FromString,
         )
+    self.startReceiveBroadcast = channel.unary_unary(
+        '/helmsley.inspectorSync/startReceiveBroadcast',
+        request_serializer=common__pb2.Request.SerializeToString,
+        response_deserializer=common__pb2.commonResponse.FromString,
+        )
     self.gsVolumePose = channel.unary_unary(
         '/helmsley.inspectorSync/gsVolumePose',
         request_serializer=inspectorSync__pb2.VPMsg.SerializeToString,
@@ -72,6 +77,13 @@ class inspectorSyncServicer(object):
   pass
 
   def startBroadcast(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def startReceiveBroadcast(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -146,6 +158,11 @@ def add_inspectorSyncServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'startBroadcast': grpc.unary_unary_rpc_method_handler(
           servicer.startBroadcast,
+          request_deserializer=common__pb2.Request.FromString,
+          response_serializer=common__pb2.commonResponse.SerializeToString,
+      ),
+      'startReceiveBroadcast': grpc.unary_unary_rpc_method_handler(
+          servicer.startReceiveBroadcast,
           request_deserializer=common__pb2.Request.FromString,
           response_serializer=common__pb2.commonResponse.SerializeToString,
       ),

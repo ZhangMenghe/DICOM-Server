@@ -8,7 +8,6 @@ from Servicer import *
  
 class transServer():
     def __init__(self):
-        
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
         self.data_servicer = dataServicer()
         self.op_servicer = operationServicer()

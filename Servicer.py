@@ -13,6 +13,8 @@ import threading
 class operationServicer(inspectorSyncServicer):
     def __init__(self):
         self.provider = None
+        self.receivers = {}
+
         self.ops = []
         self.gesture_pool = []
         self.tune_pool = []
@@ -22,11 +24,24 @@ class operationServicer(inspectorSyncServicer):
         self.mtx = threading.Lock()
         self.current_data = None
         self.volume_info = None
+        self.data_need_built = True
 
+        self.frame_state = None
+        self.last_time = None
     def startBroadcast(self, info, context):
         if self.provider is not None:
             return commonResponse(success = False, res_msg = "exisiting broadcaster")
         self.provider = info.client_id
+        print("===id: " + str(self.provider) + " start to broadcast")
+        return commonResponse(success = True)
+    
+    def startReceiveBroadcast(self, info, context):
+        if(self.provider is not None):
+            if(self.provider == info.client_id):
+                return commonResponse(success = False, res_msg = "exisiting broadcaster")
+        self.receivers[info.client_id] = False
+        print("===id: " + str(info.client_id) + " register as receiver")
+        return commonResponse(success = True)
 
     def gsVolumePose(self, msg, context):
         # print("===Client" + str(msg.client_id) + )
@@ -64,6 +79,7 @@ class operationServicer(inspectorSyncServicer):
             pass
         self.ops.append(FrameUpdateMsg.MsgType.MASK)
         self.mask_value = msk
+    
     def setDisplayVolume(self, msg, context):
         if(msg.vol_path == self.current_data):
             return
@@ -76,17 +92,32 @@ class operationServicer(inspectorSyncServicer):
         self.volume_info = msg
 
     def getUpdates(self, req, context):
-        # mutex.acquire()
-        self.gesture_pool.sort(key = lambda x: int(x.gid))
-        rt = FrameUpdateMsg(types = self.ops, gestures = self.gesture_pool, tunes = self.tune_pool, checks=self.check_pool, mask_value=self.mask_value, reset_value=self.reset_value, data_value=self.volume_info)
-        self.ops = []
-        self.gesture_pool = []
-        self.tune_pool = []
-        self.check_pool = []
-        self.mask_value = None
-        self.reset_value = None
-        # mutex.release()
-        return rt
+        if(self.provider is None):
+            return None
+        if(self.receivers[req.client_id]):
+            return None
+
+        if self.data_need_built:
+            self.gesture_pool.sort(key = lambda x: int(x.gid))
+            self.frame_state = FrameUpdateMsg(types = self.ops, gestures = self.gesture_pool, tunes = self.tune_pool, checks=self.check_pool, mask_value=self.mask_value, reset_value=self.reset_value, data_value=self.volume_info)
+            self.ops = []
+            self.gesture_pool = []
+            self.tune_pool = []
+            self.check_pool = []
+            self.mask_value = None
+            self.reset_value = None
+            self.data_need_built = False
+        self.receivers[req.client_id] = True
+        # current_time = time()
+
+        # if(self.last_time is None):
+        #     self.last_time = current_time
+        if(len(set(self.receivers.values())) == 1):#  or current_time - self.last_time > 30
+        #     self.last_time = current_time
+            for key, value in self.receivers.items():
+                self.receivers[key] = False
+            self.data_need_built = True
+        return self.frame_state 
 
     def getOperations(self, req, context):
         if(len(self.gesture_pool) == 0):

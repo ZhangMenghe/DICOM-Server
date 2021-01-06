@@ -102,14 +102,16 @@ def main():
     # ava_config = client.getAvailableConfigs()
     ava_lst = client.getAvailableDatasets()
     
-    dataset_name = ava_lst.datasets[0].folder_name
-    # dataset_name = 'Larry-2012-01-17-MRI'#"Larry_Smarr_2016"
+    # dataset_name = ava_lst.datasets[0].folder_name
+    dataset_name = 'Larry_Smarr_2016'#"Larry_Smarr_2016"
     ava_vols = client.getAvailableVolume(dataset_name)
     for v in ava_vols:
         print(v.folder_name)
     # vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
     # print(vol_name)
-    # vol_name = "Larry_Smarr_2017/Larry_2017"
+    # vol_name = "Larry_Smarr_2016/series_23_Cor_LAVA_PRE-Amira"
+    vol_name = "IRB02/21_WATERPOSTCORLAVAFLEX20secs"
+    client.getCenterLineData(vol_name)
     # client.download(vol_name)
     # client.getMasks(vol_name)
     # vol_names = ["IRB01/2100_FATPOSTCORLAVAFLEX20secs","IRB02/21_WATERPOSTCORLAVAFLEX20secs","IRB03/22_WATERPOSTCORLAVAFLEX20secs","IRB04/21_WATERPOSTCORLAVAFLEX20secs", "IRB05/17_WATERPOSTCORLAVAFLEX20secs", "IRB06/19_WATERPOSTCORLAVAFLEX20secs"]
