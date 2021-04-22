@@ -15,6 +15,14 @@ import cv2
 from generateIndexFile import generateDSIndexFile
 from ast import literal_eval
 
+def get_sub_dirs(dir_path):
+    dir_names = []
+    for fname in listdir(dir_path):
+        mpath = path.join(dir_path, fname)
+        if path.isdir(mpath):
+            dir_names.append(mpath)
+    return dir_names
+
 def parse_command():
     import argparse
     parser = argparse.ArgumentParser(description='Dicom-GRPC-Server')
@@ -44,15 +52,15 @@ def build_volume_struct_from_files(rf_path):
                 mdims = literal_eval(infos[1])[:2]
                 simg = np.zeros(mdims,dtype=np.uint8)
             spacing = literal_eval(infos[4])
-            vsc.append(volumeResponse.volumeInfo(folder_name=infos[0], \
+            vsc.append(volumeInfo(folder_name=infos[0], \
                 dims = literal_eval(infos[1]),\
                 orientation = literal_eval(infos[2]),\
                 resolution = [spacing[0],spacing[1], float(infos[5])],\
                 volume_loc_range = float(infos[6]),\
                 with_mask = infos[-1] in ['True', 'true', '1'],\
-                data_source = volumeResponse.volumeInfo.DataSource.SERVER,\
+                data_source = volumeInfo.DataSource.SERVER,\
                 sample_img = simg.tobytes(),\
-                scores = volumeResponse.scoreInfo(rgroup_id=int(scores_np[0]),\
+                scores = scoreInfo(rgroup_id=int(scores_np[0]),\
                         rank_id = int(scores_np[1]),\
                         rank_score = scores_np[2],\
                         raw_score=scores_np[3:-3],\
@@ -194,7 +202,7 @@ class transDataManager():
             for line in vl_lines:
                 contents = line.split(',')
                 has_mask = contents[5] in ('True', 'true', '1')
-                volume_lst.append(volumeResponse.volumeInfo(folder_name=contents[0],\
+                volume_lst.append(volumeInfo(folder_name=contents[0],\
                 file_nums=int(contents[1]),\
                 img_height=int(contents[2]),\
                 img_width=int(contents[3]),\
@@ -262,20 +270,39 @@ class transDataManager():
         for i in range(len(dcm_list)):
             dcm_list[i].dcmID = i
             yield dcm_list[i]
-        print("Finish sending images of "+target_folder)                
+        print("Finish sending images of "+target_folder)
+
+    def get_multi_mask(self, mask_dirs, img_name):
+        # if(len(mask_dirs) > 0):
+        #TODO: MORE THAN ONE EXTRA INFO for sdir in mask_dirs:
+        
+        img = np.asarray(Image.open(path.join(mask_dirs[0], img_name)))
+        if(img.ndim>2):
+            img = img[:,:,0]
+        return img.astype(np.uint16) << 8
 
     def inference_masks_as_volume(self, vl_folder_):
         local_mask_folder = path.join(self.folder_remote_path, vl_folder_, "mask")
         if(path.isdir(local_mask_folder)):
             # load masks and yield all the images
-            lsize = len(listdir(local_mask_folder))
-            # if lsize != len(self.dcm_list):
-            #     return None
-            # if(self.unit_size == 2):
-            img = np.asarray(Image.open(path.join(local_mask_folder, str(lsize-1) +'.png')))
+            dirs = get_sub_dirs(local_mask_folder)
+            lsize = len(listdir(local_mask_folder)) - len(dirs)
+
+            if(lsize == 0):
+                local_mask_folder = dirs.pop(0)
+                lsize = len(listdir(local_mask_folder))
+
+            img_name = str(lsize-1) +'.png'
+            img = np.asarray(Image.open(path.join(local_mask_folder, img_name)))
+
             if(img.ndim>2):
                 img = img[:,:,0]
-            chunk_data = img.astype(np.uint16).tobytes()
+
+            data_u16 = img.astype(np.uint16)
+            if(len(dirs) > 0):
+                data_u16 += self.get_multi_mask(dirs, img_name)
+            
+            chunk_data = data_u16.tobytes()
             single_chunk_size = len(chunk_data)
             chunk_size = single_chunk_size
             chunk_limit = 4194304 - single_chunk_size
@@ -288,10 +315,16 @@ class transDataManager():
                     chunk_data = b""
                     chunk_size = 0
 
-                img = np.asarray(Image.open(path.join(local_mask_folder, str(lsize-i)+ '.png')))
-                if(img.ndim>2):
+                img_name = str(lsize-i)+ '.png'
+                img = np.asarray(Image.open(path.join(local_mask_folder, img_name)))
+                if(img.ndim > 2):
                     img = img[:,:,0]
-                chunk_data += img.astype(np.uint16).tobytes()
+                
+                data_u16 = img.astype(np.uint16)
+                if(len(dirs) > 0):
+                    data_u16 += self.get_multi_mask(dirs, img_name)
+
+                chunk_data += data_u16.tobytes()
                 chunk_size += single_chunk_size
             if chunk_size!= 0:
                 yield volumeWholeResponse(data=chunk_data)

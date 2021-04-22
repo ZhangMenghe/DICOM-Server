@@ -84,8 +84,10 @@ class transClient:
     def getMasks_volume(self, folder_name):
         itrs = self.stub.DownloadMasksVolume(Request(client_id = CLIENT_ID,req_msg=folder_name))
         names = folder_name.split('/')
-        f = open(folder_name + '/'+'mask', 'wb+')
+        new_name = '/'.join(names[:-1]) + '/' +'_'.join(names[-1].split(' '))
+        f = open(new_name + '/'+'mask', 'wb+')
         for it in itrs:
+            it.data
             f.write(it.data)
         f.close()
     def getCenterLineData(self, folder_name):
@@ -100,18 +102,21 @@ def main():
     #     client.getOperations()
     # client.setRST(VPMsg.VPType.POS, [1,2,3])
     # ava_config = client.getAvailableConfigs()
-    ava_lst = client.getAvailableDatasets()
+    # ava_lst = client.getAvailableDatasets()
     
     # dataset_name = ava_lst.datasets[0].folder_name
-    dataset_name = 'Larry_Smarr_2016'#"Larry_Smarr_2016"
+    dataset_name = "IRB09"
+    # dataset_name = 'Larry_Smarr_2016'#"Larry_Smarr_2016"
     ava_vols = client.getAvailableVolume(dataset_name)
     for v in ava_vols:
         print(v.folder_name)
+    
+    client.getMasks_volume('IRB09/' +'COR SSFSE')
     # vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
     # print(vol_name)
     # vol_name = "Larry_Smarr_2016/series_23_Cor_LAVA_PRE-Amira"
-    vol_name = "IRB02/21_WATERPOSTCORLAVAFLEX20secs"
-    client.getCenterLineData(vol_name)
+    # vol_name = "IRB02/21_WATERPOSTCORLAVAFLEX20secs"
+    # client.getCenterLineData(vol_name)
     # client.download(vol_name)
     # client.getMasks(vol_name)
     # vol_names = ["IRB01/2100_FATPOSTCORLAVAFLEX20secs","IRB02/21_WATERPOSTCORLAVAFLEX20secs","IRB03/22_WATERPOSTCORLAVAFLEX20secs","IRB04/21_WATERPOSTCORLAVAFLEX20secs", "IRB05/17_WATERPOSTCORLAVAFLEX20secs", "IRB06/19_WATERPOSTCORLAVAFLEX20secs"]

@@ -22,8 +22,8 @@ class operationServicer(inspectorSyncServicer):
         self.mask_value = None
         self.reset_value = None
         self.mtx = threading.Lock()
-        self.current_data = None
-        self.volume_info = None
+        # self.current_data = None
+        self.data_info = None
         self.data_need_built = True
 
         self.frame_state = None
@@ -81,15 +81,18 @@ class operationServicer(inspectorSyncServicer):
         self.mask_value = msk
     
     def setDisplayVolume(self, msg, context):
-        if(msg.vol_path == self.current_data):
-            return
+        # m_path_id = msg.ds_name + "/" + msg.volume_name
+        # if(m_path_id == self.current_data):
+        #     print("same data")
+        #     return
+        self.data_info = msg
         try:
             self.ops.remove(FrameUpdateMsg.MsgType.DATA)
         except:
             pass
         self.ops.append(FrameUpdateMsg.MsgType.DATA)
-        self.current_data = msg.vol_path
-        self.volume_info = msg
+        print("====set data====" + msg.ds_name + " / "+ msg.volume_name)
+        # self.current_data = m_path_id
 
     def getUpdates(self, req, context):
         if(self.provider is None):
@@ -99,13 +102,21 @@ class operationServicer(inspectorSyncServicer):
 
         if self.data_need_built:
             self.gesture_pool.sort(key = lambda x: int(x.gid))
-            self.frame_state = FrameUpdateMsg(types = self.ops, gestures = self.gesture_pool, tunes = self.tune_pool, checks=self.check_pool, mask_value=self.mask_value, reset_value=self.reset_value, data_value=self.volume_info)
+            if FrameUpdateMsg.MsgType.DATA in self.ops:
+                if(self.data_info is not None):
+                    print(self.data_info.ds_name)
+                else:
+                    print("msg is none")
+            self.frame_state = FrameUpdateMsg(types = self.ops, gestures = self.gesture_pool, tunes = self.tune_pool, checks=self.check_pool, mask_value=self.mask_value, reset_value=self.reset_value, data_value=self.data_info)
             self.ops = []
+            # if(data_need_updated and not data_info_updated):
+            #     self.ops = [FrameUpdateMsg.MsgType.DATA]
             self.gesture_pool = []
             self.tune_pool = []
             self.check_pool = []
             self.mask_value = None
             self.reset_value = None
+            self.data_info = None
             self.data_need_built = False
         self.receivers[req.client_id] = True
         # current_time = time()

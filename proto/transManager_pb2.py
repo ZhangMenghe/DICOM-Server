@@ -20,37 +20,11 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='helmsley',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12transManager.proto\x12\x08helmsley\x1a\x0c\x63ommon.proto\"x\n\x0e\x63onfigResponse\x12\x34\n\x07\x63onfigs\x18\x01 \x03(\x0b\x32#.helmsley.configResponse.configInfo\x1a\x30\n\nconfigInfo\x12\x11\n\tfile_name\x18\x01 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\"\xbf\x01\n\x0f\x64\x61tasetResponse\x12\x37\n\x08\x64\x61tasets\x18\x01 \x03(\x0b\x32%.helmsley.datasetResponse.datasetInfo\x1as\n\x0b\x64\x61tasetInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x14\n\x0cpatient_name\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\x12\x15\n\rphysican_name\x18\x04 \x01(\t\x12\x14\n\x0cmask_folders\x18\x05 \x03(\t\"\x8c\x04\n\x0evolumeResponse\x12\x34\n\x07volumes\x18\x01 \x03(\x0b\x32#.helmsley.volumeResponse.volumeInfo\x1ai\n\tscoreInfo\x12\x11\n\trgroup_id\x18\x01 \x01(\x05\x12\x0f\n\x07rank_id\x18\x02 \x01(\x05\x12\x12\n\nrank_score\x18\x03 \x01(\x02\x12\x11\n\traw_score\x18\x04 \x03(\x02\x12\x11\n\tvol_score\x18\x05 \x03(\x02\x1a\xd8\x02\n\nvolumeInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x13\n\x0b\x66older_path\x18\x02 \x01(\t\x12\x0c\n\x04\x64ims\x18\x03 \x03(\x05\x12\x13\n\x0borientation\x18\x04 \x03(\x02\x12\x12\n\nresolution\x18\x05 \x03(\x02\x12\x18\n\x10volume_loc_range\x18\x06 \x01(\x02\x12\x11\n\twith_mask\x18\x07 \x01(\x08\x12\x43\n\x0b\x64\x61ta_source\x18\x08 \x01(\x0e\x32..helmsley.volumeResponse.volumeInfo.DataSource\x12\x12\n\nsample_img\x18\t \x01(\x0c\x12\x32\n\x06scores\x18\n \x01(\x0b\x32\".helmsley.volumeResponse.scoreInfo\"/\n\nDataSource\x12\t\n\x05LOCAL\x10\x00\x12\n\n\x06SERVER\x10\x01\x12\n\n\x06\x44\x45VICE\x10\x02\"#\n\x13volumeWholeResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"\x1e\n\x0e\x63\x65nterlineData\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\x02\"9\n\x08\x64\x63mImage\x12\r\n\x05\x64\x63mID\x18\x01 \x01(\x05\x12\x10\n\x08position\x18\x02 \x01(\x02\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"K\n\x12RequestWholeVolume\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\x12\x11\n\tunit_size\x18\x03 \x01(\x05\x32\xa0\x04\n\x0c\x64\x61taTransfer\x12\x39\n\x13getAvailableConfigs\x12\x08.Request\x1a\x18.helmsley.configResponse\x12*\n\rexportConfigs\x12\x08.Request\x1a\x0f.commonResponse\x12;\n\x14getAvailableDatasets\x12\x08.Request\x1a\x19.helmsley.datasetResponse\x12<\n\x14getVolumeFromDataset\x12\x08.Request\x1a\x18.helmsley.volumeResponse0\x01\x12*\n\x08\x44ownload\x12\x08.Request\x1a\x12.helmsley.dcmImage0\x01\x12O\n\x0e\x44ownloadVolume\x12\x1c.helmsley.RequestWholeVolume\x1a\x1d.helmsley.volumeWholeResponse0\x01\x12/\n\rDownloadMasks\x12\x08.Request\x1a\x12.helmsley.dcmImage0\x01\x12@\n\x13\x44ownloadMasksVolume\x12\x08.Request\x1a\x1d.helmsley.volumeWholeResponse0\x01\x12>\n\x16\x44ownloadCenterLineData\x12\x08.Request\x1a\x18.helmsley.centerlineData0\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x12transManager.proto\x12\x08helmsley\x1a\x0c\x63ommon.proto\"x\n\x0e\x63onfigResponse\x12\x34\n\x07\x63onfigs\x18\x01 \x03(\x0b\x32#.helmsley.configResponse.configInfo\x1a\x30\n\nconfigInfo\x12\x11\n\tfile_name\x18\x01 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\"\xbf\x01\n\x0f\x64\x61tasetResponse\x12\x37\n\x08\x64\x61tasets\x18\x01 \x03(\x0b\x32%.helmsley.datasetResponse.datasetInfo\x1as\n\x0b\x64\x61tasetInfo\x12\x13\n\x0b\x66older_name\x18\x01 \x01(\t\x12\x14\n\x0cpatient_name\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\x12\x15\n\rphysican_name\x18\x04 \x01(\t\x12\x14\n\x0cmask_folders\x18\x05 \x03(\t\"7\n\x0evolumeResponse\x12%\n\x07volumes\x18\x01 \x03(\x0b\x32\x14.helmsley.volumeInfo\"#\n\x13volumeWholeResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"\x1e\n\x0e\x63\x65nterlineData\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\x02\"9\n\x08\x64\x63mImage\x12\r\n\x05\x64\x63mID\x18\x01 \x01(\x05\x12\x10\n\x08position\x18\x02 \x01(\x02\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"K\n\x12RequestWholeVolume\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\x12\x11\n\tunit_size\x18\x03 \x01(\x05\x32\xf1\x04\n\x0c\x64\x61taTransfer\x12\x42\n\x13getAvailableConfigs\x12\x11.helmsley.Request\x1a\x18.helmsley.configResponse\x12<\n\rexportConfigs\x12\x11.helmsley.Request\x1a\x18.helmsley.commonResponse\x12\x44\n\x14getAvailableDatasets\x12\x11.helmsley.Request\x1a\x19.helmsley.datasetResponse\x12\x45\n\x14getVolumeFromDataset\x12\x11.helmsley.Request\x1a\x18.helmsley.volumeResponse0\x01\x12\x33\n\x08\x44ownload\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x12O\n\x0e\x44ownloadVolume\x12\x1c.helmsley.RequestWholeVolume\x1a\x1d.helmsley.volumeWholeResponse0\x01\x12\x38\n\rDownloadMasks\x12\x11.helmsley.Request\x1a\x12.helmsley.dcmImage0\x01\x12I\n\x13\x44ownloadMasksVolume\x12\x11.helmsley.Request\x1a\x1d.helmsley.volumeWholeResponse0\x01\x12G\n\x16\x44ownloadCenterLineData\x12\x11.helmsley.Request\x1a\x18.helmsley.centerlineData0\x01\x62\x06proto3')
   ,
   dependencies=[common__pb2.DESCRIPTOR,])
 
 
-
-_VOLUMERESPONSE_VOLUMEINFO_DATASOURCE = _descriptor.EnumDescriptor(
-  name='DataSource',
-  full_name='helmsley.volumeResponse.volumeInfo.DataSource',
-  filename=None,
-  file=DESCRIPTOR,
-  values=[
-    _descriptor.EnumValueDescriptor(
-      name='LOCAL', index=0, number=0,
-      serialized_options=None,
-      type=None),
-    _descriptor.EnumValueDescriptor(
-      name='SERVER', index=1, number=1,
-      serialized_options=None,
-      type=None),
-    _descriptor.EnumValueDescriptor(
-      name='DEVICE', index=2, number=2,
-      serialized_options=None,
-      type=None),
-  ],
-  containing_type=None,
-  serialized_options=None,
-  serialized_start=840,
-  serialized_end=887,
-)
-_sym_db.RegisterEnumDescriptor(_VOLUMERESPONSE_VOLUMEINFO_DATASOURCE)
 
 
 _CONFIGRESPONSE_CONFIGINFO = _descriptor.Descriptor(
@@ -210,158 +184,6 @@ _DATASETRESPONSE = _descriptor.Descriptor(
 )
 
 
-_VOLUMERESPONSE_SCOREINFO = _descriptor.Descriptor(
-  name='scoreInfo',
-  full_name='helmsley.volumeResponse.scoreInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='rgroup_id', full_name='helmsley.volumeResponse.scoreInfo.rgroup_id', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='rank_id', full_name='helmsley.volumeResponse.scoreInfo.rank_id', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='rank_score', full_name='helmsley.volumeResponse.scoreInfo.rank_score', index=2,
-      number=3, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='raw_score', full_name='helmsley.volumeResponse.scoreInfo.raw_score', index=3,
-      number=4, type=2, cpp_type=6, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='vol_score', full_name='helmsley.volumeResponse.scoreInfo.vol_score', index=4,
-      number=5, type=2, cpp_type=6, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=435,
-  serialized_end=540,
-)
-
-_VOLUMERESPONSE_VOLUMEINFO = _descriptor.Descriptor(
-  name='volumeInfo',
-  full_name='helmsley.volumeResponse.volumeInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='folder_name', full_name='helmsley.volumeResponse.volumeInfo.folder_name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='folder_path', full_name='helmsley.volumeResponse.volumeInfo.folder_path', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='dims', full_name='helmsley.volumeResponse.volumeInfo.dims', index=2,
-      number=3, type=5, cpp_type=1, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='orientation', full_name='helmsley.volumeResponse.volumeInfo.orientation', index=3,
-      number=4, type=2, cpp_type=6, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='resolution', full_name='helmsley.volumeResponse.volumeInfo.resolution', index=4,
-      number=5, type=2, cpp_type=6, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='volume_loc_range', full_name='helmsley.volumeResponse.volumeInfo.volume_loc_range', index=5,
-      number=6, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='with_mask', full_name='helmsley.volumeResponse.volumeInfo.with_mask', index=6,
-      number=7, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='data_source', full_name='helmsley.volumeResponse.volumeInfo.data_source', index=7,
-      number=8, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='sample_img', full_name='helmsley.volumeResponse.volumeInfo.sample_img', index=8,
-      number=9, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b(""),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='scores', full_name='helmsley.volumeResponse.volumeInfo.scores', index=9,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-    _VOLUMERESPONSE_VOLUMEINFO_DATASOURCE,
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=543,
-  serialized_end=887,
-)
-
 _VOLUMERESPONSE = _descriptor.Descriptor(
   name='volumeResponse',
   full_name='helmsley.volumeResponse',
@@ -379,7 +201,7 @@ _VOLUMERESPONSE = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_VOLUMERESPONSE_SCOREINFO, _VOLUMERESPONSE_VOLUMEINFO, ],
+  nested_types=[],
   enum_types=[
   ],
   serialized_options=None,
@@ -388,8 +210,8 @@ _VOLUMERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=363,
-  serialized_end=887,
+  serialized_start=362,
+  serialized_end=417,
 )
 
 
@@ -419,8 +241,8 @@ _VOLUMEWHOLERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=889,
-  serialized_end=924,
+  serialized_start=419,
+  serialized_end=454,
 )
 
 
@@ -450,8 +272,8 @@ _CENTERLINEDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=926,
-  serialized_end=956,
+  serialized_start=456,
+  serialized_end=486,
 )
 
 
@@ -495,8 +317,8 @@ _DCMIMAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=958,
-  serialized_end=1015,
+  serialized_start=488,
+  serialized_end=545,
 )
 
 
@@ -540,20 +362,15 @@ _REQUESTWHOLEVOLUME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1017,
-  serialized_end=1092,
+  serialized_start=547,
+  serialized_end=622,
 )
 
 _CONFIGRESPONSE_CONFIGINFO.containing_type = _CONFIGRESPONSE
 _CONFIGRESPONSE.fields_by_name['configs'].message_type = _CONFIGRESPONSE_CONFIGINFO
 _DATASETRESPONSE_DATASETINFO.containing_type = _DATASETRESPONSE
 _DATASETRESPONSE.fields_by_name['datasets'].message_type = _DATASETRESPONSE_DATASETINFO
-_VOLUMERESPONSE_SCOREINFO.containing_type = _VOLUMERESPONSE
-_VOLUMERESPONSE_VOLUMEINFO.fields_by_name['data_source'].enum_type = _VOLUMERESPONSE_VOLUMEINFO_DATASOURCE
-_VOLUMERESPONSE_VOLUMEINFO.fields_by_name['scores'].message_type = _VOLUMERESPONSE_SCOREINFO
-_VOLUMERESPONSE_VOLUMEINFO.containing_type = _VOLUMERESPONSE
-_VOLUMERESPONSE_VOLUMEINFO_DATASOURCE.containing_type = _VOLUMERESPONSE_VOLUMEINFO
-_VOLUMERESPONSE.fields_by_name['volumes'].message_type = _VOLUMERESPONSE_VOLUMEINFO
+_VOLUMERESPONSE.fields_by_name['volumes'].message_type = common__pb2._VOLUMEINFO
 DESCRIPTOR.message_types_by_name['configResponse'] = _CONFIGRESPONSE
 DESCRIPTOR.message_types_by_name['datasetResponse'] = _DATASETRESPONSE
 DESCRIPTOR.message_types_by_name['volumeResponse'] = _VOLUMERESPONSE
@@ -594,27 +411,11 @@ _sym_db.RegisterMessage(datasetResponse)
 _sym_db.RegisterMessage(datasetResponse.datasetInfo)
 
 volumeResponse = _reflection.GeneratedProtocolMessageType('volumeResponse', (_message.Message,), dict(
-
-  scoreInfo = _reflection.GeneratedProtocolMessageType('scoreInfo', (_message.Message,), dict(
-    DESCRIPTOR = _VOLUMERESPONSE_SCOREINFO,
-    __module__ = 'transManager_pb2'
-    # @@protoc_insertion_point(class_scope:helmsley.volumeResponse.scoreInfo)
-    ))
-  ,
-
-  volumeInfo = _reflection.GeneratedProtocolMessageType('volumeInfo', (_message.Message,), dict(
-    DESCRIPTOR = _VOLUMERESPONSE_VOLUMEINFO,
-    __module__ = 'transManager_pb2'
-    # @@protoc_insertion_point(class_scope:helmsley.volumeResponse.volumeInfo)
-    ))
-  ,
   DESCRIPTOR = _VOLUMERESPONSE,
   __module__ = 'transManager_pb2'
   # @@protoc_insertion_point(class_scope:helmsley.volumeResponse)
   ))
 _sym_db.RegisterMessage(volumeResponse)
-_sym_db.RegisterMessage(volumeResponse.scoreInfo)
-_sym_db.RegisterMessage(volumeResponse.volumeInfo)
 
 volumeWholeResponse = _reflection.GeneratedProtocolMessageType('volumeWholeResponse', (_message.Message,), dict(
   DESCRIPTOR = _VOLUMEWHOLERESPONSE,
@@ -652,8 +453,8 @@ _DATATRANSFER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1095,
-  serialized_end=1639,
+  serialized_start=625,
+  serialized_end=1250,
   methods=[
   _descriptor.MethodDescriptor(
     name='getAvailableConfigs',

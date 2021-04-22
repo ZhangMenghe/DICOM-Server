@@ -67,7 +67,7 @@ class inspectorSyncStub(object):
         )
     self.setDisplayVolume = channel.unary_unary(
         '/helmsley.inspectorSync/setDisplayVolume',
-        request_serializer=inspectorSync__pb2.volumeConcise.SerializeToString,
+        request_serializer=inspectorSync__pb2.DataMsg.SerializeToString,
         response_deserializer=common__pb2.commonResponse.FromString,
         )
 
@@ -208,7 +208,7 @@ def add_inspectorSyncServicer_to_server(servicer, server):
       ),
       'setDisplayVolume': grpc.unary_unary_rpc_method_handler(
           servicer.setDisplayVolume,
-          request_deserializer=inspectorSync__pb2.volumeConcise.FromString,
+          request_deserializer=inspectorSync__pb2.DataMsg.FromString,
           response_serializer=common__pb2.commonResponse.SerializeToString,
       ),
   }
