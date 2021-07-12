@@ -262,8 +262,24 @@ class transDataManager():
         
         if chunk_size!= 0:
             yield volumeWholeResponse(data=chunk_data)
-        print("Finish sending dicom volume of "+target_folder)                
-    
+        print("Finish sending dicom volume of "+target_folder)
+
+    def download_processed_as_volume(self, target_folder):
+        print("downloading CLAHE..." + target_folder)
+        chunk_limit = 4000000
+        chunk_id = 0
+        with open(path.join(self.folder_remote_path, target_folder) + '/clahe_data', mode='rb') as file: # b is important -> binary
+            fileContent = file.read()
+            offset = 0
+            for i in range(int(len(fileContent) / chunk_limit)):
+                chunk_id+=1
+                print("Sending the " + str(chunk_id) + " chunk")
+                yield volumeWholeResponse(data=fileContent[offset:offset+chunk_limit])
+                offset+=chunk_limit
+            if(offset < len(fileContent)):
+                yield volumeWholeResponse(data=fileContent[offset:])
+            
+        print("Finish sending CLAHE dicom volume of "+target_folder)
 
     def download_folder_as_images(self, target_folder):
         dcm_list = self.buildDCMIList(target_folder)

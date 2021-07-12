@@ -73,9 +73,21 @@ class transClient:
         for it in response:
             f.write(it.data)
         f.close()
+    def download_volume_processed(self, folder_name):
+        print("downloading Processed from server...")
+        response = self.stub.DownloadVolumeProcessed(RequestWholeVolume(client_id=CLIENT_ID, req_msg=folder_name))
 
+        # print("saving (or use) ..." + out_file_name)
+        names = folder_name.split('/')
+        
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        f = open(folder_name + '/'+'data_processed', 'wb+')
+        for it in response:
+            f.write(it.data)
+        f.close()
     def getMasks(self, folder_name):
-        print("====masks")
         itrs = self.stub.DownloadMasks(Request(client_id = CLIENT_ID,req_msg=folder_name))
         
         for it in itrs:
@@ -105,20 +117,24 @@ def main():
     # ava_lst = client.getAvailableDatasets()
     
     # dataset_name = ava_lst.datasets[0].folder_name
-    dataset_name = "IRB09"
-    # dataset_name = 'Larry_Smarr_2016'#"Larry_Smarr_2016"
+    # dataset_name = "IRB09"
+    dataset_name = 'Larry_Smarr_2017'#"Larry_Smarr_2016"
     ava_vols = client.getAvailableVolume(dataset_name)
     for v in ava_vols:
         print(v.folder_name)
     
-    client.getMasks_volume('IRB09/' +'COR SSFSE')
-    # vol_name = dataset_name + "/"+vol_lst.volumes[0].folder_name
-    # print(vol_name)
+    # client.getMasks_volume('IRB09/' +'COR SSFSE')
+    vol_name = dataset_name + "/"+ava_vols[0].folder_name
+
+    vol_name = "IRB01/2100_FATPOSTCORLAVAFLEX20secs"
+    print(vol_name)
     # vol_name = "Larry_Smarr_2016/series_23_Cor_LAVA_PRE-Amira"
     # vol_name = "IRB02/21_WATERPOSTCORLAVAFLEX20secs"
-    # client.getCenterLineData(vol_name)
-    # client.download(vol_name)
-    # client.getMasks(vol_name)
+    client.getCenterLineData(vol_name)
+    # client.download_volume(vol_name)
+    # client.download_volume_processed(vol_name)
+    # client.getMasks_volume(vol_name)
+
     # vol_names = ["IRB01/2100_FATPOSTCORLAVAFLEX20secs","IRB02/21_WATERPOSTCORLAVAFLEX20secs","IRB03/22_WATERPOSTCORLAVAFLEX20secs","IRB04/21_WATERPOSTCORLAVAFLEX20secs", "IRB05/17_WATERPOSTCORLAVAFLEX20secs", "IRB06/19_WATERPOSTCORLAVAFLEX20secs"]
     # vol_names = ['IRB5/21_WATERPOSTCORLAVAFLEX20secs', 'IRB6/22_WATERPOSTCORLAVAFLEX20secs']
     # vol_names = ["IRB01/2100_FATPOSTCORLAVAFLEX20secs"]

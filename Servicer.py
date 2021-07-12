@@ -175,6 +175,10 @@ class dataServicer(dataTransferServicer):
     def DownloadVolume(self, request, context):
         print("===Client: " + str(request.client_id)+" Download from .." + request.req_msg + " as volume")
         return self.trans_manager.download_folder_as_volume(request.req_msg, request.unit_size)
+    
+    def DownloadVolumeProcessed(self, request, context):
+        print("===Client: " + str(request.client_id)+" Download from Processed .." + request.req_msg + " as volume")
+        return self.trans_manager.download_processed_as_volume(request.req_msg)
 
     def DownloadMasks(self, request, context):
         print("===Client: " + str(request.client_id)+" Trying to return or inference Segmentation...")
