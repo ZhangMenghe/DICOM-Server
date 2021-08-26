@@ -130,7 +130,7 @@ def main():
     print(vol_name)
     # vol_name = "Larry_Smarr_2016/series_23_Cor_LAVA_PRE-Amira"
     # vol_name = "IRB02/21_WATERPOSTCORLAVAFLEX20secs"
-    client.getCenterLineData(vol_name)
+    # client.getCenterLineData(vol_name)
     # client.download_volume(vol_name)
     # client.download_volume_processed(vol_name)
     # client.getMasks_volume(vol_name)
