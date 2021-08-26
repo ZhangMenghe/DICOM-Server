@@ -3,7 +3,7 @@ from concurrent import futures
 
 import grpc
 import sys
-sys.path.insert(1, 'proto/')
+#sys.path.insert(1, 'helmsley/')
 from Servicer import *
  
 class transServer():

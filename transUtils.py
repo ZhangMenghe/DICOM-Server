@@ -1,11 +1,8 @@
-from os import path, getcwd, listdir, makedirs
-import shutil
-from proto.transManager_pb2 import *
-from proto.common_pb2 import * 
+from transManager_pb2 import *
+from common_pb2 import *
 import sys
-sys.path.append("proto")
+#sys.path.append("helmsley")
 from dicomUtils import *
-from time import sleep
 from PIL import Image
 import numpy as np 
 import xlrd
@@ -124,13 +121,13 @@ class transDataManager():
 
         #required data    
         try:
-            # idx_folder = header.index('Directory')
-            # idx_patient = header.index('Patient Name')
-            # idx_date = header.index('Scan Date')
-            # idx_modality = header.index('Modality')
-            # idx_physician = header.index('Treating Physician')
-            # idx_mask = header.index('Mask')
-            idx_folder, idx_patient, idx_date, idx_modality, idx_physician, idx_mask = range(6)
+            idx_folder = header.index('Directory')
+            idx_patient = header.index('Patient Name')
+            idx_date = header.index('Scan Date')
+            idx_modality = header.index('Modality')
+            idx_physician = header.index('Treating Physician')
+            idx_mask = header.index('Mask ')
+            # idx_folder, idx_patient, idx_date, idx_modality, idx_physician, idx_mask = range(6)
         except ValueError:
             print("Information Lacks")
             return
@@ -208,7 +205,7 @@ class transDataManager():
                 img_width=int(contents[3]),\
                 vol_thickness = float(contents[4]),\
                 mask_available = has_mask,\
-                quality_score = float(contents[-1])))
+                quality_score = float(contents[-1])).SerializeToString())
                 id_str = contents[0].split('_')[0]
                 if(id_str.isnumeric()):
                     sort_base_id.append(int(id_str))

@@ -1,12 +1,8 @@
-from proto.transManager_pb2 import *
-from proto.transManager_pb2_grpc import *
-from proto.inspectorSync_pb2 import *
-from proto.inspectorSync_pb2_grpc import *
-from proto.common_pb2 import * 
-from proto.common_pb2_grpc import *
+from transManager_pb2_grpc import *
+from inspectorSync_pb2 import *
+from inspectorSync_pb2_grpc import *
 
 from transUtils import *
-import queue
 from time import time
 import threading
 
@@ -28,6 +24,12 @@ class operationServicer(inspectorSyncServicer):
 
         self.frame_state = None
         self.last_time = None
+        
+        self.pose_info = []
+        self.pose_info.append([0.0, 0.0, 0.0])
+        self.pose_info.append([1.0])
+        self.pose_info.append([0.0, 0.0, 0.0, 1.0])
+        
     def startBroadcast(self, info, context):
         if self.provider is not None:
             return commonResponse(success = False, res_msg = "exisiting broadcaster")
@@ -45,12 +47,23 @@ class operationServicer(inspectorSyncServicer):
 
     def gsVolumePose(self, msg, context):
         # print("===Client" + str(msg.client_id) + )
-        print(msg.req_type)
-        print(msg.volume_pose_type)
-
-        print(msg.values)
-
-        return commonResponse(success = True, res_msg="lalalala")
+        # print(msg.req_type)
+        # print(msg.volume_pose_type)
+        # print(msg.values)
+        
+        if msg.req_type == ReqType.GET:
+            response = VPMsg()
+            response.volume_pose_type = msg.volume_pose_type
+            response.values.extend(self.pose_info[msg.volume_pose_type])
+            return response
+        else:
+            # record pose info
+            print(msg.req_type)
+            print(msg.volume_pose_type)
+            print(msg.values)
+            self.pose_info[msg.volume_pose_type] = msg.values
+            return msg
+        
 
     def reqestReset(self, msg, context):
         try:

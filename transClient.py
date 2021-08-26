@@ -1,17 +1,14 @@
-import time
-import grpc
 import os
 
 import sys
 # insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, 'proto/')
+#sys.path.insert(1, 'helmsley/')
 
-from proto.transManager_pb2 import *
-from proto.transManager_pb2_grpc import *
-from proto.inspectorSync_pb2 import *
-from proto.inspectorSync_pb2_grpc import *
+from transManager_pb2_grpc import *
+from inspectorSync_pb2 import *
+from inspectorSync_pb2_grpc import *
 from transUtils import *
-from shutil import copyfile
+
 SERVER_ADDRESS = "localhost:23333"
 CLIENT_ID = 100
 

@@ -2,7 +2,7 @@ from glob import glob
 from random import random
 import os
 import sys
-sys.path.append("proto")
+sys.path.append("helmsley")
 from dicomUtils import *
 from queue import Queue
 import numpy as np

@@ -1,12 +1,10 @@
-from os import listdir,path
+from os import path
 import pydicom
 import numpy as np
-from proto.transManager_pb2 import dcmImage
+from transManager_pb2 import dcmImage
 from glob import glob
-from math import isnan
 
 from util.slice_score import getVolumeScore_Slices
-from util.volume_score import *
 
 from collections import namedtuple
 dicomStruct = namedtuple("dicomStruct", "raw_data meta_data")
