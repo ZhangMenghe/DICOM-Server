@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='helmsley',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0c\x63ommon.proto\x12\x08helmsley\"-\n\x07Request\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\"2\n\x0e\x63ommonResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07res_msg\x18\x02 \x01(\t\"i\n\tscoreInfo\x12\x11\n\trgroup_id\x18\x01 \x01(\x05\x12\x0f\n\x07rank_id\x18\x02 \x01(\x05\x12\x12\n\nrank_score\x18\x03 \x01(\x02\x12\x11\n\traw_score\x18\x04 \x03(\x02\x12\x11\n\tvol_score\x18\x05 \x03(\x02\x62\x06proto3')
+  serialized_pb=_b('\n\x0c\x63ommon.proto\x12\x08helmsley\"-\n\x07Request\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07req_msg\x18\x02 \x01(\t\"2\n\x0e\x63ommonResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07res_msg\x18\x02 \x01(\tb\x06proto3')
 )
 
 
@@ -100,68 +100,8 @@ _COMMONRESPONSE = _descriptor.Descriptor(
   serialized_end=123,
 )
 
-
-_SCOREINFO = _descriptor.Descriptor(
-  name='scoreInfo',
-  full_name='helmsley.scoreInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='rgroup_id', full_name='helmsley.scoreInfo.rgroup_id', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='rank_id', full_name='helmsley.scoreInfo.rank_id', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='rank_score', full_name='helmsley.scoreInfo.rank_score', index=2,
-      number=3, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='raw_score', full_name='helmsley.scoreInfo.raw_score', index=3,
-      number=4, type=2, cpp_type=6, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='vol_score', full_name='helmsley.scoreInfo.vol_score', index=4,
-      number=5, type=2, cpp_type=6, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=125,
-  serialized_end=230,
-)
-
 DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
 DESCRIPTOR.message_types_by_name['commonResponse'] = _COMMONRESPONSE
-DESCRIPTOR.message_types_by_name['scoreInfo'] = _SCOREINFO
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Request = _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), dict(
@@ -177,13 +117,6 @@ commonResponse = _reflection.GeneratedProtocolMessageType('commonResponse', (_me
   # @@protoc_insertion_point(class_scope:helmsley.commonResponse)
   ))
 _sym_db.RegisterMessage(commonResponse)
-
-scoreInfo = _reflection.GeneratedProtocolMessageType('scoreInfo', (_message.Message,), dict(
-  DESCRIPTOR = _SCOREINFO,
-  __module__ = 'common_pb2'
-  # @@protoc_insertion_point(class_scope:helmsley.scoreInfo)
-  ))
-_sym_db.RegisterMessage(scoreInfo)
 
 
 # @@protoc_insertion_point(module_scope)

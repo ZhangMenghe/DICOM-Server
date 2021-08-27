@@ -12,6 +12,14 @@ message configResponse{
     repeated configInfo configs = 1;
 }
 
+message scoreInfo{
+    int32 rgroup_id = 1;
+    int32 rank_id = 2;
+    float rank_score = 3;
+    repeated float raw_score = 4;
+    repeated float vol_score = 5;
+}
+
 message volumeInfo{
     string folder_name = 1;
     string folder_path = 2;
