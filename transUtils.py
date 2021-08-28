@@ -121,16 +121,16 @@ class transDataManager():
         
         sheet = workbook.sheet_by_index(0)
         header = sheet.row_values(0)
-
         #required data    
         try:
-            # idx_folder = header.index('Directory')
-            # idx_patient = header.index('Patient Name')
-            # idx_date = header.index('Scan Date')
-            # idx_modality = header.index('Modality')
-            # idx_physician = header.index('Treating Physician')
-            # idx_mask = header.index('Mask')
-            idx_folder, idx_patient, idx_date, idx_modality, idx_physician, idx_mask = range(6)
+            idx_folder = header.index('Directory')
+            idx_patient = header.index('Patient Name')
+            idx_date = header.index('Scan Date')
+            idx_modality = header.index('Modality')
+            idx_physician = header.index('Treating Physician')
+            idx_mask = header.index('Mask')
+            #TODO: USE THIS INFO?
+            idx_organ_lst = header.index('Organ List')
         except ValueError:
             print("Information Lacks")
             return
@@ -160,7 +160,6 @@ class transDataManager():
                                             mask_folders=volume_with_mask_lst))    
         return datasetResponse(datasets = dataset_lst)
 
-    #todo:test this!!!
     def getVolumeInfoListFromDS(self, ds_folder, volume_idxf_name):
         # check dataset exist
         ds_path = path.join(self.folder_remote_path, ds_folder)

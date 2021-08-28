@@ -12,6 +12,8 @@ from proto.inspectorSync_pb2 import *
 from proto.inspectorSync_pb2_grpc import *
 from transUtils import *
 from shutil import copyfile
+from time import time
+
 SERVER_ADDRESS = "localhost:23333"
 CLIENT_ID = 100
 
@@ -21,13 +23,21 @@ class transClient:
         self.stub = dataTransferStub(channel)
         self.syncer = inspectorSyncStub(channel)
 
+        self.volume_pose_id = 0
     def setRST(self, type, value):
-        res = self.syncer.gsVolumePose(VPMsg(client_id = CLIENT_ID,req_type=ReqType.SET, volume_pose_type= type, values = value))
-        print(res.res_msg)
+        res = self.syncer.setVolumePose(VPMsg(client_id = CLIENT_ID,gid=self.volume_pose_id, volume_pose_type= type, values = value))
+        self.volume_pose_id+=1
+        # print(res.res_msg)
+    def getVolumePoses(self):
+        res = self.syncer.getVolumePoses(Request(client_id = CLIENT_ID))
+        if res.pose_msgs is not None:
+            for it in res.pose_msgs:
+                print(it)
     def getOperations(self):
-        itrs = self.syncer.getOperations(Request(client_id = CLIENT_ID))
-        for it in itrs:
-            print(it.gesture_op.type)
+        res = self.syncer.getOperations(Request(client_id = CLIENT_ID))
+        if res.gesture_op is not None:
+            for it in res.gesture_op:
+                print(it.gesture_op.type)
     def getAvailableConfigs(self):
         ava_lst = self.stub.getAvailableConfigs(Request(client_id = CLIENT_ID))
         print(ava_lst)
@@ -110,12 +120,15 @@ class transClient:
 
 def main():
     client = transClient(SERVER_ADDRESS)
-    # while(True):
-    #     client.getOperations()
+    while(True):
+        client.getVolumePoses()
+        client.getOperations()
     # client.setRST(VPMsg.VPType.POS, [1,2,3])
+    # client.setRST(VPMsg.VPType.SCALE, [4,4,4])
+
     # ava_config = client.getAvailableConfigs()
     # ava_lst = client.getAvailableDatasets()
-    
+    # print(ava_lst)
     # dataset_name = ava_lst.datasets[0].folder_name
     # dataset_name = "IRB09"
     dataset_name = 'Larry_Smarr_2017'#"Larry_Smarr_2016"

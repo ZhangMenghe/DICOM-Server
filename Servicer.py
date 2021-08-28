@@ -28,6 +28,9 @@ class operationServicer(inspectorSyncServicer):
 
         self.frame_state = None
         self.last_time = None
+
+        self.volume_pose_pool = []
+
     def startBroadcast(self, info, context):
         if self.provider is not None:
             return commonResponse(success = False, res_msg = "exisiting broadcaster")
@@ -43,14 +46,9 @@ class operationServicer(inspectorSyncServicer):
         print("===id: " + str(info.client_id) + " register as receiver")
         return commonResponse(success = True)
 
-    def gsVolumePose(self, msg, context):
-        # print("===Client" + str(msg.client_id) + )
-        print(msg.req_type)
-        print(msg.volume_pose_type)
-
-        print(msg.values)
-
-        return commonResponse(success = True, res_msg="lalalala")
+    def setVolumePose(self, msg, context):
+        self.volume_pose_pool.append(msg)
+        return commonResponse(success = True)
 
     def reqestReset(self, msg, context):
         try:
@@ -131,8 +129,8 @@ class operationServicer(inspectorSyncServicer):
         return self.frame_state 
 
     def getOperations(self, req, context):
-        if(len(self.gesture_pool) == 0):
-            return None
+        if not self.gesture_pool:
+            return OperationBatch(bid = time(), gesture_op = None)
         self.gesture_pool.sort(key = lambda x: int(x.gid))
         ges_batch = OperationBatch(bid = time(), gesture_op = self.gesture_pool)
         self.gesture_pool.clear()
@@ -140,6 +138,14 @@ class operationServicer(inspectorSyncServicer):
 
         # while not self.op_pool.empty():
         #     yield OperationResponse(gesture_op = self.op_pool.get())
+    
+    def getVolumePoses(self, req, context):
+        if not self.volume_pose_pool:
+            return VolumePoseBatch(bid = time(), pose_msgs = None)
+        self.volume_pose_pool.sort(key = lambda x: int(x.gid))
+        pose_batch = VolumePoseBatch(bid = time(), pose_msgs = self.volume_pose_pool.copy())
+        self.volume_pose_pool.clear()
+        return pose_batch
 
 class dataServicer(dataTransferServicer):
     def __init__(self):

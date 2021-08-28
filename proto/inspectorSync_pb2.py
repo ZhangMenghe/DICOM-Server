@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='helmsley',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x13inspectorSync.proto\x12\x08helmsley\x1a\x0c\x63ommon.proto\"\xa8\x01\n\x05VPMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12#\n\x08req_type\x18\x02 \x01(\x0e\x32\x11.helmsley.ReqType\x12\x30\n\x10volume_pose_type\x18\x03 \x01(\x0e\x32\x16.helmsley.VPMsg.VPType\x12\x0e\n\x06values\x18\x04 \x03(\x02\"%\n\x06VPType\x12\x07\n\x03POS\x10\x00\x12\t\n\x05SCALE\x10\x01\x12\x07\n\x03ROT\x10\x02\"\xa4\x01\n\tGestureOp\x12\x0b\n\x03gid\x18\x01 \x01(\x03\x12(\n\x04type\x18\x02 \x01(\x0e\x32\x1a.helmsley.GestureOp.OPType\x12\t\n\x01x\x18\x03 \x01(\x02\x12\t\n\x01y\x18\x04 \x01(\x02\"J\n\x06OPType\x12\x0e\n\nTOUCH_DOWN\x10\x00\x12\x0c\n\x08TOUCH_UP\x10\x01\x12\x0e\n\nTOUCH_MOVE\x10\x02\x12\t\n\x05SCALE\x10\x03\x12\x07\n\x03PAN\x10\x04\"F\n\x0eOperationBatch\x12\x0b\n\x03\x62id\x18\x01 \x01(\x02\x12\'\n\ngesture_op\x18\x02 \x03(\x0b\x32\x13.helmsley.GestureOp\"^\n\x08ResetMsg\x12\x12\n\ncheck_keys\x18\x01 \x03(\t\x12\x14\n\x0c\x63heck_values\x18\x02 \x03(\x08\x12\x13\n\x0bvolume_pose\x18\x03 \x03(\x02\x12\x13\n\x0b\x63\x61mera_pose\x18\x04 \x03(\x02\"\x9f\x02\n\x07TuneMsg\x12(\n\x04type\x18\x01 \x01(\x0e\x32\x1a.helmsley.TuneMsg.TuneType\x12\x0e\n\x06target\x18\x02 \x01(\x05\x12\x12\n\nsub_target\x18\x03 \x01(\x05\x12\r\n\x05value\x18\x04 \x01(\x02\x12\x0e\n\x06values\x18\x05 \x03(\x02\"\xa6\x01\n\x08TuneType\x12\x0b\n\x07\x41\x44\x44_ONE\x10\x00\x12\x0e\n\nREMOVE_ONE\x10\x01\x12\x0e\n\nREMOTE_ALL\x10\x02\x12\x0b\n\x07SET_ONE\x10\x03\x12\x0b\n\x07SET_ALL\x10\x04\x12\x0f\n\x0bSET_VISIBLE\x10\x05\x12\x0e\n\nSET_TARGET\x10\x06\x12\r\n\tCUT_PLANE\x10\x07\x12\x10\n\x0c\x43OLOR_SCHEME\x10\x08\x12\x11\n\rRENDER_METHOD\x10\t\"&\n\x08\x43heckMsg\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08\"%\n\x07MaskMsg\x12\x0b\n\x03num\x18\x01 \x01(\x05\x12\r\n\x05mbits\x18\x02 \x01(\x05\"/\n\x07\x44\x61taMsg\x12\x0f\n\x07\x64s_name\x18\x01 \x01(\t\x12\x13\n\x0bvolume_name\x18\x02 \x01(\t\"\xf1\x02\n\x0e\x46rameUpdateMsg\x12/\n\x05types\x18\x01 \x03(\x0e\x32 .helmsley.FrameUpdateMsg.MsgType\x12%\n\x08gestures\x18\x02 \x03(\x0b\x32\x13.helmsley.GestureOp\x12 \n\x05tunes\x18\x03 \x03(\x0b\x32\x11.helmsley.TuneMsg\x12\"\n\x06\x63hecks\x18\x04 \x03(\x0b\x32\x12.helmsley.CheckMsg\x12%\n\nmask_value\x18\x05 \x01(\x0b\x32\x11.helmsley.MaskMsg\x12\'\n\x0breset_value\x18\x06 \x01(\x0b\x32\x12.helmsley.ResetMsg\x12%\n\ndata_value\x18\x07 \x01(\x0b\x32\x11.helmsley.DataMsg\"J\n\x07MsgType\x12\x0b\n\x07GESTURE\x10\x00\x12\x08\n\x04TUNE\x10\x01\x12\t\n\x05\x43HECK\x10\x02\x12\x08\n\x04MASK\x10\x03\x12\t\n\x05RESET\x10\x04\x12\x08\n\x04\x44\x41TA\x10\x05*\x1b\n\x07ReqType\x12\x07\n\x03SET\x10\x00\x12\x07\n\x03GET\x10\x01\x32\xc1\x05\n\rinspectorSync\x12=\n\x0estartBroadcast\x12\x11.helmsley.Request\x1a\x18.helmsley.commonResponse\x12\x44\n\x15startReceiveBroadcast\x12\x11.helmsley.Request\x1a\x18.helmsley.commonResponse\x12\x39\n\x0cgsVolumePose\x12\x0f.helmsley.VPMsg\x1a\x18.helmsley.commonResponse\x12<\n\rgetOperations\x12\x11.helmsley.Request\x1a\x18.helmsley.OperationBatch\x12\x39\n\ngetUpdates\x12\x11.helmsley.Request\x1a\x18.helmsley.FrameUpdateMsg\x12;\n\x0breqestReset\x12\x12.helmsley.ResetMsg\x1a\x18.helmsley.commonResponse\x12=\n\x0csetGestureOp\x12\x13.helmsley.GestureOp\x1a\x18.helmsley.commonResponse\x12<\n\rsetTuneParams\x12\x11.helmsley.TuneMsg\x1a\x18.helmsley.commonResponse\x12>\n\x0esetCheckParams\x12\x12.helmsley.CheckMsg\x1a\x18.helmsley.commonResponse\x12<\n\rsetMaskParams\x12\x11.helmsley.MaskMsg\x1a\x18.helmsley.commonResponse\x12?\n\x10setDisplayVolume\x12\x11.helmsley.DataMsg\x1a\x18.helmsley.commonResponseb\x06proto3')
+  serialized_pb=_b('\n\x13inspectorSync.proto\x12\x08helmsley\x1a\x0c\x63ommon.proto\"\x90\x01\n\x05VPMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0b\n\x03gid\x18\x02 \x01(\x05\x12\x30\n\x10volume_pose_type\x18\x03 \x01(\x0e\x32\x16.helmsley.VPMsg.VPType\x12\x0e\n\x06values\x18\x04 \x03(\x02\"%\n\x06VPType\x12\x07\n\x03POS\x10\x00\x12\t\n\x05SCALE\x10\x01\x12\x07\n\x03ROT\x10\x02\"\xa4\x01\n\tGestureOp\x12\x0b\n\x03gid\x18\x01 \x01(\x03\x12(\n\x04type\x18\x02 \x01(\x0e\x32\x1a.helmsley.GestureOp.OPType\x12\t\n\x01x\x18\x03 \x01(\x02\x12\t\n\x01y\x18\x04 \x01(\x02\"J\n\x06OPType\x12\x0e\n\nTOUCH_DOWN\x10\x00\x12\x0c\n\x08TOUCH_UP\x10\x01\x12\x0e\n\nTOUCH_MOVE\x10\x02\x12\t\n\x05SCALE\x10\x03\x12\x07\n\x03PAN\x10\x04\"F\n\x0eOperationBatch\x12\x0b\n\x03\x62id\x18\x01 \x01(\x02\x12\'\n\ngesture_op\x18\x02 \x03(\x0b\x32\x13.helmsley.GestureOp\"B\n\x0fVolumePoseBatch\x12\x0b\n\x03\x62id\x18\x01 \x01(\x02\x12\"\n\tpose_msgs\x18\x02 \x03(\x0b\x32\x0f.helmsley.VPMsg\"^\n\x08ResetMsg\x12\x12\n\ncheck_keys\x18\x01 \x03(\t\x12\x14\n\x0c\x63heck_values\x18\x02 \x03(\x08\x12\x13\n\x0bvolume_pose\x18\x03 \x03(\x02\x12\x13\n\x0b\x63\x61mera_pose\x18\x04 \x03(\x02\"\x9f\x02\n\x07TuneMsg\x12(\n\x04type\x18\x01 \x01(\x0e\x32\x1a.helmsley.TuneMsg.TuneType\x12\x0e\n\x06target\x18\x02 \x01(\x05\x12\x12\n\nsub_target\x18\x03 \x01(\x05\x12\r\n\x05value\x18\x04 \x01(\x02\x12\x0e\n\x06values\x18\x05 \x03(\x02\"\xa6\x01\n\x08TuneType\x12\x0b\n\x07\x41\x44\x44_ONE\x10\x00\x12\x0e\n\nREMOVE_ONE\x10\x01\x12\x0e\n\nREMOTE_ALL\x10\x02\x12\x0b\n\x07SET_ONE\x10\x03\x12\x0b\n\x07SET_ALL\x10\x04\x12\x0f\n\x0bSET_VISIBLE\x10\x05\x12\x0e\n\nSET_TARGET\x10\x06\x12\r\n\tCUT_PLANE\x10\x07\x12\x10\n\x0c\x43OLOR_SCHEME\x10\x08\x12\x11\n\rRENDER_METHOD\x10\t\"&\n\x08\x43heckMsg\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08\"%\n\x07MaskMsg\x12\x0b\n\x03num\x18\x01 \x01(\x05\x12\r\n\x05mbits\x18\x02 \x01(\x05\"/\n\x07\x44\x61taMsg\x12\x0f\n\x07\x64s_name\x18\x01 \x01(\t\x12\x13\n\x0bvolume_name\x18\x02 \x01(\t\"\xf1\x02\n\x0e\x46rameUpdateMsg\x12/\n\x05types\x18\x01 \x03(\x0e\x32 .helmsley.FrameUpdateMsg.MsgType\x12%\n\x08gestures\x18\x02 \x03(\x0b\x32\x13.helmsley.GestureOp\x12 \n\x05tunes\x18\x03 \x03(\x0b\x32\x11.helmsley.TuneMsg\x12\"\n\x06\x63hecks\x18\x04 \x03(\x0b\x32\x12.helmsley.CheckMsg\x12%\n\nmask_value\x18\x05 \x01(\x0b\x32\x11.helmsley.MaskMsg\x12\'\n\x0breset_value\x18\x06 \x01(\x0b\x32\x12.helmsley.ResetMsg\x12%\n\ndata_value\x18\x07 \x01(\x0b\x32\x11.helmsley.DataMsg\"J\n\x07MsgType\x12\x0b\n\x07GESTURE\x10\x00\x12\x08\n\x04TUNE\x10\x01\x12\t\n\x05\x43HECK\x10\x02\x12\x08\n\x04MASK\x10\x03\x12\t\n\x05RESET\x10\x04\x12\x08\n\x04\x44\x41TA\x10\x05*\x1b\n\x07ReqType\x12\x07\n\x03SET\x10\x00\x12\x07\n\x03GET\x10\x01\x32\x82\x06\n\rinspectorSync\x12=\n\x0estartBroadcast\x12\x11.helmsley.Request\x1a\x18.helmsley.commonResponse\x12\x44\n\x15startReceiveBroadcast\x12\x11.helmsley.Request\x1a\x18.helmsley.commonResponse\x12;\n\x0breqestReset\x12\x12.helmsley.ResetMsg\x1a\x18.helmsley.commonResponse\x12>\n\x0egetVolumePoses\x12\x11.helmsley.Request\x1a\x19.helmsley.VolumePoseBatch\x12<\n\rgetOperations\x12\x11.helmsley.Request\x1a\x18.helmsley.OperationBatch\x12\x39\n\ngetUpdates\x12\x11.helmsley.Request\x1a\x18.helmsley.FrameUpdateMsg\x12:\n\rsetVolumePose\x12\x0f.helmsley.VPMsg\x1a\x18.helmsley.commonResponse\x12=\n\x0csetGestureOp\x12\x13.helmsley.GestureOp\x1a\x18.helmsley.commonResponse\x12<\n\rsetTuneParams\x12\x11.helmsley.TuneMsg\x1a\x18.helmsley.commonResponse\x12>\n\x0esetCheckParams\x12\x12.helmsley.CheckMsg\x1a\x18.helmsley.commonResponse\x12<\n\rsetMaskParams\x12\x11.helmsley.MaskMsg\x1a\x18.helmsley.commonResponse\x12?\n\x10setDisplayVolume\x12\x11.helmsley.DataMsg\x1a\x18.helmsley.commonResponseb\x06proto3')
   ,
   dependencies=[common__pb2.DESCRIPTOR,])
 
@@ -42,8 +42,8 @@ _REQTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1343,
-  serialized_end=1370,
+  serialized_start=1387,
+  serialized_end=1414,
 )
 _sym_db.RegisterEnumDescriptor(_REQTYPE)
 
@@ -73,8 +73,8 @@ _VPMSG_VPTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=179,
-  serialized_end=216,
+  serialized_start=155,
+  serialized_end=192,
 )
 _sym_db.RegisterEnumDescriptor(_VPMSG_VPTYPE)
 
@@ -107,8 +107,8 @@ _GESTUREOP_OPTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=309,
-  serialized_end=383,
+  serialized_start=285,
+  serialized_end=359,
 )
 _sym_db.RegisterEnumDescriptor(_GESTUREOP_OPTYPE)
 
@@ -161,8 +161,8 @@ _TUNEMSG_TUNETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=675,
-  serialized_end=841,
+  serialized_start=719,
+  serialized_end=885,
 )
 _sym_db.RegisterEnumDescriptor(_TUNEMSG_TUNETYPE)
 
@@ -199,8 +199,8 @@ _FRAMEUPDATEMSG_MSGTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1267,
-  serialized_end=1341,
+  serialized_start=1311,
+  serialized_end=1385,
 )
 _sym_db.RegisterEnumDescriptor(_FRAMEUPDATEMSG_MSGTYPE)
 
@@ -220,8 +220,8 @@ _VPMSG = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='req_type', full_name='helmsley.VPMsg.req_type', index=1,
-      number=2, type=14, cpp_type=8, label=1,
+      name='gid', full_name='helmsley.VPMsg.gid', index=1,
+      number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -254,7 +254,7 @@ _VPMSG = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=48,
-  serialized_end=216,
+  serialized_end=192,
 )
 
 
@@ -306,8 +306,8 @@ _GESTUREOP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=219,
-  serialized_end=383,
+  serialized_start=195,
+  serialized_end=359,
 )
 
 
@@ -344,8 +344,46 @@ _OPERATIONBATCH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=385,
-  serialized_end=455,
+  serialized_start=361,
+  serialized_end=431,
+)
+
+
+_VOLUMEPOSEBATCH = _descriptor.Descriptor(
+  name='VolumePoseBatch',
+  full_name='helmsley.VolumePoseBatch',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='bid', full_name='helmsley.VolumePoseBatch.bid', index=0,
+      number=1, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='pose_msgs', full_name='helmsley.VolumePoseBatch.pose_msgs', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=433,
+  serialized_end=499,
 )
 
 
@@ -396,8 +434,8 @@ _RESETMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=457,
-  serialized_end=551,
+  serialized_start=501,
+  serialized_end=595,
 )
 
 
@@ -456,8 +494,8 @@ _TUNEMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=554,
-  serialized_end=841,
+  serialized_start=598,
+  serialized_end=885,
 )
 
 
@@ -494,8 +532,8 @@ _CHECKMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=843,
-  serialized_end=881,
+  serialized_start=887,
+  serialized_end=925,
 )
 
 
@@ -532,8 +570,8 @@ _MASKMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=883,
-  serialized_end=920,
+  serialized_start=927,
+  serialized_end=964,
 )
 
 
@@ -570,8 +608,8 @@ _DATAMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=922,
-  serialized_end=969,
+  serialized_start=966,
+  serialized_end=1013,
 )
 
 
@@ -644,16 +682,16 @@ _FRAMEUPDATEMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=972,
-  serialized_end=1341,
+  serialized_start=1016,
+  serialized_end=1385,
 )
 
-_VPMSG.fields_by_name['req_type'].enum_type = _REQTYPE
 _VPMSG.fields_by_name['volume_pose_type'].enum_type = _VPMSG_VPTYPE
 _VPMSG_VPTYPE.containing_type = _VPMSG
 _GESTUREOP.fields_by_name['type'].enum_type = _GESTUREOP_OPTYPE
 _GESTUREOP_OPTYPE.containing_type = _GESTUREOP
 _OPERATIONBATCH.fields_by_name['gesture_op'].message_type = _GESTUREOP
+_VOLUMEPOSEBATCH.fields_by_name['pose_msgs'].message_type = _VPMSG
 _TUNEMSG.fields_by_name['type'].enum_type = _TUNEMSG_TUNETYPE
 _TUNEMSG_TUNETYPE.containing_type = _TUNEMSG
 _FRAMEUPDATEMSG.fields_by_name['types'].enum_type = _FRAMEUPDATEMSG_MSGTYPE
@@ -667,6 +705,7 @@ _FRAMEUPDATEMSG_MSGTYPE.containing_type = _FRAMEUPDATEMSG
 DESCRIPTOR.message_types_by_name['VPMsg'] = _VPMSG
 DESCRIPTOR.message_types_by_name['GestureOp'] = _GESTUREOP
 DESCRIPTOR.message_types_by_name['OperationBatch'] = _OPERATIONBATCH
+DESCRIPTOR.message_types_by_name['VolumePoseBatch'] = _VOLUMEPOSEBATCH
 DESCRIPTOR.message_types_by_name['ResetMsg'] = _RESETMSG
 DESCRIPTOR.message_types_by_name['TuneMsg'] = _TUNEMSG
 DESCRIPTOR.message_types_by_name['CheckMsg'] = _CHECKMSG
@@ -696,6 +735,13 @@ OperationBatch = _reflection.GeneratedProtocolMessageType('OperationBatch', (_me
   # @@protoc_insertion_point(class_scope:helmsley.OperationBatch)
   ))
 _sym_db.RegisterMessage(OperationBatch)
+
+VolumePoseBatch = _reflection.GeneratedProtocolMessageType('VolumePoseBatch', (_message.Message,), dict(
+  DESCRIPTOR = _VOLUMEPOSEBATCH,
+  __module__ = 'inspectorSync_pb2'
+  # @@protoc_insertion_point(class_scope:helmsley.VolumePoseBatch)
+  ))
+_sym_db.RegisterMessage(VolumePoseBatch)
 
 ResetMsg = _reflection.GeneratedProtocolMessageType('ResetMsg', (_message.Message,), dict(
   DESCRIPTOR = _RESETMSG,
@@ -747,8 +793,8 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1373,
-  serialized_end=2078,
+  serialized_start=1417,
+  serialized_end=2187,
   methods=[
   _descriptor.MethodDescriptor(
     name='startBroadcast',
@@ -769,18 +815,27 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='gsVolumePose',
-    full_name='helmsley.inspectorSync.gsVolumePose',
+    name='reqestReset',
+    full_name='helmsley.inspectorSync.reqestReset',
     index=2,
     containing_service=None,
-    input_type=_VPMSG,
+    input_type=_RESETMSG,
     output_type=common__pb2._COMMONRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='getVolumePoses',
+    full_name='helmsley.inspectorSync.getVolumePoses',
+    index=3,
+    containing_service=None,
+    input_type=common__pb2._REQUEST,
+    output_type=_VOLUMEPOSEBATCH,
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
     name='getOperations',
     full_name='helmsley.inspectorSync.getOperations',
-    index=3,
+    index=4,
     containing_service=None,
     input_type=common__pb2._REQUEST,
     output_type=_OPERATIONBATCH,
@@ -789,25 +844,25 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='getUpdates',
     full_name='helmsley.inspectorSync.getUpdates',
-    index=4,
+    index=5,
     containing_service=None,
     input_type=common__pb2._REQUEST,
     output_type=_FRAMEUPDATEMSG,
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='reqestReset',
-    full_name='helmsley.inspectorSync.reqestReset',
-    index=5,
+    name='setVolumePose',
+    full_name='helmsley.inspectorSync.setVolumePose',
+    index=6,
     containing_service=None,
-    input_type=_RESETMSG,
+    input_type=_VPMSG,
     output_type=common__pb2._COMMONRESPONSE,
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
     name='setGestureOp',
     full_name='helmsley.inspectorSync.setGestureOp',
-    index=6,
+    index=7,
     containing_service=None,
     input_type=_GESTUREOP,
     output_type=common__pb2._COMMONRESPONSE,
@@ -816,7 +871,7 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='setTuneParams',
     full_name='helmsley.inspectorSync.setTuneParams',
-    index=7,
+    index=8,
     containing_service=None,
     input_type=_TUNEMSG,
     output_type=common__pb2._COMMONRESPONSE,
@@ -825,7 +880,7 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='setCheckParams',
     full_name='helmsley.inspectorSync.setCheckParams',
-    index=8,
+    index=9,
     containing_service=None,
     input_type=_CHECKMSG,
     output_type=common__pb2._COMMONRESPONSE,
@@ -834,7 +889,7 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='setMaskParams',
     full_name='helmsley.inspectorSync.setMaskParams',
-    index=9,
+    index=10,
     containing_service=None,
     input_type=_MASKMSG,
     output_type=common__pb2._COMMONRESPONSE,
@@ -843,7 +898,7 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='setDisplayVolume',
     full_name='helmsley.inspectorSync.setDisplayVolume',
-    index=10,
+    index=11,
     containing_service=None,
     input_type=_DATAMSG,
     output_type=common__pb2._COMMONRESPONSE,

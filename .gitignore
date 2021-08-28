@@ -39,6 +39,7 @@ __*
 *Build*
 data/
 data_mask/
+pacs/
 report/*
 jupyters/*
 .ipynb_checkpoints/*
