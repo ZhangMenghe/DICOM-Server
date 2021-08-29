@@ -25,8 +25,8 @@ class inspectorSyncStub(object):
         request_serializer=common__pb2.Request.SerializeToString,
         response_deserializer=common__pb2.commonResponse.FromString,
         )
-    self.reqestReset = channel.unary_unary(
-        '/helmsley.inspectorSync/reqestReset',
+    self.requestReset = channel.unary_unary(
+        '/helmsley.inspectorSync/requestReset',
         request_serializer=inspectorSync__pb2.ResetMsg.SerializeToString,
         response_deserializer=common__pb2.commonResponse.FromString,
         )
@@ -95,7 +95,7 @@ class inspectorSyncServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def reqestReset(self, request, context):
+  def requestReset(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -178,8 +178,8 @@ def add_inspectorSyncServicer_to_server(servicer, server):
           request_deserializer=common__pb2.Request.FromString,
           response_serializer=common__pb2.commonResponse.SerializeToString,
       ),
-      'reqestReset': grpc.unary_unary_rpc_method_handler(
-          servicer.reqestReset,
+      'requestReset': grpc.unary_unary_rpc_method_handler(
+          servicer.requestReset,
           request_deserializer=inspectorSync__pb2.ResetMsg.FromString,
           response_serializer=common__pb2.commonResponse.SerializeToString,
       ),

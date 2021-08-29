@@ -64,7 +64,7 @@ class operationServicer(inspectorSyncServicer):
         self.volume_pose_pool.append(msg)
         return commonResponse(success = True)
 
-    def reqestReset(self, msg, context):
+    def requestReset(self, msg, context):
         if not self.check_host_client_status(msg.client_id):
             return commonResponse(success = False)
         try:
