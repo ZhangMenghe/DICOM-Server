@@ -15,7 +15,7 @@ from shutil import copyfile
 from time import time
 
 SERVER_ADDRESS = "localhost:23333"
-CLIENT_ID = 100
+CLIENT_ID = 120
 
 class transClient:
     def __init__(self, address):
@@ -26,10 +26,8 @@ class transClient:
         self.volume_pose_id = 0
     def registeredAsReceiver(self):
         self.syncer.startReceiveBroadcast(Request(client_id=CLIENT_ID))
-        
     def registeredAsBroadcaster(self):
         self.syncer.startBroadcast(Request(client_id=CLIENT_ID))
-
     def setRST(self, type, value):
         res = self.syncer.setVolumePose(VPMsg(client_id = CLIENT_ID,gid=self.volume_pose_id, volume_pose_type= type, values = value))
         self.volume_pose_id+=1
@@ -130,10 +128,10 @@ class transClient:
 
 def main():
     client = transClient(SERVER_ADDRESS)
-    client.registeredAsReceiver()
-    while(True):
+    client.registeredAsBroadcaster()
+    # while(True):
         # client.getVolumePoses()
-        client.getAllUpdates()
+        # client.getAllUpdates()
     # client.setRST(VPMsg.VPType.POS, [1,2,3])
     # client.setRST(VPMsg.VPType.SCALE, [4,4,4])
 

@@ -3,7 +3,6 @@ syntax = "proto3";
 package helmsley;
 import "common.proto";
 
-
 message configResponse{
     message configInfo{
         string file_name = 1;

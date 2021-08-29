@@ -33,52 +33,83 @@ class operationServicer(inspectorSyncServicer):
 
     def startBroadcast(self, info, context):
         if self.provider is not None:
-            return commonResponse(success = False, res_msg = "exisiting broadcaster")
+            self.receivers[self.provider] = False
+            print("===id: " + str(self.provider) + " changed to receiver")
+            self.receivers.pop(info.client_id, None)
         self.provider = info.client_id
         print("===id: " + str(self.provider) + " start to broadcast")
+        #TODO: clear pools?
         return commonResponse(success = True)
     
     def startReceiveBroadcast(self, info, context):
-        if(self.provider is not None):
-            if(self.provider == info.client_id):
-                return commonResponse(success = False, res_msg = "exisiting broadcaster")
+        #TODO: has to be a provider?
+        if(self.provider is None):
+            return self.startBroadcast(info, context)
         self.receivers[info.client_id] = False
         print("===id: " + str(info.client_id) + " register as receiver")
         return commonResponse(success = True)
 
+    def check_host_client_status(self, nid, rtype=ReqType.SET):
+        if(self.provider is None):
+            return False
+
+        if rtype == ReqType.SET:
+            return self.provider == nid
+
+        return nid in self.receivers.keys() and not self.receivers[nid]
+
     def setVolumePose(self, msg, context):
+        if not self.check_host_client_status(msg.client_id):
+            return commonResponse(success = False)
         self.volume_pose_pool.append(msg)
         return commonResponse(success = True)
 
     def reqestReset(self, msg, context):
+        if not self.check_host_client_status(msg.client_id):
+            return commonResponse(success = False)
         try:
             self.ops.remove(FrameUpdateMsg.MsgType.RESET)
         except:
             pass
         self.ops.append(FrameUpdateMsg.MsgType.RESET)
         self.reset_value = msg
-        
-    def setGestureOp(self, touch, context):
+        return commonResponse(success = True)
+
+    def setGestureOp(self, msg, context):
+        if not self.check_host_client_status(msg.client_id):
+            return commonResponse(success = False)
         self.ops.append(FrameUpdateMsg.MsgType.GESTURE)
-        self.gesture_pool.append(touch) 
+        self.gesture_pool.append(msg)
+        return commonResponse(success = True)
 
-    def setTuneParams(self, tune, context):
+    def setTuneParams(self, msg, context):
+        if not self.check_host_client_status(msg.client_id):
+            return commonResponse(success = False)
         self.ops.append(FrameUpdateMsg.MsgType.TUNE)
-        self.tune_pool.append(tune)
+        self.tune_pool.append(msg)
+        return commonResponse(success = True)
 
-    def setCheckParams(self, check, context):
+    def setCheckParams(self, msg, context):
+        if not self.check_host_client_status(msg.client_id):
+            return commonResponse(success = False)
         self.ops.append(FrameUpdateMsg.MsgType.CHECK)
-        self.check_pool.append(check)
+        self.check_pool.append(msg)
+        return commonResponse(success = True)
 
-    def setMaskParams(self, msk, context):
+    def setMaskParams(self, msg, context):
+        if not self.check_host_client_status(msg.client_id):
+            return commonResponse(success = False)
         try:
             self.ops.remove(FrameUpdateMsg.MsgType.MASK)
         except:
             pass
         self.ops.append(FrameUpdateMsg.MsgType.MASK)
-        self.mask_value = msk
+        self.mask_value = msg
+        return commonResponse(success = True)
     
     def setDisplayVolume(self, msg, context):
+        if not self.check_host_client_status(msg.client_id):
+            return commonResponse(success = False)
         # m_path_id = msg.ds_name + "/" + msg.volume_name
         # if(m_path_id == self.current_data):
         #     print("same data")
@@ -91,12 +122,11 @@ class operationServicer(inspectorSyncServicer):
         self.ops.append(FrameUpdateMsg.MsgType.DATA)
         print("====set data====" + msg.ds_name + " / "+ msg.volume_name)
         # self.current_data = m_path_id
+        return commonResponse(success = True)
 
     def getUpdates(self, req, context):
-        if(self.provider is None):
-            return None
-        if(self.receivers[req.client_id]):
-            return None
+        if not self.check_host_client_status(req.client_id, rtype=ReqType.GET):
+            return FrameUpdateMsg(types=None)
 
         if self.data_need_built:
             self.gesture_pool.sort(key = lambda x: int(x.gid))
@@ -129,7 +159,7 @@ class operationServicer(inspectorSyncServicer):
         return self.frame_state 
 
     def getOperations(self, req, context):
-        if not self.gesture_pool:
+        if not self.check_host_client_status(req.client_id, rtype=ReqType.GET) or not self.gesture_pool :
             return OperationBatch(bid = time(), gesture_op = None)
         self.gesture_pool.sort(key = lambda x: int(x.gid))
         ges_batch = OperationBatch(bid = time(), gesture_op = self.gesture_pool)
@@ -140,7 +170,7 @@ class operationServicer(inspectorSyncServicer):
         #     yield OperationResponse(gesture_op = self.op_pool.get())
     
     def getVolumePoses(self, req, context):
-        if not self.volume_pose_pool:
+        if not self.check_host_client_status(req.client_id, rtype=ReqType.GET) or not self.volume_pose_pool :
             return VolumePoseBatch(bid = time(), pose_msgs = None)
         self.volume_pose_pool.sort(key = lambda x: int(x.gid))
         pose_batch = VolumePoseBatch(bid = time(), pose_msgs = self.volume_pose_pool.copy())
