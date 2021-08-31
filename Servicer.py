@@ -42,9 +42,8 @@ class operationServicer(inspectorSyncServicer):
         return commonResponse(success = True)
     
     def startReceiveBroadcast(self, info, context):
-        #TODO: has to be a provider?
-        if(self.provider is None):
-            return self.startBroadcast(info, context)
+        if self.provider == info.client_id:
+            self.provider = None
         self.receivers[info.client_id] = False
         print("===id: " + str(info.client_id) + " register as receiver")
         return commonResponse(success = True)
