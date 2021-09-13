@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='helmsley',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x13inspectorSync.proto\x12\x08helmsley\x1a\x0c\x63ommon.proto\"\x90\x01\n\x05VPMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0b\n\x03gid\x18\x02 \x01(\x05\x12\x30\n\x10volume_pose_type\x18\x03 \x01(\x0e\x32\x16.helmsley.VPMsg.VPType\x12\x0e\n\x06values\x18\x04 \x03(\x02\"%\n\x06VPType\x12\x07\n\x03POS\x10\x00\x12\t\n\x05SCALE\x10\x01\x12\x07\n\x03ROT\x10\x02\"\xb7\x01\n\tGestureOp\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0b\n\x03gid\x18\x02 \x01(\x03\x12(\n\x04type\x18\x03 \x01(\x0e\x32\x1a.helmsley.GestureOp.OPType\x12\t\n\x01x\x18\x04 \x01(\x02\x12\t\n\x01y\x18\x05 \x01(\x02\"J\n\x06OPType\x12\x0e\n\nTOUCH_DOWN\x10\x00\x12\x0c\n\x08TOUCH_UP\x10\x01\x12\x0e\n\nTOUCH_MOVE\x10\x02\x12\t\n\x05SCALE\x10\x03\x12\x07\n\x03PAN\x10\x04\"F\n\x0eOperationBatch\x12\x0b\n\x03\x62id\x18\x01 \x01(\x02\x12\'\n\ngesture_op\x18\x02 \x03(\x0b\x32\x13.helmsley.GestureOp\"B\n\x0fVolumePoseBatch\x12\x0b\n\x03\x62id\x18\x01 \x01(\x02\x12\"\n\tpose_msgs\x18\x02 \x03(\x0b\x32\x0f.helmsley.VPMsg\"q\n\x08ResetMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x12\n\ncheck_keys\x18\x02 \x03(\t\x12\x14\n\x0c\x63heck_values\x18\x03 \x03(\x08\x12\x13\n\x0bvolume_pose\x18\x04 \x03(\x02\x12\x13\n\x0b\x63\x61mera_pose\x18\x05 \x03(\x02\"\xb2\x02\n\x07TuneMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12(\n\x04type\x18\x02 \x01(\x0e\x32\x1a.helmsley.TuneMsg.TuneType\x12\x0e\n\x06target\x18\x03 \x01(\x05\x12\x12\n\nsub_target\x18\x04 \x01(\x05\x12\r\n\x05value\x18\x05 \x01(\x02\x12\x0e\n\x06values\x18\x06 \x03(\x02\"\xa6\x01\n\x08TuneType\x12\x0b\n\x07\x41\x44\x44_ONE\x10\x00\x12\x0e\n\nREMOVE_ONE\x10\x01\x12\x0e\n\nREMOTE_ALL\x10\x02\x12\x0b\n\x07SET_ONE\x10\x03\x12\x0b\n\x07SET_ALL\x10\x04\x12\x0f\n\x0bSET_VISIBLE\x10\x05\x12\x0e\n\nSET_TARGET\x10\x06\x12\r\n\tCUT_PLANE\x10\x07\x12\x10\n\x0c\x43OLOR_SCHEME\x10\x08\x12\x11\n\rRENDER_METHOD\x10\t\"9\n\x08\x43heckMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0b\n\x03key\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\x08\"8\n\x07MaskMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0b\n\x03num\x18\x02 \x01(\x05\x12\r\n\x05mbits\x18\x03 \x01(\x05\"B\n\x07\x44\x61taMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07\x64s_name\x18\x02 \x01(\t\x12\x13\n\x0bvolume_name\x18\x03 \x01(\t\"\xf1\x02\n\x0e\x46rameUpdateMsg\x12/\n\x05types\x18\x01 \x03(\x0e\x32 .helmsley.FrameUpdateMsg.MsgType\x12%\n\x08gestures\x18\x02 \x03(\x0b\x32\x13.helmsley.GestureOp\x12 \n\x05tunes\x18\x03 \x03(\x0b\x32\x11.helmsley.TuneMsg\x12\"\n\x06\x63hecks\x18\x04 \x03(\x0b\x32\x12.helmsley.CheckMsg\x12%\n\nmask_value\x18\x05 \x01(\x0b\x32\x11.helmsley.MaskMsg\x12\'\n\x0breset_value\x18\x06 \x01(\x0b\x32\x12.helmsley.ResetMsg\x12%\n\ndata_value\x18\x07 \x01(\x0b\x32\x11.helmsley.DataMsg\"J\n\x07MsgType\x12\x0b\n\x07GESTURE\x10\x00\x12\x08\n\x04TUNE\x10\x01\x12\t\n\x05\x43HECK\x10\x02\x12\x08\n\x04MASK\x10\x03\x12\t\n\x05RESET\x10\x04\x12\x08\n\x04\x44\x41TA\x10\x05*\x1b\n\x07ReqType\x12\x07\n\x03SET\x10\x00\x12\x07\n\x03GET\x10\x01\x32\x83\x06\n\rinspectorSync\x12=\n\x0estartBroadcast\x12\x11.helmsley.Request\x1a\x18.helmsley.commonResponse\x12\x44\n\x15startReceiveBroadcast\x12\x11.helmsley.Request\x1a\x18.helmsley.commonResponse\x12<\n\x0crequestReset\x12\x12.helmsley.ResetMsg\x1a\x18.helmsley.commonResponse\x12>\n\x0egetVolumePoses\x12\x11.helmsley.Request\x1a\x19.helmsley.VolumePoseBatch\x12<\n\rgetOperations\x12\x11.helmsley.Request\x1a\x18.helmsley.OperationBatch\x12\x39\n\ngetUpdates\x12\x11.helmsley.Request\x1a\x18.helmsley.FrameUpdateMsg\x12:\n\rsetVolumePose\x12\x0f.helmsley.VPMsg\x1a\x18.helmsley.commonResponse\x12=\n\x0csetGestureOp\x12\x13.helmsley.GestureOp\x1a\x18.helmsley.commonResponse\x12<\n\rsetTuneParams\x12\x11.helmsley.TuneMsg\x1a\x18.helmsley.commonResponse\x12>\n\x0esetCheckParams\x12\x12.helmsley.CheckMsg\x1a\x18.helmsley.commonResponse\x12<\n\rsetMaskParams\x12\x11.helmsley.MaskMsg\x1a\x18.helmsley.commonResponse\x12?\n\x10setDisplayVolume\x12\x11.helmsley.DataMsg\x1a\x18.helmsley.commonResponseb\x06proto3')
+  serialized_pb=_b('\n\x13inspectorSync.proto\x12\x08helmsley\x1a\x0c\x63ommon.proto\"\x90\x01\n\x05VPMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0b\n\x03gid\x18\x02 \x01(\x05\x12\x30\n\x10volume_pose_type\x18\x03 \x01(\x0e\x32\x16.helmsley.VPMsg.VPType\x12\x0e\n\x06values\x18\x04 \x03(\x02\"%\n\x06VPType\x12\x07\n\x03POS\x10\x00\x12\t\n\x05SCALE\x10\x01\x12\x07\n\x03ROT\x10\x02\"\xb7\x01\n\tGestureOp\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0b\n\x03gid\x18\x02 \x01(\x03\x12(\n\x04type\x18\x03 \x01(\x0e\x32\x1a.helmsley.GestureOp.OPType\x12\t\n\x01x\x18\x04 \x01(\x02\x12\t\n\x01y\x18\x05 \x01(\x02\"J\n\x06OPType\x12\x0e\n\nTOUCH_DOWN\x10\x00\x12\x0c\n\x08TOUCH_UP\x10\x01\x12\x0e\n\nTOUCH_MOVE\x10\x02\x12\t\n\x05SCALE\x10\x03\x12\x07\n\x03PAN\x10\x04\"F\n\x0eOperationBatch\x12\x0b\n\x03\x62id\x18\x01 \x01(\x02\x12\'\n\ngesture_op\x18\x02 \x03(\x0b\x32\x13.helmsley.GestureOp\"B\n\x0fVolumePoseBatch\x12\x0b\n\x03\x62id\x18\x01 \x01(\x02\x12\"\n\tpose_msgs\x18\x02 \x03(\x0b\x32\x0f.helmsley.VPMsg\"q\n\x08ResetMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x12\n\ncheck_keys\x18\x02 \x03(\t\x12\x14\n\x0c\x63heck_values\x18\x03 \x03(\x08\x12\x13\n\x0bvolume_pose\x18\x04 \x03(\x02\x12\x13\n\x0b\x63\x61mera_pose\x18\x05 \x03(\x02\"\xb2\x02\n\x07TuneMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12(\n\x04type\x18\x02 \x01(\x0e\x32\x1a.helmsley.TuneMsg.TuneType\x12\x0e\n\x06target\x18\x03 \x01(\x05\x12\x12\n\nsub_target\x18\x04 \x01(\x05\x12\r\n\x05value\x18\x05 \x01(\x02\x12\x0e\n\x06values\x18\x06 \x03(\x02\"\xa6\x01\n\x08TuneType\x12\x0b\n\x07\x41\x44\x44_ONE\x10\x00\x12\x0e\n\nREMOVE_ONE\x10\x01\x12\x0e\n\nREMOTE_ALL\x10\x02\x12\x0b\n\x07SET_ONE\x10\x03\x12\x0b\n\x07SET_ALL\x10\x04\x12\x0f\n\x0bSET_VISIBLE\x10\x05\x12\x0e\n\nSET_TARGET\x10\x06\x12\r\n\tCUT_PLANE\x10\x07\x12\x10\n\x0c\x43OLOR_SCHEME\x10\x08\x12\x11\n\rRENDER_METHOD\x10\t\"9\n\x08\x43heckMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0b\n\x03key\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\x08\"8\n\x07MaskMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0b\n\x03num\x18\x02 \x01(\x05\x12\r\n\x05mbits\x18\x03 \x01(\x05\"B\n\x07\x44\x61taMsg\x12\x11\n\tclient_id\x18\x01 \x01(\x05\x12\x0f\n\x07\x64s_name\x18\x02 \x01(\t\x12\x13\n\x0bvolume_name\x18\x03 \x01(\t\"\xf1\x02\n\x0e\x46rameUpdateMsg\x12/\n\x05types\x18\x01 \x03(\x0e\x32 .helmsley.FrameUpdateMsg.MsgType\x12%\n\x08gestures\x18\x02 \x03(\x0b\x32\x13.helmsley.GestureOp\x12 \n\x05tunes\x18\x03 \x03(\x0b\x32\x11.helmsley.TuneMsg\x12\"\n\x06\x63hecks\x18\x04 \x03(\x0b\x32\x12.helmsley.CheckMsg\x12%\n\nmask_value\x18\x05 \x01(\x0b\x32\x11.helmsley.MaskMsg\x12\'\n\x0breset_value\x18\x06 \x01(\x0b\x32\x12.helmsley.ResetMsg\x12%\n\ndata_value\x18\x07 \x01(\x0b\x32\x11.helmsley.DataMsg\"J\n\x07MsgType\x12\x0b\n\x07GESTURE\x10\x00\x12\x08\n\x04TUNE\x10\x01\x12\t\n\x05\x43HECK\x10\x02\x12\x08\n\x04MASK\x10\x03\x12\t\n\x05RESET\x10\x04\x12\x08\n\x04\x44\x41TA\x10\x05\"\x1c\n\tStatusMsg\x12\x0f\n\x07host_id\x18\x01 \x01(\x05*\x1b\n\x07ReqType\x12\x07\n\x03SET\x10\x00\x12\x07\n\x03GET\x10\x01\x32\xbf\x06\n\rinspectorSync\x12=\n\x0estartBroadcast\x12\x11.helmsley.Request\x1a\x18.helmsley.commonResponse\x12\x44\n\x15startReceiveBroadcast\x12\x11.helmsley.Request\x1a\x18.helmsley.commonResponse\x12<\n\x0crequestReset\x12\x12.helmsley.ResetMsg\x1a\x18.helmsley.commonResponse\x12>\n\x0egetVolumePoses\x12\x11.helmsley.Request\x1a\x19.helmsley.VolumePoseBatch\x12<\n\rgetOperations\x12\x11.helmsley.Request\x1a\x18.helmsley.OperationBatch\x12\x39\n\ngetUpdates\x12\x11.helmsley.Request\x1a\x18.helmsley.FrameUpdateMsg\x12:\n\x10getStatusMessage\x12\x11.helmsley.Request\x1a\x13.helmsley.StatusMsg\x12:\n\rsetVolumePose\x12\x0f.helmsley.VPMsg\x1a\x18.helmsley.commonResponse\x12=\n\x0csetGestureOp\x12\x13.helmsley.GestureOp\x1a\x18.helmsley.commonResponse\x12<\n\rsetTuneParams\x12\x11.helmsley.TuneMsg\x1a\x18.helmsley.commonResponse\x12>\n\x0esetCheckParams\x12\x12.helmsley.CheckMsg\x1a\x18.helmsley.commonResponse\x12<\n\rsetMaskParams\x12\x11.helmsley.MaskMsg\x1a\x18.helmsley.commonResponse\x12?\n\x10setDisplayVolume\x12\x11.helmsley.DataMsg\x1a\x18.helmsley.commonResponseb\x06proto3')
   ,
   dependencies=[common__pb2.DESCRIPTOR,])
 
@@ -42,8 +42,8 @@ _REQTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1501,
-  serialized_end=1528,
+  serialized_start=1531,
+  serialized_end=1558,
 )
 _sym_db.RegisterEnumDescriptor(_REQTYPE)
 
@@ -728,6 +728,37 @@ _FRAMEUPDATEMSG = _descriptor.Descriptor(
   serialized_end=1499,
 )
 
+
+_STATUSMSG = _descriptor.Descriptor(
+  name='StatusMsg',
+  full_name='helmsley.StatusMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='host_id', full_name='helmsley.StatusMsg.host_id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1501,
+  serialized_end=1529,
+)
+
 _VPMSG.fields_by_name['volume_pose_type'].enum_type = _VPMSG_VPTYPE
 _VPMSG_VPTYPE.containing_type = _VPMSG
 _GESTUREOP.fields_by_name['type'].enum_type = _GESTUREOP_OPTYPE
@@ -754,6 +785,7 @@ DESCRIPTOR.message_types_by_name['CheckMsg'] = _CHECKMSG
 DESCRIPTOR.message_types_by_name['MaskMsg'] = _MASKMSG
 DESCRIPTOR.message_types_by_name['DataMsg'] = _DATAMSG
 DESCRIPTOR.message_types_by_name['FrameUpdateMsg'] = _FRAMEUPDATEMSG
+DESCRIPTOR.message_types_by_name['StatusMsg'] = _STATUSMSG
 DESCRIPTOR.enum_types_by_name['ReqType'] = _REQTYPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -827,6 +859,13 @@ FrameUpdateMsg = _reflection.GeneratedProtocolMessageType('FrameUpdateMsg', (_me
   ))
 _sym_db.RegisterMessage(FrameUpdateMsg)
 
+StatusMsg = _reflection.GeneratedProtocolMessageType('StatusMsg', (_message.Message,), dict(
+  DESCRIPTOR = _STATUSMSG,
+  __module__ = 'inspectorSync_pb2'
+  # @@protoc_insertion_point(class_scope:helmsley.StatusMsg)
+  ))
+_sym_db.RegisterMessage(StatusMsg)
+
 
 
 _INSPECTORSYNC = _descriptor.ServiceDescriptor(
@@ -835,8 +874,8 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1531,
-  serialized_end=2302,
+  serialized_start=1561,
+  serialized_end=2392,
   methods=[
   _descriptor.MethodDescriptor(
     name='startBroadcast',
@@ -893,9 +932,18 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
+    name='getStatusMessage',
+    full_name='helmsley.inspectorSync.getStatusMessage',
+    index=6,
+    containing_service=None,
+    input_type=common__pb2._REQUEST,
+    output_type=_STATUSMSG,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
     name='setVolumePose',
     full_name='helmsley.inspectorSync.setVolumePose',
-    index=6,
+    index=7,
     containing_service=None,
     input_type=_VPMSG,
     output_type=common__pb2._COMMONRESPONSE,
@@ -904,7 +952,7 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='setGestureOp',
     full_name='helmsley.inspectorSync.setGestureOp',
-    index=7,
+    index=8,
     containing_service=None,
     input_type=_GESTUREOP,
     output_type=common__pb2._COMMONRESPONSE,
@@ -913,7 +961,7 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='setTuneParams',
     full_name='helmsley.inspectorSync.setTuneParams',
-    index=8,
+    index=9,
     containing_service=None,
     input_type=_TUNEMSG,
     output_type=common__pb2._COMMONRESPONSE,
@@ -922,7 +970,7 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='setCheckParams',
     full_name='helmsley.inspectorSync.setCheckParams',
-    index=9,
+    index=10,
     containing_service=None,
     input_type=_CHECKMSG,
     output_type=common__pb2._COMMONRESPONSE,
@@ -931,7 +979,7 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='setMaskParams',
     full_name='helmsley.inspectorSync.setMaskParams',
-    index=10,
+    index=11,
     containing_service=None,
     input_type=_MASKMSG,
     output_type=common__pb2._COMMONRESPONSE,
@@ -940,7 +988,7 @@ _INSPECTORSYNC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='setDisplayVolume',
     full_name='helmsley.inspectorSync.setDisplayVolume',
-    index=11,
+    index=12,
     containing_service=None,
     input_type=_DATAMSG,
     output_type=common__pb2._COMMONRESPONSE,

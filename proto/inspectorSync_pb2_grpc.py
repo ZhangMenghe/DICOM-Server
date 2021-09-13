@@ -45,6 +45,11 @@ class inspectorSyncStub(object):
         request_serializer=common__pb2.Request.SerializeToString,
         response_deserializer=inspectorSync__pb2.FrameUpdateMsg.FromString,
         )
+    self.getStatusMessage = channel.unary_unary(
+        '/helmsley.inspectorSync/getStatusMessage',
+        request_serializer=common__pb2.Request.SerializeToString,
+        response_deserializer=inspectorSync__pb2.StatusMsg.FromString,
+        )
     self.setVolumePose = channel.unary_unary(
         '/helmsley.inspectorSync/setVolumePose',
         request_serializer=inspectorSync__pb2.VPMsg.SerializeToString,
@@ -117,6 +122,13 @@ class inspectorSyncServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def getUpdates(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def getStatusMessage(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -197,6 +209,11 @@ def add_inspectorSyncServicer_to_server(servicer, server):
           servicer.getUpdates,
           request_deserializer=common__pb2.Request.FromString,
           response_serializer=inspectorSync__pb2.FrameUpdateMsg.SerializeToString,
+      ),
+      'getStatusMessage': grpc.unary_unary_rpc_method_handler(
+          servicer.getStatusMessage,
+          request_deserializer=common__pb2.Request.FromString,
+          response_serializer=inspectorSync__pb2.StatusMsg.SerializeToString,
       ),
       'setVolumePose': grpc.unary_unary_rpc_method_handler(
           servicer.setVolumePose,

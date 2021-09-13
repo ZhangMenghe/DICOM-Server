@@ -175,6 +175,8 @@ class operationServicer(inspectorSyncServicer):
         pose_batch = VolumePoseBatch(bid = time(), pose_msgs = self.volume_pose_pool.copy())
         self.volume_pose_pool.clear()
         return pose_batch
+    def getStatusMessage(self, req, context):
+        return StatusMsg(host_id = self.provider)
 
 class dataServicer(dataTransferServicer):
     def __init__(self):
